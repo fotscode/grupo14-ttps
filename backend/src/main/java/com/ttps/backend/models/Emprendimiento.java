@@ -22,13 +22,11 @@ import lombok.NoArgsConstructor;
 public class Emprendimiento {
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-     @Column(unique=true)
+    @Column(unique=true)
     private String domainUrl;
     private String nombre;
     private String descripcion;
-    private String facebookUrl;
-    private String twitterUrl;
-    private String youtubeUrl;
+    private double valorManguito;
     private Boolean filterByDonations;
     private Boolean filterByManguitos;
     @Lob
@@ -38,8 +36,12 @@ public class Emprendimiento {
     private AppUser appUser;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Categoria> categorias;
-    // relacion onetomany
-    //private List<Posts> posts;
     @OneToMany
-    private List<MetodoDonacion> metodos;
+    private List<Post> posts;
+    @OneToMany
+    private List<Plan> planes;
+    @OneToMany
+    private List<RedSocial> redesSociales;
+    @OneToMany
+    private List<Manguito> manguitos;
 }

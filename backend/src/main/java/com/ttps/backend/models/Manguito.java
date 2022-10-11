@@ -1,24 +1,26 @@
 package com.ttps.backend.models;
 
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity @Data @NoArgsConstructor @AllArgsConstructor
-public class MetodoDonacion {
+public class Manguito {
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    private String titulo; // preguntar titulo con id emprendimiento
-    private String descripcion;
+    private String nombrePersona;
+    private Date fecha;
+    private int cantidad;
     private double monto;
-    @OneToMany
-    private List<Donaciones> donaciones;
+    private String mensaje;
+    @ManyToOne
+    private Emprendimiento emprendimiento;
 }

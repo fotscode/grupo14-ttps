@@ -1,14 +1,11 @@
 package com.ttps.backend.models;
 
-import java.util.List;
+import java.util.Date;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
@@ -16,14 +13,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity @Data @NoArgsConstructor @AllArgsConstructor
-public class Post {
+public class PagoPlan {
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    private String titulo;
-    private String descripcion;
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private List<byte[]> fotos;
+    private String nombrePersona;
+    private String contacto;
+    private Date fecha;
+    private double monto;
+    private String mensaje;
     @ManyToOne
-    private Emprendimiento emprendimiento;
+    private Plan plan;
 }
