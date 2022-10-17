@@ -29,10 +29,9 @@ class AppUserTest {
 
     @Test
 	void testUserAdd() {
-        AppUser user = new AppUser(null,"new","new","new",new ArrayList<>());
+        AppUser user = new AppUser(null,"newAdd","newAdd","newAdd",new ArrayList<>());
         userRepo.save(user);
-        assertEquals(user.getEmail(), userRepo.findByEmail("new").getEmail());
-        userRepo.delete(user);
+        assertEquals(user.getEmail(), userRepo.findByEmail("newAdd").getEmail());
 	}
 
     @Test
@@ -41,16 +40,14 @@ class AppUserTest {
         user.setFullName("testUpdate");
         userRepo.save(user);
         assertEquals(user.getFullName(), userRepo.findByEmail("testAdded").getFullName());
-        userRepo.delete(user);
 	}
 
     @Test
     void testUserListAll(){
         assertEquals(1, userRepo.findAll().size());
-        AppUser user = new AppUser(null,"new","new","new",new ArrayList<>());
+        AppUser user = new AppUser(null,"newUpdate","newUpdate","newUpdate",new ArrayList<>());
         userRepo.save(user);
         assertEquals(2, userRepo.findAll().size());
-        userRepo.delete(user);
     }
 
     @Test
