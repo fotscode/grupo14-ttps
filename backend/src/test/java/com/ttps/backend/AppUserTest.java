@@ -21,15 +21,18 @@ class AppUserTest {
     AppUser userAdded;
     @BeforeEach
     void setUp() throws Exception {
-        userAdded = new AppUser(null,"testAdded","in","setUp",new ArrayList<>());
-        userRepo.save(userAdded);
+        if(userRepo.findByEmail("testAdded")==null){
+            userAdded = new AppUser(null,"testAdded","in","setUp",new ArrayList<>());
+            userRepo.save(userAdded);
+        }
     }
 
-	@Test
+    @Test
 	void testUserAdd() {
         AppUser user = new AppUser(null,"new","new","new",new ArrayList<>());
         userRepo.save(user);
-        assertEquals(user.getEmail(), userRepo.findByEmail("asd").getEmail());
+        assertEquals(user.getEmail(), userRepo.findByEmail("new").getEmail());
+        userRepo.delete(user);
 	}
 
     @Test
@@ -38,6 +41,7 @@ class AppUserTest {
         user.setFullName("testUpdate");
         userRepo.save(user);
         assertEquals(user.getFullName(), userRepo.findByEmail("testAdded").getFullName());
+        userRepo.delete(user);
 	}
 
     @Test
@@ -46,10 +50,12 @@ class AppUserTest {
         AppUser user = new AppUser(null,"new","new","new",new ArrayList<>());
         userRepo.save(user);
         assertEquals(2, userRepo.findAll().size());
+        userRepo.delete(user);
     }
 
     @Test
     void testUserDelete(){
+        userAdded=userRepo.findByEmail("testAdded");
         userRepo.delete(userAdded);
         assertNull(userRepo.findByEmail("testAdded"));
     }
