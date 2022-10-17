@@ -21,4 +21,7 @@ public class Plan {
     private double monto;
     @OneToMany
     private List<PagoPlan> pagos;
+    public void addPago(PagoPlan pago){
+        this.pagos.add(pago);
+    }
 }

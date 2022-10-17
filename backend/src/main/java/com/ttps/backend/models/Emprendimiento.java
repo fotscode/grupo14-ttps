@@ -18,11 +18,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity @Data @NoArgsConstructor @AllArgsConstructor
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Emprendimiento {
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(unique=true)
+    @Column(unique = true)
     private String domainUrl;
     private String nombre;
     private String descripcion;
@@ -32,9 +36,9 @@ public class Emprendimiento {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] imagen;
-    @OneToOne()
+    @OneToOne
     private AppUser appUser;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Categoria> categorias;
     @OneToMany
     private List<Post> posts;
@@ -44,4 +48,24 @@ public class Emprendimiento {
     private List<RedSocial> redesSociales;
     @OneToMany
     private List<Manguito> manguitos;
+
+    public void addCategoria(Categoria categoria) {
+        this.categorias.add(categoria);
+    }
+
+    public void addPost(Post post) {
+        this.posts.add(post);
+    }
+
+    public void addPlan(Plan plan) {
+        this.planes.add(plan);
+    }
+
+    public void addRedSocial(RedSocial redSocial) {
+        this.redesSociales.add(redSocial);
+    }
+
+    public void addManguito(Manguito manguito) {
+        this.manguitos.add(manguito);
+    }
 }

@@ -15,9 +15,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity @Data @NoArgsConstructor @AllArgsConstructor
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String titulo;
     private String descripcion;
@@ -26,4 +30,8 @@ public class Post {
     private List<byte[]> fotos;
     @ManyToOne
     private Emprendimiento emprendimiento;
+
+    public void addFoto(byte[] foto) {
+        this.fotos.add(foto);
+    }
 }

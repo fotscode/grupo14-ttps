@@ -1,5 +1,6 @@
 package com.ttps.backend.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class Categoria {
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+    @Column(unique=true)
     private String nombre;
     private String color;
 }
