@@ -28,8 +28,6 @@ public class Post {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private List<byte[]> fotos;
-    @ManyToOne
-    private Emprendimiento emprendimiento;
 
     public void addFoto(byte[] foto) {
         this.fotos.add(foto);

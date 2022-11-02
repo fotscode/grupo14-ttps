@@ -21,6 +21,4 @@ public class Manguito {
     private int cantidad;
     private double monto;
     private String mensaje;
-    @ManyToOne
-    private Emprendimiento emprendimiento;
 }

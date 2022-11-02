@@ -25,6 +25,4 @@ public class PagoPlan {
     private Date fecha;
     private double monto;
     private String mensaje;
-    @ManyToOne
-    private Plan plan;
 }
