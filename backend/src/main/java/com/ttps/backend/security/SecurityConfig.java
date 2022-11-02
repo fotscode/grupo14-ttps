@@ -1,4 +1,5 @@
 package com.ttps.backend.security;
+
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
@@ -49,11 +50,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and().authorizeRequests()
         .antMatchers(HttpMethod.GET, "/**").permitAll()
         .and().authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/**")//.hasAnyAuthority("ROLE_USER").and().authorizeRequests()
-        .permitAll()
-        .antMatchers(HttpMethod.DELETE, "/**").hasAnyAuthority("ROLE_USER")
+        .antMatchers(HttpMethod.GET, "/api/posts/**").hasAnyAuthority("ROLE_USER")
         .and().authorizeRequests()
-        .antMatchers(HttpMethod.PUT, "/**").hasAnyAuthority("ROLE_USER")
+        .antMatchers(HttpMethod.POST, "/**")// .hasAnyAuthority("ROLE_USER").and().authorizeRequests()
+        .permitAll()
+        .antMatchers(HttpMethod.PUT, "/**").permitAll() // change
+        .antMatchers(HttpMethod.DELETE, "/**").permitAll()
+        //.antMatchers(HttpMethod.DELETE, "/**").hasAnyAuthority("ROLE_USER")
+        //.and().authorizeRequests()
+        //.antMatchers(HttpMethod.PUT, "/**").hasAnyAuthority("ROLE_USER")
         .and().authorizeRequests().anyRequest().authenticated()
         .and().addFilter(customAuthenticationFilter)
         .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
