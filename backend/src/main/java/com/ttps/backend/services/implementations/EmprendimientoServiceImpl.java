@@ -6,12 +6,12 @@ import com.ttps.backend.models.Manguito;
 import com.ttps.backend.models.Plan;
 import com.ttps.backend.models.Post;
 import com.ttps.backend.models.RedSocial;
-import com.ttps.backend.repositories.CategoriaRepo;
 import com.ttps.backend.repositories.EmprendimientoRepo;
 import com.ttps.backend.repositories.ManguitoRepo;
 import com.ttps.backend.repositories.PlanRepo;
 import com.ttps.backend.repositories.PostRepo;
 import com.ttps.backend.repositories.RedSocialRepo;
+import com.ttps.backend.services.CategoriaService;
 import com.ttps.backend.services.EmprendimientoService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
     private final ManguitoRepo manguitoRepo;
     private final PlanRepo planRepo;
     private final RedSocialRepo redSocialRepo;
-    private final CategoriaRepo categoriaRepo;
+    private final CategoriaService categoriaService;
 
     @Override
     public Emprendimiento get(Long id) {
@@ -110,15 +110,15 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
     }
 
     @Override
-    public Boolean addCategoriaToEmprendimiento(Long id, Categoria categoria) {
+    public Boolean addCategoriaToEmprendimiento(Long id, Long idCategoria) {
         Emprendimiento emprendimiento = emprendimientoRepo.findById(id).orElse(null);
-        log.info("Creando categoria con nombre:{}", categoria.getNombre());
-        categoriaRepo.save(categoria);
-        log.info(
-                "Agregar categoria con nombre:{} al emprendimiento con id:{}",
-                categoria.getNombre(),
-                id);
-        if (emprendimiento != null) {
+        log.info("Buscando categoria con id:{}", idCategoria);
+        Categoria categoria = categoriaService.get(idCategoria);
+        if (emprendimiento != null && categoria != null) {
+            log.info(
+                    "Agregar categoria con nombre:{} al emprendimiento con id:{}",
+                    categoria.getNombre(),
+                    id);
             emprendimiento.addCategoria(categoria);
             return true;
         }
@@ -128,14 +128,13 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
     @Override
     public Boolean removeCategoriaFromEmprendimiento(Long idEmprendimiento, Long idCategoria) {
         Emprendimiento emprendimiento = emprendimientoRepo.findById(idEmprendimiento).orElse(null);
-        Categoria categoria = categoriaRepo.findById(idCategoria).orElse(null);
+        Categoria categoria = categoriaService.get(idCategoria);
         if (emprendimiento != null && categoria != null) {
             log.info(
                     "Borrando categoria con titulo:{} del emprendimiento con id:{}",
                     categoria.getNombre(),
                     idEmprendimiento);
             emprendimiento.removeCategoria(categoria);
-            categoriaRepo.deleteById(idCategoria);
             return true;
         }
         return false;

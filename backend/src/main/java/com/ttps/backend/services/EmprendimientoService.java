@@ -26,7 +26,7 @@ public interface EmprendimientoService {
 
     Boolean removePostFromEmprendimiento(Long idEmprendimiento, Long idPost);
 
-    Boolean addCategoriaToEmprendimiento(Long id, Categoria categoria);
+    Boolean addCategoriaToEmprendimiento(Long id, Long idCategoria);
 
     Boolean removeCategoriaFromEmprendimiento(Long idEmprendimiento, Long idCategoria);
 
