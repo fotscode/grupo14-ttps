@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ttps.backend.models.AppUser;
+import com.ttps.backend.models.Emprendimiento;
+import com.ttps.backend.models.Role;
 import com.ttps.backend.repositories.UserRepo;
 
 @SpringBootTest
@@ -22,14 +24,14 @@ class AppUserTest {
     @BeforeEach
     void setUp() throws Exception {
         if(userRepo.findByEmail("testAdded")==null){
-            userAdded = new AppUser(null,"testAdded","in","setUp",new ArrayList<>());
+            userAdded = new AppUser(null,"testAdded","in","setUp",new ArrayList<Role>(),null);
             userRepo.save(userAdded);
         }
     }
 
     @Test
 	void testUserAdd() {
-        AppUser user = new AppUser(null,"newAdd","newAdd","newAdd",new ArrayList<>());
+        AppUser user = new AppUser(null,"newAdd","newAdd","newAdd",new ArrayList<>(),null);
         userRepo.save(user);
         assertEquals(user.getEmail(), userRepo.findByEmail("newAdd").getEmail());
 	}
@@ -45,7 +47,7 @@ class AppUserTest {
     @Test
     void testUserListAll(){
         assertEquals(1, userRepo.findAll().size());
-        AppUser user = new AppUser(null,"newUpdate","newUpdate","newUpdate",new ArrayList<>());
+        AppUser user = new AppUser(null,"newUpdate","newUpdate","newUpdate",new ArrayList<>(),null);
         userRepo.save(user);
         assertEquals(2, userRepo.findAll().size());
     }
