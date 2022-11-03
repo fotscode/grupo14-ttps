@@ -1,11 +1,7 @@
 package com.ttps.backend.controllers;
 
-import com.ttps.backend.models.Plan;
-import com.ttps.backend.models.Response;
-import com.ttps.backend.services.EmprendimientoService;
-import com.ttps.backend.services.UserService;
-
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.Map;
+import com.ttps.backend.models.Plan;
+import com.ttps.backend.models.Response;
+import com.ttps.backend.services.EmprendimientoService;
+import com.ttps.backend.services.UserService;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/emprendimiento/plan")
@@ -30,6 +31,7 @@ public class PlanController {
     private final EmprendimientoService emprendimientoService;
 
     @GetMapping("/list")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> getPlans() {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(
@@ -46,6 +48,7 @@ public class PlanController {
     }
 
     @GetMapping("/get/{id}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> getPlan(@PathVariable("id") Long id) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(
@@ -69,6 +72,7 @@ public class PlanController {
     }
 
     @PostMapping("/save")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> savePlan(@RequestBody Plan plan) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Long idEmprendimiento = userService.getUser(user).getEmprendimiento().getId();
@@ -87,6 +91,7 @@ public class PlanController {
     }
 
     @PutMapping("/update")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> updatePlan(@RequestBody Plan plan) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Long idEmprendimiento = userService.getUser(user).getEmprendimiento().getId();
@@ -105,6 +110,7 @@ public class PlanController {
     }
 
     @DeleteMapping("/delete/{idPlan}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> deletePlan(@PathVariable("idPlan") Long idPlan) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Long idEmprendimiento = userService.getUser(user).getEmprendimiento().getId();

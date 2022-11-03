@@ -18,6 +18,7 @@ import com.ttps.backend.models.Emprendimiento;
 import com.ttps.backend.models.Response;
 import com.ttps.backend.services.implementations.EmprendimientoServiceImpl;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -66,6 +67,7 @@ public class EmprendimientoController {
     }
 
     @PostMapping("/save")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> saveEmprendimiento(@RequestBody Emprendimiento emprendimiento) {
         return ResponseEntity.ok(
                 Response.builder()
@@ -79,6 +81,7 @@ public class EmprendimientoController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> deleteEmprendimiento(@PathVariable("id") Long id) {
         return ResponseEntity.ok(
                 Response.builder()
@@ -92,6 +95,7 @@ public class EmprendimientoController {
     }
 
     @PutMapping("/update")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> updateEmprendimiento(@RequestBody Emprendimiento emprendimiento) {
         return ResponseEntity.ok(
                 Response.builder()

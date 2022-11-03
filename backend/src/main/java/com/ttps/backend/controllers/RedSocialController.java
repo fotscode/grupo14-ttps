@@ -1,11 +1,7 @@
 package com.ttps.backend.controllers;
 
-import com.ttps.backend.models.RedSocial;
-import com.ttps.backend.models.Response;
-import com.ttps.backend.services.EmprendimientoService;
-import com.ttps.backend.services.UserService;
-
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.Map;
+import com.ttps.backend.models.RedSocial;
+import com.ttps.backend.models.Response;
+import com.ttps.backend.services.EmprendimientoService;
+import com.ttps.backend.services.UserService;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/emprendimiento/redes")
@@ -30,6 +31,7 @@ public class RedSocialController {
     private final EmprendimientoService emprendimientoService;
 
     @GetMapping("/list")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> getRedesSociales() {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(
@@ -49,6 +51,7 @@ public class RedSocialController {
     }
 
     @GetMapping("/get/{id}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> getRedSocial(@PathVariable("id") Long id) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(
@@ -72,6 +75,7 @@ public class RedSocialController {
     }
 
     @PostMapping("/save")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> saveRedSocial(@RequestBody RedSocial redSocial) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Long idEmprendimiento = userService.getUser(user).getEmprendimiento().getId();
@@ -90,6 +94,7 @@ public class RedSocialController {
     }
 
     @PutMapping("/update")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> updateRedSocial(@RequestBody RedSocial redSocial) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Long idEmprendimiento = userService.getUser(user).getEmprendimiento().getId();
@@ -108,6 +113,7 @@ public class RedSocialController {
     }
 
     @DeleteMapping("/delete/{idRedSocial}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> deleteRedSocial(@PathVariable("idRedSocial") Long idRedSocial) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Long idEmprendimiento = userService.getUser(user).getEmprendimiento().getId();

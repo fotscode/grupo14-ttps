@@ -1,11 +1,7 @@
 package com.ttps.backend.controllers;
 
-import com.ttps.backend.models.PagoPlan;
-import com.ttps.backend.models.Response;
-import com.ttps.backend.services.PlanService;
-import com.ttps.backend.services.UserService;
-
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.Map;
+import com.ttps.backend.models.PagoPlan;
+import com.ttps.backend.models.Response;
+import com.ttps.backend.services.PlanService;
+import com.ttps.backend.services.UserService;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/emprendimiento/plan/pago")
@@ -28,6 +29,7 @@ public class PagoPlanController {
     private final PlanService planService;
 
     @GetMapping("/list")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> getPagoPlans() {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(
@@ -49,6 +51,7 @@ public class PagoPlanController {
     }
 
     @PostMapping("/save/{idPlan}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> savePagoPlan(@PathVariable("idPlan") Long idPlan,@RequestBody PagoPlan pagoPlan) {
         return ResponseEntity.ok(
                 Response.builder()
