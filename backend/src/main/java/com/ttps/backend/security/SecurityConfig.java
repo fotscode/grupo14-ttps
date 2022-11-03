@@ -1,6 +1,12 @@
 package com.ttps.backend.security;
 
-import java.util.List;
+import com.ttps.backend.filters.CustomAuthenticationFilter;
+import com.ttps.backend.filters.CustomAuthorizationFilter;
+
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,84 +24,100 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.ttps.backend.filters.CustomAuthenticationFilter;
-import com.ttps.backend.filters.CustomAuthorizationFilter;
+import java.util.List;
 
-import lombok.RequiredArgsConstructor;
-
-/**
- * SecurityConfig
- */
+/** SecurityConfig */
 @Configuration
+@SecurityScheme(
+        name = "Bearer Authentication",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "bearer")
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-  private final UserDetailsService userDetailsService;
-  private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserDetailsService userDetailsService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
-  }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+    }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
-    customAuthenticationFilter.setFilterProcessesUrl("/api/login");
-    http.csrf().disable()
-        .cors().configurationSource(corsConfigurationSource())
-        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-        .and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/login/**").permitAll()
-        .and().authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/**").permitAll()
-        .and().authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/api/posts/**").hasAnyAuthority("ROLE_USER")
-        .and().authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/**")// .hasAnyAuthority("ROLE_USER").and().authorizeRequests()
-        .permitAll()
-        .antMatchers(HttpMethod.PUT, "/**").permitAll() // change
-        .antMatchers(HttpMethod.DELETE, "/**").permitAll()
-        //.antMatchers(HttpMethod.DELETE, "/**").hasAnyAuthority("ROLE_USER")
-        //.and().authorizeRequests()
-        //.antMatchers(HttpMethod.PUT, "/**").hasAnyAuthority("ROLE_USER")
-        .and().authorizeRequests().anyRequest().authenticated()
-        .and().addFilter(customAuthenticationFilter)
-        .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-        .httpBasic();
-    // TODO add routes for admin only
-  }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter =
+                new CustomAuthenticationFilter(authenticationManagerBean());
+        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
+        http.csrf()
+                .disable()
+                .cors()
+                .configurationSource(corsConfigurationSource())
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login/", "/api/user/**")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/empredimiento/**")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/empredimiento/**")
+                .hasAnyAuthority("ROLE_USER")
+                .antMatchers(HttpMethod.PUT, "/api/empredimiento/**")
+                .hasAnyAuthority("ROLE_USER")
+                .antMatchers(HttpMethod.DELETE, "/api/empredimiento/**")
+                .hasAnyAuthority("ROLE_USER")
+                .antMatchers(HttpMethod.GET, "/api/users", "/api/categoria/**")
+                .hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/role/**", "/api/categoria/**")
+                .hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/categoria/**")
+                .hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/categoria/**")
+                .hasAnyAuthority("ROLE_ADMIN")
+                .and()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .addFilter(customAuthenticationFilter)
+                .addFilterBefore(
+                        new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .httpBasic();
+    }
 
-  @Bean
-  @Override
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
-  }
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-  @Bean
-  CorsConfigurationSource corsConfigurationSource() {
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    CorsConfiguration corsConfiguration = new CorsConfiguration();
-    corsConfiguration.setAllowCredentials(true);
-    corsConfiguration.addAllowedOriginPattern("*");
-    corsConfiguration.addAllowedMethod(HttpMethod.GET);
-    corsConfiguration.addAllowedMethod(HttpMethod.POST);
-    corsConfiguration.addAllowedMethod(HttpMethod.OPTIONS);
-    corsConfiguration.addAllowedMethod(HttpMethod.PUT);
-    corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
-    corsConfiguration.addAllowedHeader("Origin");
-    corsConfiguration.addAllowedHeader("X-Requested-With");
-    corsConfiguration.addAllowedHeader("Content-Type");
-    corsConfiguration.addAllowedHeader("Accept");
-    corsConfiguration.addAllowedHeader("Authorization");
-    corsConfiguration.addAllowedHeader("X-PINGOTHER");
-    corsConfiguration.setExposedHeaders(List.of("Authorization"));
-    // TODO change when deploying
-    corsConfiguration.addAllowedOrigin("*");
-    corsConfiguration.addAllowedOrigin("http://localhost:4200");
-    corsConfiguration.setMaxAge(1728000L);
-    source.registerCorsConfiguration("/**", corsConfiguration);
-    return source;
-  }
-
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.addAllowedOriginPattern("*");
+        corsConfiguration.addAllowedMethod(HttpMethod.GET);
+        corsConfiguration.addAllowedMethod(HttpMethod.POST);
+        corsConfiguration.addAllowedMethod(HttpMethod.OPTIONS);
+        corsConfiguration.addAllowedMethod(HttpMethod.PUT);
+        corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
+        corsConfiguration.addAllowedHeader("Origin");
+        corsConfiguration.addAllowedHeader("X-Requested-With");
+        corsConfiguration.addAllowedHeader("Content-Type");
+        corsConfiguration.addAllowedHeader("Accept");
+        corsConfiguration.addAllowedHeader("Authorization");
+        corsConfiguration.addAllowedHeader("X-PINGOTHER");
+        corsConfiguration.setExposedHeaders(List.of("Authorization"));
+        // TODO change when deploying
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedOrigin("http://localhost:4200");
+        corsConfiguration.setMaxAge(1728000L);
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
+    }
 }
