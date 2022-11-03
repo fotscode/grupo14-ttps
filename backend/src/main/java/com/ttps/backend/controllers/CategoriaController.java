@@ -6,6 +6,8 @@ import com.ttps.backend.services.EmprendimientoService;
 import com.ttps.backend.services.UserService;
 import com.ttps.backend.services.implementations.CategoriaServiceImpl;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,7 @@ public class CategoriaController {
     private final UserService userService;
 
     @GetMapping("/categoria/list")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> getCategorias() {
         return ResponseEntity.ok(
                 Response.builder()
@@ -44,6 +47,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/categoria/get/{id}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> getCategoria(@PathVariable("id") Long id) {
         return ResponseEntity.ok(
                 Response.builder()
@@ -56,6 +60,7 @@ public class CategoriaController {
     }
 
     @PostMapping("/categoria/save")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> saveCategoria(@RequestBody Categoria categoria) {
         return ResponseEntity.ok(
                 Response.builder()
@@ -68,6 +73,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/categoria/delete/{id}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> deleteCategoria(@PathVariable("id") Long id) {
         return ResponseEntity.ok(
                 Response.builder()
@@ -80,6 +86,7 @@ public class CategoriaController {
     }
 
     @PutMapping("/categoria/update")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> updateCategoria(@RequestBody Categoria categoria) {
         return ResponseEntity.ok(
                 Response.builder()
@@ -92,6 +99,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/emprendimiento/categoria/list")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> getEmprendimientoCategorias() {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(
@@ -110,8 +118,10 @@ public class CategoriaController {
                         .build());
     }
 
-    @PostMapping("/emprendimiento/categoria/save")
-    public ResponseEntity<Response> saveEmprendimientoCategoria(@RequestBody Categoria categoria) {
+    @PostMapping("/emprendimiento/categoria/save/{idCategoria}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<Response> saveEmprendimientoCategoria(
+            @PathVariable("idCategoria") Long idCategoria) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Long idEmprendimiento = userService.getUser(user).getEmprendimiento().getId();
         return ResponseEntity.ok(
@@ -121,7 +131,7 @@ public class CategoriaController {
                                 Map.of(
                                         "wasSaved",
                                         emprendimientoService.addCategoriaToEmprendimiento(
-                                                idEmprendimiento, categoria)))
+                                                idEmprendimiento, idCategoria)))
                         .message("Categoria saved")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
@@ -129,6 +139,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/emprendimiento/categoria/delete/{idCategoria}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> deleteEmprendimientoCategoria(
             @PathVariable("idCategoria") Long idCategoria) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
