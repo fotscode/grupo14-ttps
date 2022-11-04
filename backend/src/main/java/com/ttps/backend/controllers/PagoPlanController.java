@@ -1,7 +1,13 @@
 package com.ttps.backend.controllers;
 
-import java.time.LocalDateTime;
-import java.util.Map;
+import com.ttps.backend.models.PagoPlan;
+import com.ttps.backend.models.Response;
+import com.ttps.backend.services.PlanService;
+import com.ttps.backend.services.UserService;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ttps.backend.models.PagoPlan;
-import com.ttps.backend.models.Response;
-import com.ttps.backend.services.PlanService;
-import com.ttps.backend.services.UserService;
-
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/emprendimiento/plan/pago")
@@ -44,22 +45,27 @@ public class PagoPlanController {
                                                 .getPlanes()
                                                 .stream()
                                                 .flatMap(p -> p.getPagos().stream())))
-                        .message("Pagos a planes retrieved")
+                        .message("Pagos a planes retornados")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
+                        .path("/api/emprendimiento/plan/pago/list")
                         .build());
     }
 
     @PostMapping("/save/{idPlan}")
-    @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<Response> savePagoPlan(@PathVariable("idPlan") Long idPlan,@RequestBody PagoPlan pagoPlan) {
+    public ResponseEntity<Response> savePagoPlan(
+            @PathVariable("idPlan") Long idPlan, @RequestBody PagoPlan pagoPlan) {
+        boolean wasSaved = planService.addPagoToPlan(idPlan, pagoPlan);
+        HttpStatus status = wasSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
+        String message = wasSaved ? "Pago a plan creado" : "Pago a plan no creado";
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
-                        .data(Map.of("wasSaved", planService.addPagoToPlan(idPlan, pagoPlan)))
-                        .message("Pago Plan saved")
-                        .status(HttpStatus.OK)
-                        .statusCode(HttpStatus.OK.value())
+                        .data(Map.of("pagoPlan", wasSaved ? pagoPlan : false))
+                        .message(message)
+                        .status(status)
+                        .statusCode(status.value())
+                        .path("/api/emprendimiento/plan/pago/save/" + idPlan)
                         .build());
     }
 }

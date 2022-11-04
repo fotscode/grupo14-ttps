@@ -1,15 +1,20 @@
 package com.ttps.backend.controllers;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ttps.backend.models.AppUser;
+import com.ttps.backend.models.Response;
+import com.ttps.backend.models.Role;
+import com.ttps.backend.services.UserService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,21 +25,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ttps.backend.models.AppUser;
-import com.ttps.backend.models.Role;
-import com.ttps.backend.services.UserService;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /** UserController */
 @RestController
@@ -46,36 +46,61 @@ public class UserController {
 
     @GetMapping("/users")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<List<AppUser>> getUsers() {
-        return ResponseEntity.ok().body(userService.getUsers());
+    public ResponseEntity<Response> getUsers() {
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .data(Map.of("usuarios", userService.getUsers()))
+                        .message("Usuarios retornados")
+                        .status(HttpStatus.OK)
+                        .statusCode(HttpStatus.OK.value())
+                        .path("/api/users")
+                        .build());
     }
 
     @PostMapping("/user/save")
-    public ResponseEntity<AppUser> saveUser(@RequestBody AppUser user) {
-        URI uri =
-                URI.create(
-                        ServletUriComponentsBuilder.fromCurrentContextPath()
-                                .path("/api/user/save")
-                                .toUriString());
-        return ResponseEntity.created(uri).body(userService.saveUser(user));
+    public ResponseEntity<Response> saveUser(@RequestBody AppUser user) {
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .data(Map.of("user", userService.saveUser(user)))
+                        .message("Usuario creado")
+                        .status(HttpStatus.CREATED)
+                        .statusCode(HttpStatus.CREATED.value())
+                        .path("/api/user/save")
+                        .build());
     }
 
     @PostMapping("/role/save")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<Role> saveRole(@RequestBody Role role) {
-        URI uri =
-                URI.create(
-                        ServletUriComponentsBuilder.fromCurrentContextPath()
-                                .path("/api/role/save")
-                                .toUriString());
-        return ResponseEntity.created(uri).body(userService.saveRole(role));
+    public ResponseEntity<Response> saveRole(@RequestBody Role role) {
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .data(Map.of("user", userService.saveRole(role)))
+                        .message("Rol creado")
+                        .status(HttpStatus.CREATED)
+                        .statusCode(HttpStatus.CREATED.value())
+                        .path("/api/role/save")
+                        .build());
     }
 
     @PostMapping("/role/addtouser")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
-        userService.addRoleToUser(form.getEmail(), form.getRoleName());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Response> addRoleToUser(@RequestBody RoleToUserForm form) {
+        boolean wasSaved = userService.addRoleToUser(form.getEmail(), form.getRoleName());
+        String message =
+                wasSaved ? "Rol agregado al usuario" : "No se pudo agregar el rol al usuario";
+        HttpStatus status = wasSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .data(Map.of("user", userService.getUser(form.getEmail())))
+                        .message(message)
+                        .status(status)
+                        .statusCode(status.value())
+                        .path("/api/role/addtouser")
+                        .build());
     }
 
     @GetMapping("/token/refresh")

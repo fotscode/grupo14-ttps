@@ -1,7 +1,13 @@
 package com.ttps.backend.controllers;
 
-import java.time.LocalDateTime;
-import java.util.Map;
+import com.ttps.backend.models.Manguito;
+import com.ttps.backend.models.Response;
+import com.ttps.backend.services.EmprendimientoService;
+import com.ttps.backend.services.UserService;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ttps.backend.models.Manguito;
-import com.ttps.backend.models.Response;
-import com.ttps.backend.services.EmprendimientoService;
-import com.ttps.backend.services.UserService;
-
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/emprendimiento/manguito")
@@ -42,9 +43,10 @@ public class ManguitoController {
                                                 .getUser(user)
                                                 .getEmprendimiento()
                                                 .getManguitos()))
-                        .message("Manguitos retrieved")
+                        .message("Manguitos retornados")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
+                        .path("/api/emprendimiento/manguito/list")
                         .build());
     }
 
@@ -52,42 +54,40 @@ public class ManguitoController {
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> getManguito(@PathVariable("id") Long id) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Manguito mang =
+                userService.getUser(user).getEmprendimiento().getManguitos().stream()
+                        .filter(manguito -> manguito.getId().equals(id))
+                        .findFirst()
+                        .orElse(null);
+        HttpStatus status = mang != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
+        String msg = mang != null ? "Manguito retornado" : "Manguito no encontrado";
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
-                        .data(
-                                Map.of(
-                                        "manguito",
-                                        userService
-                                                .getUser(user)
-                                                .getEmprendimiento()
-                                                .getManguitos()
-                                                .stream()
-                                                .filter(manguito -> manguito.getId().equals(id))
-                                                .findFirst()
-                                                .orElse(null)))
-                        .message("Manguito retrieved")
-                        .status(HttpStatus.OK)
-                        .statusCode(HttpStatus.OK.value())
+                        .data(Map.of("manguito", mang != null ? mang : false))
+                        .message(msg)
+                        .status(status)
+                        .statusCode(status.value())
+                        .path("/api/emprendimiento/manguito/get/" + id)
                         .build());
     }
 
-    @PostMapping("/save")
-    @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<Response> saveManguito(@RequestBody Manguito manguito) {
-        String user = SecurityContextHolder.getContext().getAuthentication().getName();
-        Long idEmprendimiento = userService.getUser(user).getEmprendimiento().getId();
+    @PostMapping("/save/{idEmprendimiento}")
+    public ResponseEntity<Response> saveManguito(
+            @PathVariable("idEmprendimiento") Long idEmprendimiento,
+            @RequestBody Manguito manguito) {
+        boolean wasSaved =
+                emprendimientoService.addManguitoToEmprendimiento(idEmprendimiento, manguito);
+        HttpStatus status = wasSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
+        String msg = wasSaved ? "Manguito guardado" : "Emprendimiento no encontrado";
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
-                        .data(
-                                Map.of(
-                                        "wasSaved",
-                                        emprendimientoService.addManguitoToEmprendimiento(
-                                                idEmprendimiento, manguito)))
-                        .message("Manguito saved")
-                        .status(HttpStatus.OK)
-                        .statusCode(HttpStatus.OK.value())
+                        .data(Map.of("manguito", wasSaved ? manguito : false))
+                        .message(msg)
+                        .status(status)
+                        .statusCode(status.value())
+                        .path("/api/emprendimiento/manguito/save/" + idEmprendimiento)
                         .build());
     }
 }
