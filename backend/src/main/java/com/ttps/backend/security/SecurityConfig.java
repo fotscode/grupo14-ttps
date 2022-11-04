@@ -60,17 +60,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**")
                 .permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login/", "/api/user/**")
+                .antMatchers(
+                        HttpMethod.POST,
+                        "/api/login/",
+                        "/api/user/**",
+                        "/api/emprendimiento/manguito/**",
+                        "/api/emprendimiento/plan/pago/**")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/empredimiento/**")
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/api/emprendimiento/list",
+                        "/api/emprendimiento/get/**",
+                        "/api/categoria/**")
                 .permitAll()
-                .antMatchers(HttpMethod.POST, "/api/empredimiento/**")
+                .antMatchers(HttpMethod.GET, "/api/emprendimiento/**")
                 .hasAnyAuthority("ROLE_USER")
-                .antMatchers(HttpMethod.PUT, "/api/empredimiento/**")
+                .antMatchers(HttpMethod.POST, "/api/emprendimiento/**")
                 .hasAnyAuthority("ROLE_USER")
-                .antMatchers(HttpMethod.DELETE, "/api/empredimiento/**")
+                .antMatchers(HttpMethod.PUT, "/api/emprendimiento/**")
                 .hasAnyAuthority("ROLE_USER")
-                .antMatchers(HttpMethod.GET, "/api/users", "/api/categoria/**")
+                .antMatchers(HttpMethod.DELETE, "/api/emprendimiento/**")
+                .hasAnyAuthority("ROLE_USER")
+                .antMatchers(HttpMethod.GET, "/api/users")
                 .hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/role/**", "/api/categoria/**")
                 .hasAnyAuthority("ROLE_ADMIN")
