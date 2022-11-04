@@ -42,6 +42,10 @@ public class RedSocialServiceImpl implements RedSocialService {
     @Override
     public Boolean delete(Long id) {
         log.info("Borrando redSocial con id: {}", id);
+        RedSocial redSocial = redSocialRepo.findById(id).orElse(null);
+        if (redSocial == null) {
+            return false;
+        }
         redSocialRepo.deleteById(id);
         return true;
     }

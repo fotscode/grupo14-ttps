@@ -89,10 +89,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void addRoleToUser(String email, String roleName) {
+    public Boolean addRoleToUser(String email, String roleName) {
         AppUser user = userRepo.findByEmail(email);
         Role role = roleRepo.findByName(roleName);
+        if (user==null || role==null) {
+            return false;
+        }
         user.addRole(role);
+        return true;
     }
 
     @Override

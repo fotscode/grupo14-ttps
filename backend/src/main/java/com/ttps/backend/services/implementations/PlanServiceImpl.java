@@ -45,6 +45,10 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public Boolean delete(Long id) {
         log.info("Borrando plan con id: {}", id);
+        Plan plan = planRepo.findById(id).orElse(null);
+        if (plan == null) {
+            return false;
+        }
         planRepo.deleteById(id);
         return true;
     }

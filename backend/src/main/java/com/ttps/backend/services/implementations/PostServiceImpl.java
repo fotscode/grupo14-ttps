@@ -42,6 +42,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public Boolean delete(Long id) {
         log.info("Borrando post con id: {}", id);
+        Post post = postRepo.findById(id).orElse(null);
+        if (post == null) {
+            return false;
+        }
         postRepo.deleteById(id);
         return true;
     }

@@ -42,6 +42,10 @@ public class PagoPlanServiceImpl implements PagoPlanService {
     @Override
     public Boolean delete(Long id) {
         log.info("Borrando manguit con id: {}", id);
+        PagoPlan pagoPlan = pagoPlanRepo.findById(id).orElse(null);
+        if (pagoPlan == null) {
+            return false;
+        }
         pagoPlanRepo.deleteById(id);
         return true;
     }

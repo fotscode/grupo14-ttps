@@ -42,6 +42,10 @@ public class ManguitoServiceImpl implements ManguitoService {
     @Override
     public Boolean delete(Long id) {
         log.info("Borrando manguito con id: {}", id);
+        Manguito manguito = manguitoRepo.findById(id).orElse(null);
+        if (manguito == null) {
+            return false;
+        }
         manguitoRepo.deleteById(id);
         return true;
     }

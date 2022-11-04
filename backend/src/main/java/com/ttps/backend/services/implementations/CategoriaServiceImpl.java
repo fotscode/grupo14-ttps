@@ -1,12 +1,5 @@
 package com.ttps.backend.services.implementations;
 
-import java.util.Collection;
-
-import javax.transaction.Transactional;
-
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
 import com.ttps.backend.models.Categoria;
 import com.ttps.backend.repositories.CategoriaRepo;
 import com.ttps.backend.services.CategoriaService;
@@ -14,12 +7,18 @@ import com.ttps.backend.services.CategoriaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+
+import javax.transaction.Transactional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class CategoriaServiceImpl implements CategoriaService{
+public class CategoriaServiceImpl implements CategoriaService {
     private final CategoriaRepo categoriaRepo;
 
     @Override
@@ -43,6 +42,10 @@ public class CategoriaServiceImpl implements CategoriaService{
     @Override
     public Boolean delete(Long id) {
         log.info("Borrando categoria con id: {}", id);
+        Categoria categoria = categoriaRepo.findById(id).orElse(null);
+        if (categoria == null) {
+            return false;
+        }
         categoriaRepo.deleteById(id);
         return true;
     }
