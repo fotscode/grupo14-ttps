@@ -61,15 +61,16 @@ public class ManguitoController {
                         .orElse(null);
         HttpStatus status = mang != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         String msg = mang != null ? "Manguito retornado" : "Manguito no encontrado";
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("manguito", mang != null ? mang : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/manguito/get/" + id)
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("manguito", mang != null ? mang : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/manguito/get/" + id)
+                                .build());
     }
 
     @PostMapping("/save/{idEmprendimiento}")
@@ -80,14 +81,15 @@ public class ManguitoController {
                 emprendimientoService.addManguitoToEmprendimiento(idEmprendimiento, manguito);
         HttpStatus status = wasSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
         String msg = wasSaved ? "Manguito guardado" : "Emprendimiento no encontrado";
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("manguito", wasSaved ? manguito : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/manguito/save/" + idEmprendimiento)
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("manguito", wasSaved ? manguito : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/manguito/save/" + idEmprendimiento)
+                                .build());
     }
 }

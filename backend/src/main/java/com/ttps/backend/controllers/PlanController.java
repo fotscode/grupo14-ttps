@@ -62,15 +62,16 @@ public class PlanController {
                         .orElse(null);
         String msg = p != null ? "Plan encontrado" : "Plan no encontrado";
         HttpStatus status = p != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("plan", p != null ? p : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/plan/get/" + id)
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("plan", p != null ? p : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/plan/get/" + id)
+                                .build());
     }
 
     @PostMapping("/save")
@@ -81,15 +82,16 @@ public class PlanController {
         boolean wasSaved = emprendimientoService.addPlanToEmprendimiento(idEmprendimiento, plan);
         String msg = wasSaved ? "Plan guardado" : "Emprendimiento no encontrado";
         HttpStatus status = wasSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("plan", wasSaved ? plan : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/plan/save")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("plan", wasSaved ? plan : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/plan/save")
+                                .build());
     }
 
     @PutMapping("/update")
@@ -100,15 +102,16 @@ public class PlanController {
         boolean wasUpdated = emprendimientoService.addPlanToEmprendimiento(idEmprendimiento, plan);
         String msg = wasUpdated ? "Plan actualizado" : "Emprendimiento no encontrado";
         HttpStatus status = wasUpdated ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("plan", wasUpdated ? plan : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/plan/update")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("plan", wasUpdated ? plan : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/plan/update")
+                                .build());
     }
 
     @DeleteMapping("/delete/{idPlan}")
@@ -116,19 +119,20 @@ public class PlanController {
     public ResponseEntity<Response> deletePlan(@PathVariable("idPlan") Long idPlan) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Long idEmprendimiento = userService.getUser(user).getEmprendimiento().getId();
-        Plan p = planService.get(idPlan);
         boolean wasDeleted =
                 emprendimientoService.removePlanFromEmprendimiento(idEmprendimiento, idPlan);
         String msg = wasDeleted ? "Plan eliminado" : "Emprendimiento no encontrado";
         HttpStatus status = wasDeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("plan", p != null ? p : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/plan/delete/" + idPlan)
-                        .build());
+        Plan p = planService.get(idPlan);
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("plan", p != null ? p : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/plan/delete/" + idPlan)
+                                .build());
     }
 }

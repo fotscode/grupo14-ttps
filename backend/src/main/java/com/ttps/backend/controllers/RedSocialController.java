@@ -65,15 +65,16 @@ public class RedSocialController {
                         .orElse(null);
         String msg = r != null ? "Red social retornada" : "No se encontro la red social";
         HttpStatus status = r != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("redSocial", r != null ? r : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/redes/get/" + id)
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("redSocial", r != null ? r : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/redes/get/" + id)
+                                .build());
     }
 
     @PostMapping("/save")
@@ -85,15 +86,16 @@ public class RedSocialController {
                 emprendimientoService.addRedSocialToEmprendimiento(idEmprendimiento, redSocial);
         String msg = wasSaved ? "Red social guardada" : "Emprendimiento no encontrado";
         HttpStatus status = wasSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("redSocial", wasSaved ? redSocial : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/redes/save")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("redSocial", wasSaved ? redSocial : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/redes/save")
+                                .build());
     }
 
     @PutMapping("/update")
@@ -105,15 +107,16 @@ public class RedSocialController {
                 emprendimientoService.addRedSocialToEmprendimiento(idEmprendimiento, redSocial);
         String msg = wasUpdated ? "Red social actualizada" : "Red social no encontrada";
         HttpStatus status = wasUpdated ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("redSocial", wasUpdated ? redSocial : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/redes/update")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("redSocial", wasUpdated ? redSocial : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/redes/update")
+                                .build());
     }
 
     @DeleteMapping("/delete/{idRedSocial}")
@@ -127,14 +130,15 @@ public class RedSocialController {
                         idEmprendimiento, idRedSocial);
         String msg = wasDeleted ? "Red social eliminada" : "Red social no encontrada";
         HttpStatus status = wasDeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("redSocial", r != null ? r : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/redes/delete/{idRedSocial}")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("redSocial", r != null ? r : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/redes/delete/" + idRedSocial)
+                                .build());
     }
 }

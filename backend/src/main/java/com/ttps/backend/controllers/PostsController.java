@@ -62,15 +62,16 @@ public class PostsController {
                         .orElse(null);
         String msg = p != null ? "Post encontrado" : "Post no encontrado";
         HttpStatus status = p != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("post", p != null ? p : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/post/get/{id}")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("post", p != null ? p : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/post/get/"+id)
+                                .build());
     }
 
     @PostMapping("/save")
@@ -81,15 +82,16 @@ public class PostsController {
         boolean wasSaved = emprendimientoService.addPostToEmprendimiento(idEmprendimiento, post);
         String msg = wasSaved ? "Post guardado" : "Emprendimiento no encontrado";
         HttpStatus status = wasSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("post", wasSaved ? post : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/post/save")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("post", wasSaved ? post : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/post/save")
+                                .build());
     }
 
     @PutMapping("/update")
@@ -100,15 +102,16 @@ public class PostsController {
         boolean wasUpdated = emprendimientoService.addPostToEmprendimiento(idEmprendimiento, post);
         String msg = wasUpdated ? "Post actualizado" : "Emprendimiento no encontrado";
         HttpStatus status = wasUpdated ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("post", wasUpdated ? post : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/post/update")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("post", wasUpdated ? post : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/post/update")
+                                .build());
     }
 
     @DeleteMapping("/delete/{idPost}")
@@ -121,14 +124,15 @@ public class PostsController {
                 emprendimientoService.removePostFromEmprendimiento(idEmprendimiento, idPost);
         String msg = wasDeleted ? "Post eliminado" : "Post no encontrado";
         HttpStatus status = wasDeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("post", p != null ? p : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/post/delete/{idPost}")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("post", p != null ? p : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/post/delete/" + idPost)
+                                .build());
     }
 }

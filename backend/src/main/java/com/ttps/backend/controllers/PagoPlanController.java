@@ -58,14 +58,15 @@ public class PagoPlanController {
         boolean wasSaved = planService.addPagoToPlan(idPlan, pagoPlan);
         HttpStatus status = wasSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
         String message = wasSaved ? "Pago a plan creado" : "Pago a plan no creado";
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("pagoPlan", wasSaved ? pagoPlan : false))
-                        .message(message)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/plan/pago/save/" + idPlan)
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("pagoPlan", wasSaved ? pagoPlan : false))
+                                .message(message)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/plan/pago/save/" + idPlan)
+                                .build());
     }
 }

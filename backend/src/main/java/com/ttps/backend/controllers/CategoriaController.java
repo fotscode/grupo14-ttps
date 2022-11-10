@@ -52,29 +52,31 @@ public class CategoriaController {
         Categoria c = categoriaService.get(id);
         String msg = c != null ? "Categoria retornada" : "Categoria no encontrada";
         HttpStatus status = c != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("categoria", c != null ? c : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/categoria/get/{id}")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("categoria", c != null ? c : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/categoria/get/" + id)
+                                .build());
     }
 
     @PostMapping("/categoria/save")
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> saveCategoria(@RequestBody Categoria categoria) {
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("categoria", categoriaService.create(categoria)))
-                        .message("Categoria creada")
-                        .status(HttpStatus.CREATED)
-                        .statusCode(HttpStatus.CREATED.value())
-                        .path("/api/categoria/save")
-                        .build());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("categoria", categoriaService.create(categoria)))
+                                .message("Categoria creada")
+                                .status(HttpStatus.CREATED)
+                                .statusCode(HttpStatus.CREATED.value())
+                                .path("/api/categoria/save")
+                                .build());
     }
 
     @DeleteMapping("/categoria/delete/{id}")
@@ -84,15 +86,16 @@ public class CategoriaController {
         Categoria c = categoriaService.get(id);
         HttpStatus status = wasDeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         String msg = wasDeleted ? "Categoria borrada" : "Categoria no encontrada";
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("categoria", c != null ? c : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/categoria/delete/{id}")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("categoria", c != null ? c : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/categoria/delete/" + id)
+                                .build());
     }
 
     @PutMapping("/categoria/update")
@@ -144,15 +147,16 @@ public class CategoriaController {
         HttpStatus status = wasSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
         String msg = wasSaved ? "Categoria guardada" : "Categoria no encontrada";
 
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("categoria", c != null ? c : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/categoria/save/{idCategoria}")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("categoria", c != null ? c : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/categoria/save/" + idCategoria)
+                                .build());
     }
 
     @DeleteMapping("/emprendimiento/categoria/delete/{idCategoria}")
@@ -168,14 +172,15 @@ public class CategoriaController {
         String msg = wasDeleted ? "Categoria borrada" : "Categoria no encontrada";
         HttpStatus status = wasDeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         Categoria c = categoriaService.get(idCategoria);
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("categoria", c != null ? c : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/categoria/delete/{idCategoria}")
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("categoria", c != null ? c : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/categoria/delete/" + idCategoria)
+                                .build());
     }
 }

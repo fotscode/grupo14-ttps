@@ -46,15 +46,16 @@ public class EmprendimientoController {
         Emprendimiento e = emprendimientoService.get(id);
         String msg = e != null ? "Emprendimiento retornado" : "Emprendimiento no encontrado";
         HttpStatus status = e != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("emprendimiento", e != null ? e : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/get/" + id)
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("emprendimiento", e != null ? e : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/get/" + id)
+                                .build());
     }
 
     @GetMapping("/get/domain/{domainUrl}")
@@ -62,32 +63,34 @@ public class EmprendimientoController {
         Emprendimiento e = emprendimientoService.get(domainUrl);
         String msg = e != null ? "Emprendimiento retornado" : "Emprendimiento no encontrado";
         HttpStatus status = e != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("emprendimiento", e != null ? e : false))
-                        .message(msg)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/get/" + domainUrl)
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("emprendimiento", e != null ? e : false))
+                                .message(msg)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/get/" + domainUrl)
+                                .build());
     }
 
     @PostMapping("/save")
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Response> saveEmprendimiento(@RequestBody Emprendimiento emprendimiento) {
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(
-                                Map.of(
-                                        "emprendimiento",
-                                        emprendimientoService.create(emprendimiento)))
-                        .message("Emprendimiento created")
-                        .status(HttpStatus.CREATED)
-                        .statusCode(HttpStatus.CREATED.value())
-                        .path("/api/emprendimiento/save")
-                        .build());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(
+                                        Map.of(
+                                                "emprendimiento",
+                                                emprendimientoService.create(emprendimiento)))
+                                .message("Emprendimiento created")
+                                .status(HttpStatus.CREATED)
+                                .statusCode(HttpStatus.CREATED.value())
+                                .path("/api/emprendimiento/save")
+                                .build());
     }
 
     @DeleteMapping("/delete/{id}")
@@ -97,15 +100,16 @@ public class EmprendimientoController {
         HttpStatus status = empr != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         String message = empr != null ? "Emprendimiento borrado" : "Emprendimiento no encontrado";
         emprendimientoService.delete(id);
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("emprendimiento", empr != null ? empr : false))
-                        .message(message)
-                        .status(status)
-                        .statusCode(status.value())
-                        .path("/api/emprendimiento/delete/" + id)
-                        .build());
+        return ResponseEntity.status(status)
+                .body(
+                        Response.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .data(Map.of("emprendimiento", empr != null ? empr : false))
+                                .message(message)
+                                .status(status)
+                                .statusCode(status.value())
+                                .path("/api/emprendimiento/delete/" + id)
+                                .build());
     }
 
     @PutMapping("/update")
