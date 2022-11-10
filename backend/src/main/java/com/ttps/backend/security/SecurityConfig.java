@@ -80,7 +80,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("ROLE_USER")
                 .antMatchers(HttpMethod.PUT, "/api/emprendimiento/**")
                 .hasAnyAuthority("ROLE_USER")
-                .antMatchers(HttpMethod.DELETE, "/api/emprendimiento/**")
+                .antMatchers(
+                        HttpMethod.DELETE,
+                        "/api/emprendimiento/categoria/**",
+                        "/api/emprendimiento/post/**",
+                        "/api/emprendimiento/plan/**",
+                        "/api/emprendimiento/redes/**")
                 .hasAnyAuthority("ROLE_USER")
                 .antMatchers(HttpMethod.GET, "/api/users")
                 .hasAnyAuthority("ROLE_ADMIN")
@@ -88,7 +93,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/categoria/**")
                 .hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/categoria/**")
+                .antMatchers(
+                        HttpMethod.DELETE, "/api/categoria/**", "/api/emprendimiento/delete/**")
                 .hasAnyAuthority("ROLE_ADMIN")
                 .and()
                 .authorizeRequests()
