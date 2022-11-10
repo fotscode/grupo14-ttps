@@ -1,28 +1,26 @@
 package com.ttps.backend.filters;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.ttps.backend.helpers.JWTFactory;
 import com.ttps.backend.models.AppUser;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -58,39 +56,47 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             FilterChain chain,
             Authentication authentication)
             throws IOException, ServletException {
+        JWTFactory jwtFactory = new JWTFactory();
         User user = (User) authentication.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-        // "secret" deberia ser una private key, evito para no complejizar
-        String access_token =
-                JWT.create()
-                        .withSubject(user.getUsername())
-                        .withExpiresAt(
-                                new Date(
-                                        System.currentTimeMillis() + 1000 * 60 * 1000)) // 1000 mins
-                        .withIssuer(request.getRequestURL().toString())
-                        .withClaim(
-                                "roles",
-                                user.getAuthorities().stream()
-                                        .map(GrantedAuthority::getAuthority)
-                                        .collect(Collectors.toList()))
-                        .sign(algorithm);
-        String refresh_token =
-                JWT.create()
-                        .withSubject(user.getUsername())
-                        .withExpiresAt(
-                                new Date(System.currentTimeMillis() + 600 * 60 * 1000)) // 600 mins
-                        .withIssuer(request.getRequestURL().toString())
-                        .withClaim(
-                                "roles",
-                                user.getAuthorities().stream()
-                                        .map(GrantedAuthority::getAuthority)
-                                        .collect(Collectors.toList()))
-                        .sign(algorithm);
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("access_token", access_token);
-        tokens.put("refresh_token", refresh_token);
+        Map<String, String> tokens = jwtFactory.genTokensFromRequest(user, request);
         response.setContentType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
         response.setHeader("Access-Control-Allow-Origin", "*");
-        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+        Map<?, ?> body =
+                Map.of(
+                        "timeStamp",
+                        LocalDateTime.now().toString(),
+                        "statusCode",
+                        HttpStatus.OK.value(),
+                        "status",
+                        HttpStatus.OK,
+                        "path",
+                        "/api/login",
+                        "data",
+                        Map.of("tokens", tokens));
+        new ObjectMapper().writeValue(response.getOutputStream(), body);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            AuthenticationException failed)
+            throws IOException, ServletException {
+        response.setContentType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        Map<?, ?> body =
+                Map.of(
+                        "timeStamp",
+                        LocalDateTime.now().toString(),
+                        "statusCode",
+                        HttpStatus.UNAUTHORIZED.value(),
+                        "status",
+                        HttpStatus.UNAUTHORIZED,
+                        "path",
+                        "/api/login",
+                        "message",
+                        "Invalid credentials");
+        new ObjectMapper().writeValue(response.getOutputStream(), body);
     }
 }

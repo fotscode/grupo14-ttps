@@ -71,6 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         HttpMethod.GET,
                         "/api/emprendimiento/list",
                         "/api/emprendimiento/get/**",
+                        "/api/token/**",
                         "/api/categoria/**")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/emprendimiento/**")

@@ -1,5 +1,6 @@
 package com.ttps.backend;
 
+import com.ttps.backend.helpers.JWTFactory;
 import com.ttps.backend.models.AppUser;
 import com.ttps.backend.models.Role;
 import com.ttps.backend.services.UserService;
@@ -33,6 +34,11 @@ public class BackendApplication {
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    JWTFactory jwtFactory() {
+        return new JWTFactory();
     }
 
     @Bean
