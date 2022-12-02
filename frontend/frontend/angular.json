@@ -25,9 +25,18 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "src/styles.css",
+              "src/assets/css/dh-card-image-left-dark.css",
+              "src/assets/css/Footer-Dark-Multi-Column-icons.css",
+              "src/assets/css/Google-Style-Text-Input.css",
+              "src/assets/css/Multiple-Input-Select-Pills.css",
+              "src/assets/css/Pretty-Search-Form-.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "src/assets/js/bold-and-dark.js"
+            ]
           },
           "configurations": {
             "production": {
