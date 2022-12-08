@@ -132,7 +132,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         corsConfiguration.addAllowedHeader("X-PINGOTHER");
         corsConfiguration.setExposedHeaders(List.of("Authorization"));
         // TODO change when deploying
-        corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.addAllowedOrigin("http://localhost:4200");
         corsConfiguration.setMaxAge(1728000L);
         source.registerCorsConfiguration("/**", corsConfiguration);
