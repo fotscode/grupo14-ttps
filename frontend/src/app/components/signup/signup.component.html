@@ -2,13 +2,13 @@
   <div class="container py-5">
     <div class="row mb-4 mb-lg-5">
       <div class="col-md-8 col-xl-6 text-center mx-auto">
-        <p class="fw-bold text-success mb-2">Iniciar sesion</p>
-        <h2 class="fw-bold text-white">Bienvenido de vuelta</h2>
+        <p class="fw-bold text-success mb-2">Registro de usuario</p>
+        <h2 class="fw-bold text-white">Bienvenido</h2>
       </div>
     </div>
     <div class="row d-flex justify-content-center">
       <div class="w-100" style="max-width:800px">
-        <div class="card bg-dark pb-5">
+        <div class="card bg-dark">
           <div
             class="card-body text-center d-flex flex-column align-items-center"
           >
@@ -28,14 +28,23 @@
                 ></path>
               </svg>
             </div>
-            <form (submit)="logIn()" class="w-100" style="max-width:400px">
+            <form (submit)="signUp()" class="w-100" style="max-width:400px">
+              <div class="mb-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  name="name"
+                  placeholder="Nombre y Apellido"
+                  [(ngModel)]="this.user.fullName"
+                />
+              </div>
               <div class="mb-3">
                 <input
                   class="form-control"
                   type="email"
                   name="email"
-                  [(ngModel)]="user.email"
                   placeholder="Email"
+                  [(ngModel)]="this.user.email"
                 />
               </div>
               <div class="mb-3">
@@ -43,8 +52,17 @@
                   class="form-control"
                   type="password"
                   name="password"
-                  [(ngModel)]="user.password"
+                  [(ngModel)]="this.user.password"
                   placeholder="Contraseña"
+                />
+              </div>
+              <div class="mb-3">
+                <input
+                  class="form-control"
+                  type="password"
+                  name="password"
+                  [(ngModel)]="this.repeatPassword"
+                  placeholder="Repetir contraseña"
                 />
               </div>
               <div class="mb-3">
@@ -52,12 +70,13 @@
                   class="btn btn-primary shadow d-block w-100"
                   type="submit"
                 >
-                  Iniciar sesion
+                  Registrarse
                 </button>
               </div>
-              <a class="text-white" routerLink="/registro">
-                No tienes cuenta? Registrate.
-              </a>
+              <p class="text-muted">
+                Ya tenes una cuenta?
+                <a routerLink="/login" class="text-white">Inicia sesion</a>
+              </p>
             </form>
           </div>
         </div>

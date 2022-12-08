@@ -5,6 +5,8 @@ import * as moment from 'moment'
 import { environment } from 'src/environments/environment'
 import { LoginUser } from '../interfaces/LoginUser';
 import { TokenResponse } from '../interfaces/responses/TokenResponse';
+import { User } from '../interfaces/User';
+import { SignupResponse } from '../interfaces/responses/SignupResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +15,8 @@ export class AuthService {
   private URL = environment.baseApiUrl
   constructor(private http: HttpClient, private router: Router) {}
 
-  signUp(user: any) {
-    return this.http.post<any>(this.URL + '/user/add', user)
+  signUp(user: User) {
+    return this.http.post<SignupResponse>(this.URL + '/user/save', user)
   }
 
   signIn(user: LoginUser) {

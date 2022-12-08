@@ -19,7 +19,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './guards/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms'
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { SignupComponent } from './components/signup/signup.component'
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { FormsModule } from '@angular/forms'
     EditEmprendimientoComponentComponent,
     NavigationHeaderComponent,
     ContactFooterComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { EmprendimientoComponentComponent } from './components/emprendimiento-component/emprendimiento-component.component'
 import { HomeComponentComponent } from './components/home-component/home-component.component'
 import { LoginComponent } from './components/login/login.component'
+import { SignupComponent } from './components/signup/signup.component'
 import { AuthGuard } from './guards/auth.guard'
 import { LoggedInGuard } from './guards/logged-in.guard'
 
@@ -14,6 +15,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'login', component: LoginComponent, canActivate: [LoggedInGuard] },
+  { path: 'registro', component: SignupComponent, canActivate: [LoggedInGuard] },
   { path: '**', redirectTo: 'Home' },
 ]
 
