@@ -2,11 +2,13 @@ package com.ttps.backend.services.implementations;
 
 import com.ttps.backend.models.Categoria;
 import com.ttps.backend.models.Emprendimiento;
+import com.ttps.backend.models.Image;
 import com.ttps.backend.models.Manguito;
 import com.ttps.backend.models.Plan;
 import com.ttps.backend.models.Post;
 import com.ttps.backend.models.RedSocial;
 import com.ttps.backend.repositories.EmprendimientoRepo;
+import com.ttps.backend.repositories.ImageRepo;
 import com.ttps.backend.repositories.ManguitoRepo;
 import com.ttps.backend.repositories.PlanRepo;
 import com.ttps.backend.repositories.PostRepo;
@@ -35,6 +37,7 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
     private final PlanRepo planRepo;
     private final RedSocialRepo redSocialRepo;
     private final CategoriaService categoriaService;
+    private final ImageRepo imageRepo;
 
     @Override
     public Emprendimiento get(Long id) {
@@ -83,10 +86,12 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
             emprendimiento.removePost(post);
         }
         log.info("Creando post con titulo:{}", post.getTitulo());
+        for (Image foto : post.getFotos()) {
+            imageRepo.save(foto);
+        }
         postRepo.save(post);
         log.info("Agregar post con titulo:{} al emprendimiento con id:{}", post.getTitulo(), id);
         if (emprendimiento != null) {
-
             emprendimiento.addPost(post);
             return true;
         }
