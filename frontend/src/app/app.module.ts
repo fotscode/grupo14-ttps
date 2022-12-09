@@ -20,7 +20,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms'
 import { FormsModule } from '@angular/forms';
-import { SignupComponent } from './components/signup/signup.component'
+import { SignupComponent } from './components/signup/signup.component';
+import { DonateComponent } from './components/donate/donate.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SignupComponent } from './components/signup/signup.component'
     NavigationHeaderComponent,
     ContactFooterComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    DonateComponent,
   ],
   imports: [
     BrowserModule,

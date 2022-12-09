@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
+import { DonateComponent } from './components/donate/donate.component'
+import { EditPostsComponentComponent } from './components/edit-posts-component/edit-posts-component.component'
 import { EmprendimientoComponentComponent } from './components/emprendimiento-component/emprendimiento-component.component'
 import { HomeComponentComponent } from './components/home-component/home-component.component'
 import { LoginComponent } from './components/login/login.component'
 import { SignupComponent } from './components/signup/signup.component'
+import { ViewPostsComponentComponent } from './components/view-posts-component/view-posts-component.component'
 import { AuthGuard } from './guards/auth.guard'
 import { LoggedInGuard } from './guards/logged-in.guard'
 
@@ -16,6 +19,9 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent, canActivate: [LoggedInGuard] },
   { path: 'registro', component: SignupComponent, canActivate: [LoggedInGuard] },
+  { path: 'editarPosts', component:EditPostsComponentComponent, canActivate:[AuthGuard]},
+  { path: 'verPosts', component:ViewPostsComponentComponent},
+  { path: 'donar', component:DonateComponent},
   { path: '**', redirectTo: 'Home' },
 ]
 
