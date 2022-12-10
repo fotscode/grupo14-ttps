@@ -1,5 +1,5 @@
 <section class="d-flex justify-content-center">
-  <button class="btn btn-primary" type="button" style="margin-top: 10px">
+  <button class="btn btn-primary" type="button" style="margin-top: 10px" (click)="openDialog(emptyPost)">
     Agregar post
   </button>
 </section>
@@ -70,7 +70,7 @@
               border-top-right-radius: 0; /*border-bottom-right-radius: 15px;*/
               border-bottom-left-radius: 15px;
             "
-            href="edit_post.html"
+            (click)="openDialog(post)"
             >Editar</a
           ><button
             (click)="deletePost(post.id)"

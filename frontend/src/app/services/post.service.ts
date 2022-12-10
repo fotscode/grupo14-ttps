@@ -18,4 +18,8 @@ export class PostService {
   deletePost(id: number) {
     return this.http.delete<PostResponse>(this.URL + '/emprendimiento/post/delete/' + id)
   }
+
+  updatePost(post: Post) {
+    return this.http.put<PostResponse>(this.URL + '/emprendimiento/post/update/', post)
+  }
 }

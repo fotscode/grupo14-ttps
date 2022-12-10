@@ -22,6 +22,10 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './components/signup/signup.component';
 import { DonateComponent } from './components/donate/donate.component';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
+import { PostsDialog } from './components/edit-posts-component/posts-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +40,7 @@ import { DonateComponent } from './components/donate/donate.component';
     LoginComponent,
     SignupComponent,
     DonateComponent,
+    PostsDialog
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,7 @@ import { DonateComponent } from './components/donate/donate.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
+    CommonModule,
   ],
   providers: [
     AuthGuard,
@@ -54,6 +60,9 @@ import { DonateComponent } from './components/donate/donate.component';
       useClass: TokenInterceptorService,
       multi: true,
     },
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-AR' }
   ],
   bootstrap: [AppComponent]
 })
