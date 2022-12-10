@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,6 +63,21 @@ public class UserController {
                                 .statusCode(HttpStatus.CREATED.value())
                                 .path("/api/user/save")
                                 .build());
+    }
+
+    @GetMapping("/user/roles")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<Response> listRoles(){
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .data(Map.of("roles", userService.getUser(user).getRoles()))
+                        .message("Roles retornados")
+                        .status(HttpStatus.OK)
+                        .statusCode(HttpStatus.OK.value())
+                        .path("/api/user/roles")
+                        .build());
     }
 
     @PostMapping("/role/save")
@@ -126,6 +142,7 @@ public class UserController {
                                 .path("/api/token/refresh")
                                 .build());
     }
+    
 }
 
 @Data
