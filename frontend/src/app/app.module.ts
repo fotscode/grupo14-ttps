@@ -26,6 +26,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { PostsDialog } from './components/edit-posts-component/posts-dialog.component';
+import { CategoriesComponent } from './components/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PostsDialog } from './components/edit-posts-component/posts-dialog.comp
     LoginComponent,
     SignupComponent,
     DonateComponent,
-    PostsDialog
+    PostsDialog,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,

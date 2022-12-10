@@ -36,8 +36,8 @@
         <li *ngIf="isLogged()" class="nav-item">
           <a class="nav-link" routerLink="/editarPosts">Posts</a>
         </li>
-        <li *ngIf="isLogged()" class="nav-item">
-          <a class="nav-link" href="editar_etiquetas.html">Etiquetas</a>
+        <li *ngIf="isLogged() && checkAdmin() && isAdmin" class="nav-item">
+          <a class="nav-link" routerLink="/etiquetas">Etiquetas</a>
         </li>
       </ul>
       <a

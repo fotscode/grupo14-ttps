@@ -13,6 +13,9 @@ export class NavigationHeaderComponent {
     private snackBar: MatSnackBar
   ) {}
 
+  wasLoggedIn: Boolean = false
+  isAdmin: Boolean = false
+
   isLogged() {
     return this.authService.loggedIn()
   }
@@ -20,5 +23,21 @@ export class NavigationHeaderComponent {
   logOut() {
     this.authService.logOut()
     this.snackBar.open('Se ha cerrado sesion', void 0, { duration: 3000 })
+    this.wasLoggedIn = false
+    this.isAdmin = false
+  }
+
+  ngOnInit(): void {}
+
+  checkAdmin() {
+    if (this.wasLoggedIn != this.isLogged()) {
+      this.wasLoggedIn = this.isLogged()
+      this.authService.getRoles().subscribe((res: any) => {
+        console.log(res.data.roles)
+        this.isAdmin =
+          res.data.roles.filter((r: any) => r.name == 'ROLE_ADMIN').length > 0
+      })
+    }
+    return true
   }
 }
