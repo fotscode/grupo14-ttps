@@ -53,7 +53,6 @@ export class EditPostsComponentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Post) => {
       if (result) {
-        console.log(result)
         this.postService.updatePost(result).subscribe(
           (res) => {
             this.posts = this.posts.filter((post) => post.id !== result.id)

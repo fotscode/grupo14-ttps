@@ -33,7 +33,6 @@ export class NavigationHeaderComponent {
     if (this.wasLoggedIn != this.isLogged()) {
       this.wasLoggedIn = this.isLogged()
       this.authService.getRoles().subscribe((res: any) => {
-        console.log(res.data.roles)
         this.isAdmin =
           res.data.roles.filter((r: any) => r.name == 'ROLE_ADMIN').length > 0
       })
