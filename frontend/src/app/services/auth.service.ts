@@ -7,6 +7,7 @@ import { LoginUser } from '../interfaces/LoginUser';
 import { TokenResponse } from '../interfaces/responses/TokenResponse';
 import { User } from '../interfaces/User';
 import { SignupResponse } from '../interfaces/responses/SignupResponse';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,8 @@ export class AuthService {
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
     this.router.navigate(['/login'])
+  }
+  getRoles():any {
+    return this.http.get(this.URL + '/user/roles')
   }
 }
