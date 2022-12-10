@@ -1,1 +1,92 @@
-<p>categories works!</p>
+<section class="py-5">
+  <div class="container py-5">
+    <div class="row mb-5">
+      <div class="col-md-8 col-xl-6 text-center mx-auto">
+        <h2 class="fw-bold text-white">Editar categorias</h2>
+      </div>
+    </div>
+    <section></section>
+    <div
+      *ngFor="let category of categories"
+      class="d-flex justify-content-center"
+      style="margin-bottom: 15px"
+    >
+      <div class="card" style="height: 100px; background: none">
+        <div
+          class="card-body d-flex justify-content-between"
+          style="height: 82.391px; background: rgb(45, 54, 56)"
+        >
+          <div>
+            <input
+              type="text"
+              style="border-radius: 10px; padding-left: 10px"
+              [(ngModel)]="category.nombre"
+            /><small class="form-text">Nombre de categoria</small>
+          </div>
+          <div
+            class="btn-group"
+            role="group"
+            style="margin-left: 30px; height: 100%"
+          >
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="saveCategory(category)"
+            >
+              Guardar</button
+            ><button
+              class="btn btn-primary"
+              type="button"
+              (click)="deleteCategory(category.id)"
+              style="border: none; background: rgb(220, 53, 69)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="-32 0 512 512"
+                width="1em"
+                height="1em"
+                fill="currentColor"
+              >
+                <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+                <path
+                  d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128H416L394.8 466.1z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d-flex justify-content-center"
+      style="margin-bottom: 15px"
+    >
+      <div
+        class="w-50 card d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center justify-content-xxl-center align-items-xxl-center"
+        (click)="addEmptyCategory()"
+        style="
+          background: rgb(20, 74, 30);
+          --bs-body-bg: #2d2c38;
+          height: 100.3906px;
+          text-align: center;
+          cursor:pointer
+        "
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="-32 0 512 512"
+          width="1em"
+          height="1em"
+          fill="currentColor"
+          class="fs-1"
+          style="color: rgb(25, 245, 170)"
+        >
+          <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+          <path
+            d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"
+          ></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
