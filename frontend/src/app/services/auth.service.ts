@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router'
-import * as moment from 'moment'
 import { environment } from 'src/environments/environment'
 import { LoginUser } from '../interfaces/LoginUser';
 import { TokenResponse } from '../interfaces/responses/TokenResponse';
 import { User } from '../interfaces/User';
 import { SignupResponse } from '../interfaces/responses/SignupResponse';
-import { Observable } from 'rxjs';
+import { RoleResponse } from '../interfaces/responses/RoleResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +37,6 @@ export class AuthService {
     this.router.navigate(['/login'])
   }
   getRoles():any {
-    return this.http.get(this.URL + '/user/roles')
+    return this.http.get<RoleResponse>(this.URL + '/user/roles')
   }
 }
