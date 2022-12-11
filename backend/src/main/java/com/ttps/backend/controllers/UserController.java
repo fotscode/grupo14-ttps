@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserService userService;
     private final JWTFactory jwtFactory;
