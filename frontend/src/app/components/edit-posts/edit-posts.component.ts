@@ -26,7 +26,8 @@ export class EditPostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe((res) => {
-      this.posts = res.data.posts
+      if (res.data.posts)
+        this.posts = res.data.posts
       this.loading = false
     })
   }
@@ -49,7 +50,8 @@ export class EditPostsComponent implements OnInit {
         this.postService.updatePost(result).subscribe(
           (res) => {
             this.posts = this.posts.filter((post) => post.id !== result.id)
-            this.posts.push(result)
+            if (res.data.post)
+              this.posts.push(res.data.post)
           },
           (err) => {
             this.ngOnInit()
