@@ -1,34 +1,212 @@
-<section class="d-flex justify-content-center align-items-baseline align-content-around justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center" style="margin: 20px 0 0 0;"><input type="text" style="margin: 0 20px;padding: 15px 20px;" placeholder="/telescopio-personal" /><input type="url" style="margin: 0 20px;padding: 15px 20px;" placeholder="**************" /></section>
-<section class="py-5" style="margin: 0px;/*padding: 0px 0px;*/padding-top: 0rem !important;height: 672.344px;">
-    <div class="container d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center py-5" style="width: 100%;">
-        <div class="d-xxl-flex justify-content-xxl-center photo-card" style="height: 586.359px;padding: 0px;margin: 0px;width: 80%;max-width: 1500px;">
-            <div class="photo-background" style="background-image: url('product-aeon-feature.jpg');"></div>
-            <div class="d-flex flex-column justify-content-between photo-details">
-                <div>
-                    <h1>Telescopio personal</h1>
-                    <p style="/*height: 103.938px;*/">Es un modelo portable para los amantes de los astros. Gracias a ser liviano se puede llevar en todos lados.<br /></p>
-                    <div style="width: 518.406px;">
-                        <fieldset class="d-flex flex-column justify-content-around" style="height: 80px;">
-                            <div class="text-start d-flex justify-content-start custom-control custom-checkbox custom-control-inline" style="height: 30px;"><input id="customCheckInline1" class="custom-control-input" type="checkbox" style="width: 30px;height: 30px;padding: 10px;" checked disabled /><label class="form-label custom-control-label" for="customCheckInline1" style="position: static;display: inline;overflow: hidden;height: 30px;border-color: rgb(255,255,255);padding: 0 10px;font-size: 17px;">Mostrar top de donadores</label></div>
-                            <div class="text-start d-flex justify-content-start custom-control custom-checkbox custom-control-inline" style="height: 30px;"><input id="customCheckInline-1" class="custom-control-input" type="checkbox" style="width: 30px;height: 30px;padding: 10px;" checked disabled /><label class="form-label custom-control-label" for="customCheckInline1" style="position: static;display: inline;overflow: hidden;height: 30px;padding: 0 10px;font-size: 17px;">Mostrar top de manguitos recibidos</label></div>
-                        </fieldset>
-                    </div>
-                    <div style="margin: 10px 0 0 0;">
-                        <p><strong>Twitter: </strong><span>https://twitter.com/telescopio-personal</span></p>
-                        <p><strong>Youtube: </strong><span>https://youtube.com/channel/telescopio-personal</span></p>
-                        <p><strong>Facebook: </strong><span>https://facebook.com/telescopio-personal</span></p>
-                    </div>
-                    <div class="photo-tags" style="margin: 10px 0;">
-                        <div>
-                            <div class="selectgroup selectgroup-pills"><label class="selectgroup-item"><input class="selectgroup-input" type="checkbox" name="value" value="HTML" checked /><span class="selectgroup-button">Tecnologia</span></label><label class="selectgroup-item"><input class="selectgroup-input" type="checkbox" name="value" value="CSS" checked /><span class="selectgroup-button">Aire libre</span></label></div>
-                        </div>
-                    </div>
-                </div>
-                <section class="d-flex d-xxl-flex justify-content-start align-self-start align-items-xxl-end" style="width: 100%;"><a class="btn btn-primary d-xxl-flex justify-content-xxl-start align-items-xxl-start" role="button" href="editar_emprendimiento.html">Editar producto</a></section>
-            </div>
-        </div>
-    </div>
+<section
+  class="d-flex justify-content-center align-items-baseline align-content-around justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center"
+  style="margin: 20px 0 0 0"
+>
+  <span class="text-white fw-bold h4" for="dominio">Dominio:</span>
+
+  <input
+    type="text"
+    name="dominio"
+    style="margin: 0 20px; padding: 15px 20px"
+    [disabled]="!this.editMode"
+    [(ngModel)]="this.emprendimiento.domainUrl"
+  />
 </section>
-<section class="d-inline-flex flex-row justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center align-items-xxl-center" style="margin-bottom: 50px;width: 100%;">
-    <div class="d-flex justify-content-evenly" style="width: 80%;max-width: 1400px;"><a class="btn btn-primary d-xxl-flex justify-content-xxl-start align-items-xxl-start" role="button" href="editar_posts.html">Editar posteos</a><a class="btn btn-primary d-xxl-flex justify-content-xxl-start align-items-xxl-start" role="button" href="editar_pagos.html">Editar Pagos</a><a class="btn btn-primary d-xxl-flex justify-content-xxl-start align-items-xxl-start" role="button" href="lista_manguitos.html">Ver Pagos</a></div>
+<section
+  style="margin: 0px; /*padding: 0px 0px;*/ padding-top: 0rem !important"
+>
+  <div
+    class="container d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center py-5"
+    style="width: 100%"
+  >
+    <div
+      class="d-xxl-flex justify-content-xxl-center photo-card"
+      style="padding: 0px; margin: 0px; width: 80%; max-width: 1500px"
+    >
+      <div
+        class="photo-background"
+        [ngClass]="this.editMode ? 'borders' : 'w-100'"
+        style="overflow: hidden"
+        (click)="enterpriseImg.click()"
+      >
+        <img
+          src="data:image/png;base64,{{ emprendimiento.imagen }}"
+          class="w-100"
+          alt=""
+        />
+        <input
+          hidden
+          (change)="onFileSelected()"
+          #enterpriseImg
+          type="file"
+          id="enterpriseImg"
+        />
+      </div>
+
+      <div class="d-flex flex-column justify-content-between photo-details">
+        <div>
+          <h1 *ngIf="!this.editMode">{{ emprendimiento.nombre }}</h1>
+          <div *ngIf="this.editMode">
+            <span class="text-white">Nombre:</span>
+            <input
+              type="text"
+              name="nombre"
+              [(ngModel)]="emprendimiento.nombre"
+            />
+            <span class="text-white">Descripcion:</span>
+            <input
+              type="text"
+              name="descripcion"
+              [(ngModel)]="emprendimiento.descripcion"
+            />
+          </div>
+          <p *ngIf="!this.editMode" style="/*height: 103.938px;*/">
+            {{ emprendimiento.descripcion }}
+          </p>
+          <div style="width: 518.406px">
+            <fieldset
+              class="d-flex flex-column justify-content-around"
+              style="height: 80px"
+            >
+              <div
+                class="text-start d-flex justify-content-start custom-control custom-checkbox custom-control-inline"
+                style="height: 30px"
+              >
+                <input
+                  id="customCheckInline1"
+                  class="custom-control-input"
+                  type="checkbox"
+                  style="width: 30px; height: 30px; padding: 10px"
+                  [(ngModel)]="emprendimiento.filterByDonations"
+                  [checked]="emprendimiento.filterByDonations"
+                  [disabled]="!isEditMode()"
+                /><label
+                  class="form-label custom-control-label"
+                  for="customCheckInline1"
+                  style="
+                    position: static;
+                    display: inline;
+                    overflow: hidden;
+                    height: 30px;
+                    border-color: rgb(255, 255, 255);
+                    padding: 0 10px;
+                    font-size: 17px;
+                  "
+                  >Mostrar top de donadores</label
+                >
+              </div>
+              <div
+                class="text-start d-flex justify-content-start custom-control custom-checkbox custom-control-inline"
+                style="height: 30px"
+              >
+                <input
+                  id="customCheckInline-1"
+                  class="custom-control-input"
+                  type="checkbox"
+                  style="width: 30px; height: 30px; padding: 10px"
+                  [(ngModel)]="emprendimiento.filterByManguitos"
+                  [checked]="emprendimiento.filterByManguitos"
+                  [disabled]="!isEditMode()"
+                /><label
+                  class="form-label custom-control-label"
+                  for="customCheckInline1"
+                  style="
+                    position: static;
+                    display: inline;
+                    overflow: hidden;
+                    height: 30px;
+                    padding: 0 10px;
+                    font-size: 17px;
+                  "
+                  >Mostrar top de manguitos recibidos</label
+                >
+              </div>
+            </fieldset>
+          </div>
+          <div *ngIf="!this.editMode" style="margin: 10px 0 0 0">
+            <p *ngFor="let red of emprendimiento.redesSociales">
+              <strong>{{ red.nombre }}: </strong><span>{{ red.url }}</span>
+            </p>
+          </div>
+          <div *ngIf="this.editMode" class="d-flex flex-column mb-2">
+            <div
+              *ngFor="let red of emprendimiento.redesSociales; let i=index"
+              class="row gap-2 mb-2 w-100"
+            >
+              <div class="row">
+                <span class="text-white col">Nombre</span>
+                <span class="text-white col">Url</span>
+              </div>
+              <input type="text" class="col" [(ngModel)]="red.nombre" />
+              <input type="text" class="col" [(ngModel)]="red.url" />
+              <button type="button" class="btn btn-danger" (click)="this.emprendimiento.redesSociales.splice(i,1)">Borrar</button>
+            </div>
+            <div class="mb-3">
+              <button type="button" (click)="agregarRed()" class="btn btn-primary">Agregar red</button>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 mb-5">
+            <div
+              *ngFor="let categoria of getCategorias()"
+              (click)="addCategoria(categoria)"
+            >
+              <span
+                class="px-2 py-1 rounded-pill text-white"
+                [ngClass]="
+                  isSelected(categoria) ? 'bg-primary' : 'bg-secondary'
+                "
+                >{{ categoria.nombre }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <section
+          class="d-flex d-xxl-flex justify-content-start align-self-start align-items-xxl-end gap-3"
+          style="width: 100%"
+        >
+          <a
+            class="btn btn-primary d-xxl-flex justify-content-xxl-start align-items-xxl-start"
+            role="button"
+            (click)="toggleEditMode()"
+            ><span *ngIf="!this.editMode">Editar producto</span
+            ><span *ngIf="this.editMode">Guardar</span>
+          </a>
+          <a
+            class="btn btn-danger"
+            role="button"
+            *ngIf="this.editMode"
+            (click)="cancelEdit()"
+            >Cancelar</a
+          >
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+<section
+  class="d-inline-flex flex-row justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center align-items-xxl-center"
+  style="margin-bottom: 50px; width: 100%"
+>
+  <div
+    class="d-flex justify-content-evenly"
+    style="width: 80%; max-width: 1400px"
+  >
+    <a
+      class="btn btn-primary d-xxl-flex justify-content-xxl-start align-items-xxl-start"
+      role="button"
+      href="editar_posts.html"
+      >Editar posteos</a
+    ><a
+      class="btn btn-primary d-xxl-flex justify-content-xxl-start align-items-xxl-start"
+      role="button"
+      href="editar_pagos.html"
+      >Editar Pagos</a
+    ><a
+      class="btn btn-primary d-xxl-flex justify-content-xxl-start align-items-xxl-start"
+      role="button"
+      href="lista_manguitos.html"
+      >Ver Pagos</a
+    >
+  </div>
 </section>

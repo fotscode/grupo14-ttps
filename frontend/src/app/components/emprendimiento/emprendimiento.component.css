@@ -1,0 +1,8 @@
+.borders{
+  border-style: groove !important;
+  border: 27px solid rgb(55,99,244);
+}
+
+:disabled{
+  background:#222;
+}
