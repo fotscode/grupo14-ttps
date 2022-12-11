@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Emprendimiento } from '../interfaces/Emprendimiento';
 import { EmprendimientoResponse } from '../interfaces/responses/EmprendimientosResponse';
 
 @Injectable({
@@ -15,5 +16,17 @@ export class EmprendimientosService {
   }
   getEmprendimiento(id:number){
     return this.http.get<EmprendimientoResponse>(this.URL+"/emprendimiento/get/"+id)
+  }
+
+  getEmprendimientoByDomain(domainUrl:string){
+    return this.http.get<EmprendimientoResponse>(this.URL+"/emprendimiento/get/domain/"+domainUrl)
+  }
+
+  getEmprendimientoWithJWT(){
+    return this.http.get<EmprendimientoResponse>(this.URL+"/emprendimiento/get")
+  }
+
+  updateEmprendimiento(emprendimiento:Emprendimiento){
+    return this.http.put<EmprendimientoResponse>(this.URL+"/emprendimiento/update",emprendimiento)
   }
 }

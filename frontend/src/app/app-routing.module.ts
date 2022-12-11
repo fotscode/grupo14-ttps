@@ -15,7 +15,7 @@ import { LoggedInGuard } from './guards/logged-in.guard'
 const routes: Routes = [
   { path: 'Home', component: HomeComponent },
   {
-    path: 'miEmprendimiento',
+    path: 'emprendimiento/:domain',
     component: EmprendimientoComponent,
     canActivate: [AuthGuard],
   },

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { Router } from '@angular/router'
 import { AuthService } from 'src/app/services/auth.service'
+import { EmprendimientosService } from 'src/app/services/emprendimientos.service'
 
 @Component({
   selector: 'app-navigation-header',
@@ -10,7 +12,9 @@ import { AuthService } from 'src/app/services/auth.service'
 export class NavigationHeaderComponent {
   constructor(
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private emprendimientoService: EmprendimientosService,
+    private router:Router
   ) {}
 
   wasLoggedIn: Boolean = false
@@ -38,5 +42,14 @@ export class NavigationHeaderComponent {
       })
     }
     return true
+  }
+
+  navigateEmprendimiento() {
+    this.emprendimientoService.getEmprendimientoWithJWT().subscribe(
+      (res: any) => {
+        this.router.navigate(['/emprendimiento', res.data.emprendimiento.domainUrl])
+
+      })
+    console.log('navigate to emprendimiento')
   }
 }

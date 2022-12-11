@@ -29,7 +29,7 @@
     <div id="navcol-1" class="collapse navbar-collapse">
       <ul class="navbar-nav mx-auto">
         <li *ngIf="isLogged()" class="nav-item">
-          <a class="nav-link" routerLink="/miEmprendimiento"
+          <a class="nav-link" (click)="navigateEmprendimiento()"
             >Mi emprendimiento</a
           >
         </li>
