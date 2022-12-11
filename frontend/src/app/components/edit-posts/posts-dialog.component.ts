@@ -22,7 +22,7 @@ export class PostsDialog {
     return this.editar
   }
 
-  onFileSelected(index:any) {
+  onFileSelected(index:number) {
     if (index==-1){
       this.data.fotos.push({ image: '' })
       index=this.data.fotos.length-1

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Categoria } from '../interfaces/Categoria';
 import { CategoriasResponse } from '../interfaces/responses/CategoriasResponse';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class CategoriesService {
     return this.http.get<CategoriasResponse>(this.URL+"/categoria/list")
   }
 
-  saveCategories(category:any){
+  saveCategories(category:Categoria){
     return this.http.put<CategoriasResponse>(this.URL+"/categoria/update",category)
   }
 
