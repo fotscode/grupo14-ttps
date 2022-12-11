@@ -10,14 +10,7 @@ import { PostsDialog } from './posts-dialog.component'
   styleUrls: ['./edit-posts.component.css'],
 })
 export class EditPostsComponent implements OnInit {
-  posts: Post[] = [
-    {
-      id: 1,
-      titulo: 'Post 1',
-      descripcion: 'Contenido del post 1',
-      fotos: [{ id: 1, image: 'https://picsum.photos/200/300' }],
-    },
-  ]
+  posts: Post[] = []
 
   emptyPost: Post ={
     titulo: '',
