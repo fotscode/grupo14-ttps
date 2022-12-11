@@ -2,27 +2,27 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { CategoriesComponent } from './components/categories/categories.component'
 import { DonateComponent } from './components/donate/donate.component'
-import { EditPostsComponentComponent } from './components/edit-posts-component/edit-posts-component.component'
-import { EmprendimientoComponentComponent } from './components/emprendimiento-component/emprendimiento-component.component'
-import { HomeComponentComponent } from './components/home-component/home-component.component'
+import { EditPostsComponent } from './components/edit-posts/edit-posts.component'
+import { EmprendimientoComponent } from './components/emprendimiento/emprendimiento.component'
+import { HomeComponent } from './components/home/home.component'
 import { LoginComponent } from './components/login/login.component'
 import { SignupComponent } from './components/signup/signup.component'
-import { ViewPostsComponentComponent } from './components/view-posts-component/view-posts-component.component'
+import { ViewPostsComponent } from './components/view-posts/view-posts.component'
 import { AdminGuard } from './guards/admin.guard'
 import { AuthGuard } from './guards/auth.guard'
 import { LoggedInGuard } from './guards/logged-in.guard'
 
 const routes: Routes = [
-  { path: 'Home', component: HomeComponentComponent },
+  { path: 'Home', component: HomeComponent },
   {
     path: 'miEmprendimiento',
-    component: EmprendimientoComponentComponent,
+    component: EmprendimientoComponent,
     canActivate: [AuthGuard],
   },
   { path: 'login', component: LoginComponent, canActivate: [LoggedInGuard] },
   { path: 'registro', component: SignupComponent, canActivate: [LoggedInGuard] },
-  { path: 'editarPosts', component:EditPostsComponentComponent, canActivate:[AuthGuard]},
-  { path: 'verPosts', component:ViewPostsComponentComponent},
+  { path: 'editarPosts', component:EditPostsComponent, canActivate:[AuthGuard]},
+  { path: 'verPosts', component:ViewPostsComponent},
   { path: 'donar', component:DonateComponent},
   { path: 'etiquetas', component:CategoriesComponent, canActivate:[AuthGuard,AdminGuard]},
   { path: '**', redirectTo: 'Home' },

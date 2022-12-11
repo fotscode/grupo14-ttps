@@ -5,11 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { HomeComponentComponent } from './components/home-component/home-component.component';
-import { EmprendimientoComponentComponent } from './components/emprendimiento-component/emprendimiento-component.component';
-import { EditPostsComponentComponent } from './components/edit-posts-component/edit-posts-component.component';
-import { ViewPostsComponentComponent } from './components/view-posts-component/view-posts-component.component';
-import { EditEmprendimientoComponentComponent } from './components/edit-emprendimiento-component/edit-emprendimiento-component.component';
+import { HomeComponent } from './components/home/home.component';
+import { EmprendimientoComponent } from './components/emprendimiento/emprendimiento.component';
+import { EditPostsComponent } from './components/edit-posts/edit-posts.component';
+import { ViewPostsComponent } from './components/view-posts/view-posts.component';
+import { EditEmprendimientoComponent } from './components/edit-emprendimiento/edit-emprendimiento.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
 import { ContactFooterComponent } from './components/contact-footer/contact-footer.component';
 import { MaterialModule } from './material/material.module';
@@ -25,17 +25,17 @@ import { DonateComponent } from './components/donate/donate.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-import { PostsDialog } from './components/edit-posts-component/posts-dialog.component';
+import { PostsDialog } from './components/edit-posts/posts-dialog.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponentComponent,
-    EmprendimientoComponentComponent,
-    EditPostsComponentComponent,
-    ViewPostsComponentComponent,
-    EditEmprendimientoComponentComponent,
+    HomeComponent,
+    EmprendimientoComponent,
+    EditPostsComponent,
+    ViewPostsComponent,
+    EditEmprendimientoComponent,
     NavigationHeaderComponent,
     ContactFooterComponent,
     LoginComponent,

@@ -6,10 +6,10 @@ import { PostsDialog } from './posts-dialog.component'
 
 @Component({
   selector: 'app-edit-posts-component',
-  templateUrl: './edit-posts-component.component.html',
-  styleUrls: ['./edit-posts-component.component.css'],
+  templateUrl: './edit-posts.component.html',
+  styleUrls: ['./edit-posts.component.css'],
 })
-export class EditPostsComponentComponent implements OnInit {
+export class EditPostsComponent implements OnInit {
   posts: Post[] = [
     {
       id: 1,

@@ -5,10 +5,10 @@ import { EmprendimientosService } from 'src/app/services/emprendimientos.service
 
 @Component({
   selector: 'app-home-component',
-  templateUrl: './home-component.component.html',
-  styleUrls: ['./home-component.component.css']
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponentComponent {
+export class HomeComponent {
     faSearch=faSearch;
     emprendimientos: Emprendimiento[]=[]
     loading=true
