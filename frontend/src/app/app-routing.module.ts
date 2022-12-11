@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoggedInGuard] },
   { path: 'registro', component: SignupComponent, canActivate: [LoggedInGuard] },
   { path: 'editarPosts', component:EditPostsComponent, canActivate:[AuthGuard]},
-  { path: 'verPosts', component:ViewPostsComponent},
+  { path: 'posts/:domain', component:ViewPostsComponent},
   { path: 'donar', component:DonateComponent},
   { path: 'etiquetas', component:CategoriesComponent, canActivate:[AuthGuard,AdminGuard]},
   { path: '**', redirectTo: 'Home' },
