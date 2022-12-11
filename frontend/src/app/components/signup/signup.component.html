@@ -1,5 +1,4 @@
 <section class="py-5">
-
   <form (submit)="signUp()">
     <div class="row">
       <div class="container py-5 col">
@@ -10,27 +9,29 @@
           </div>
         </div>
         <div class="row d-flex justify-content-center">
-          <div class="w-100" style="max-width:800px">
+          <div class="w-100" style="max-width: 800px">
             <div class="card bg-dark">
               <div
-                class="card-body text-center d-flex flex-column
-                align-items-center">
+                class="card-body text-center d-flex flex-column align-items-center"
+              >
                 <div
-                  class="bs-icon-xl bs-icon-circle bs-icon-primary shadow
-                  bs-icon my-4">
+                  class="bs-icon-xl bs-icon-circle bs-icon-primary shadow bs-icon my-4"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="1em"
                     height="1em"
                     fill="currentColor"
                     viewBox="0 0 16 16"
-                    class="bi bi-person">
+                    class="bi bi-person"
+                  >
                     <path
                       d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2
                       0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6
                       4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68
                       10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83
-                      1.418-.832 1.664h10z"></path>
+                      1.418-.832 1.664h10z"
+                    ></path>
                   </svg>
                 </div>
                 <div class="mb-3">
@@ -40,7 +41,7 @@
                     name="name"
                     placeholder="Nombre y Apellido"
                     [(ngModel)]="this.user.fullName"
-                    />
+                  />
                 </div>
                 <div class="mb-3">
                   <input
@@ -49,7 +50,7 @@
                     name="email"
                     placeholder="Email"
                     [(ngModel)]="this.user.email"
-                    />
+                  />
                 </div>
                 <div class="mb-3">
                   <input
@@ -58,7 +59,7 @@
                     name="password"
                     [(ngModel)]="this.user.password"
                     placeholder="Contraseña"
-                    />
+                  />
                 </div>
                 <div class="mb-3">
                   <input
@@ -67,7 +68,7 @@
                     name="password"
                     [(ngModel)]="this.repeatPassword"
                     placeholder="Repetir contraseña"
-                    />
+                  />
                 </div>
               </div>
             </div>
@@ -82,38 +83,48 @@
           </div>
         </div>
         <div class="row d-flex justify-content-center">
-          <div class="w-100" style="max-width:800px">
+          <div class="w-100" style="max-width: 800px">
             <div class="card bg-dark">
               <div
-                class="card-body text-center d-flex flex-column
-                align-items-center">
+                class="card-body text-center d-flex flex-column align-items-center"
+              >
                 <div
-                  class="bs-icon-xl bs-icon-circle bs-icon-primary shadow
-                  bs-icon my-4">
+                  class="bs-icon-xl bs-icon-circle bs-icon-primary shadow bs-icon my-4"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="1em"
                     height="1em"
                     fill="currentColor"
                     viewBox="0 0 16 16"
-                    class="bi bi-person">
+                    class="bi bi-person"
+                  >
                     <path
                       d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2
                       0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6
                       4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68
                       10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83
-                      1.418-.832 1.664h10z"></path>
+                      1.418-.832 1.664h10z"
+                    ></path>
                   </svg>
                 </div>
-
                 <div class="mb-3">
                   <input
                     class="form-control"
-                    type="url"
+                    type="text"
+                    name="nombreEmprendimiento"
+                    placeholder="Nombre"
+                    [(ngModel)]="this.user.emprendimiento.nombre"
+                  />
+                </div>
+                <div class="mb-3">
+                  <input
+                    class="form-control"
+                    type="text"
                     name="domainUrl"
-                    placeholder="Url"
+                    placeholder="Dominio de manguito a usar"
                     [(ngModel)]="this.user.emprendimiento.domainUrl"
-                    />
+                  />
                 </div>
                 <div class="mb-3">
                   <input
@@ -122,36 +133,89 @@
                     name="Descripcion"
                     placeholder="Descripcion"
                     [(ngModel)]="this.user.emprendimiento.descripcion"
-                    />
+                  />
                 </div>
                 <div class="mb-3">
-                  <table class="tabletable-bordered">
-                    <tr>
-                      <th colspan="2">Añadir red social</th>
-                      <th width="150px"><button type="button"
-                          (click)="addRedSocial()" class="btn btn-primary">Add
-                          More</button></th>
-                    </tr>
-                    <tr *ngFor="let red of user.emprendimiento.redesSociales; let
-                      i=index" [formGroupName]="i">
-                      <td>
-                        Quantity :
-                        <input type="text" formControlName="qty"
-                          class="form-control">
-                      </td>
-                      <td>
-                        Price:
-                        <input type="text" formControlName="price"
-                          class="form-control">
-                      </td>
-                      <td>
-                        <button (click)="removeRedSocial(i)" class="btn
-                          btn-danger">Remove</button>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                  <img
+                    class="text-white"
+                    style="width: 150px; height: auto"
+                    src="data:image/png;base64,{{
+                      this.user.emprendimiento.imagen
+                    }}"
+                    alt="Imagen emprendimiento"
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-primary mx-5"
+                    color="primary"
+                    (click)="enterpriseImg.click()"
+                  >
+                    Agregar imagen
+                  </button>
 
+                  <input
+                    hidden
+                    (change)="onFileSelected()"
+                    #enterpriseImg
+                    type="file"
+                    id="enterpriseImg"
+                  />
+                </div>
+                <div class="mb-3">
+                  <p class="text-white">Categorias</p>
+                  <div class="d-flex gap-2">
+                    <div
+                      *ngFor="let categoria of categorias"
+                      (click)="
+                      addCategoria(categoria)
+                      "
+                      class="px-2 rounded-pill"
+                      [ngClass]="
+                        isSelected(categoria) ? 'bg-primary' : 'bg-secondary'
+                      "
+                    >
+                      <span class="text-white">{{ categoria.nombre }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <button
+                    (click)="this.addRedSocial()"
+                    type="button"
+                    class="btn btn-primary"
+                  >
+                    Agregar red social
+                  </button>
+                  <div
+                    *ngFor="
+                      let red of this.user.emprendimiento.redesSociales;
+                      let i = index
+                    "
+                    class="row gap-4 mt-3"
+                  >
+                    <input
+                      class="form-control col"
+                      type="text"
+                      name="nombreRed"
+                      placeholder="Nombre red social"
+                      [(ngModel)]="red.nombre"
+                    />
+                    <input
+                      class="form-control col"
+                      type="text"
+                      name="urlRed"
+                      placeholder="Url red social"
+                      [(ngModel)]="red.url"
+                    />
+                    <button
+                      type="button"
+                      (click)="this.removeRedSocial(i)"
+                      class="col-auto btn btn-danger"
+                    >
+                      Borrar red
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -160,9 +224,7 @@
       <div class="row justify-content-md-center">
         <div class="col col-lg-3">
           <div class="mb-3">
-            <button
-              class="btn btn-primary shadow d-block w-100"
-              type="submit">
+            <button class="btn btn-primary shadow d-block w-100" type="submit">
               Registrarse
             </button>
           </div>
@@ -174,5 +236,4 @@
       </div>
     </div>
   </form>
-
 </section>
