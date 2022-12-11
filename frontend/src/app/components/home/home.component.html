@@ -1,12 +1,12 @@
 
-<section class="d-flex flex-column">
+<section>
     <section class="d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center" style="/*max-width: 1190px;*/width: 100%;">
         <form class="d-flex justify-content-center align-items-center justify-content-xxl-center search-form" style="padding: 0 90px;/*max-width: 1190px;*/">
             <div class="input-group"><span class="input-group-text"><fa-icon [icon]="faSearch"></fa-icon></span><input class="form-control" type="text" placeholder="Estoy buscando por..." /><button class="btn btn-primary" type="button">Etiquetas ▾</button><button class="btn btn-light" type="button">Buscar</button></div>
         </form>
     </section>
-    <div  class=" row align-items-xxl-center" >
-        <div *ngFor="let emprendimiento of emprendimientos; index as i;first as isFirst"  class="col-xl container justify-content-xxl-center" style="width: 100%;padding: 0px;height: 320px;margin-top: 20px;">
+    <div  class=" row row-cols-3 align-items-xxl-center" >
+        <div *ngFor="let emprendimiento of emprendimientos; index as i;first as isFirst"  class="col container justify-content-xxl-center" style="width:45%;height: 320px;margin-top: 20px;">
             <div class="photo-card" style="height: 320px;padding: 0px;margin: 0 9px;margin-top: 0px;">
                 <div class="photo-background" style="height: 100%; overflow:hidden" > <img class="w-100" style="overflow: hidden !important" src="data:image/jpg;base64, {{emprendimiento.imagen}}"> </div>
                 <div class="photo-details">
@@ -14,8 +14,8 @@
                     <p style="height: 103.938px;">{{emprendimiento.descripcion}}<br /></p>
                     <div class="photo-tags">
                         <ul>
-                            <li><a href="/verPosts">ver posts</a></li>
-                            <li><a href="/donar">Donar</a></li>
+                          <li><a [routerLink]="['/posts',emprendimiento.domainUrl]">ver posts</a></li>
+                            <li><a routerLink="/donar">Donar</a></li>
                         </ul>
                         <div class="photo-tags" style="margin: 10px 0;">
                             <div>
@@ -30,7 +30,6 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="i%2 != 0" class="w-100"> Hola buenas</div>
         </div>
           
     </div>
