@@ -1,5 +1,6 @@
 package com.ttps.backend.controllers;
 
+import com.ttps.backend.models.Emprendimiento;
 import com.ttps.backend.models.Manguito;
 import com.ttps.backend.models.Response;
 import com.ttps.backend.services.EmprendimientoService;
@@ -77,6 +78,8 @@ public class ManguitoController {
     public ResponseEntity<Response> saveManguito(
             @PathVariable("idEmprendimiento") Long idEmprendimiento,
             @RequestBody Manguito manguito) {
+        Emprendimiento emprendimiento = emprendimientoService.get(idEmprendimiento);
+        manguito.setMonto(emprendimiento.getValorManguito());
         boolean wasSaved =
                 emprendimientoService.addManguitoToEmprendimiento(idEmprendimiento, manguito);
         HttpStatus status = wasSaved ? HttpStatus.CREATED : HttpStatus.NOT_FOUND;
