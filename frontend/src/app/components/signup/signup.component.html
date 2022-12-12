@@ -170,9 +170,7 @@
                       addCategoria(categoria)
                       "
                       class="px-2 rounded-pill"
-                      [ngClass]="
-                        isSelected(categoria) ? 'bg-primary' : 'bg-secondary'
-                      "
+                      [ngStyle]="{'background-color': isSelected(categoria)?categoria.color : 'rgb(108, 117, 125)'}"
                     >
                       <span class="text-white">{{ categoria.nombre }}</span>
                     </div>
