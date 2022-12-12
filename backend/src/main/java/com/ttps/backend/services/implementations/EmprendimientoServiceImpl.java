@@ -66,6 +66,7 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
     @Override
     public Emprendimiento update(Emprendimiento emprendimiento) {
         log.info("Actualizando emprendimiento con dominio:{}", emprendimiento.getDomainUrl());
+        emprendimiento.getPlanes().forEach(p-> planRepo.save(p));
         return emprendimientoRepo.save(emprendimiento);
     }
 
