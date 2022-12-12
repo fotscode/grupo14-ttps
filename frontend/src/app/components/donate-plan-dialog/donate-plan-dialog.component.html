@@ -1,0 +1,42 @@
+<div style="border: 1px solid rgb(55, 99, 244)">
+  <div
+    class="d-flex flex-column p-5 justify-content-between bg-dark text-white"
+    style="font-size: 1.5em"
+    mat-dialog-content
+  >
+    <div class="mb-4">
+      <strong>Nombre donador</strong>
+      <input
+        type="text"
+        class="w-100"
+        name="nombre"
+        [(ngModel)]="data.nombrePersona"
+      />
+    </div>
+    <div class="mb-4">
+      <strong>Fecha:</strong><span> {{ data.fecha.toLocaleDateString() }}</span>
+    </div>
+    <div class="mb-4">
+      <strong>Monto:</strong><span> {{ data.monto }}</span>
+    </div>
+    <div class="mb-4">
+      <strong>Contacto</strong>
+      <input
+        type="text"
+        class="w-100"
+        name="nombre"
+        [(ngModel)]="data.contacto"
+      />
+    </div>
+    <div class="d-flex flex-column mb-2">
+      <strong class="mb-2">Mensaje</strong>
+      <textarea matInput name="mensaje" [(ngModel)]="data.mensaje"></textarea>
+    </div>
+  </div>
+  <div class="gap-3 px-5 pb-5 bg-dark text-white py-3" mat-dialog-actions>
+    <button class="btn btn-primary" [mat-dialog-close]="data" cdkFocusInitial>
+      Ok
+    </button>
+    <button class="btn btn-danger" (click)="onNoClick()">Rechazar</button>
+  </div>
+</div>

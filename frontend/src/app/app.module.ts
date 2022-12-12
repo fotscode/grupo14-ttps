@@ -28,6 +28,8 @@ import { CommonModule } from '@angular/common';
 import { PostsDialog } from './components/edit-posts/posts-dialog.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { EditPagosComponent } from './components/edit-pagos/edit-pagos.component';
+import { DonateDialogComponent } from './components/donate-dialog/donate-dialog.component';
+import { DonatePlanDialogComponent } from './components/donate-plan-dialog/donate-plan-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { EditPagosComponent } from './components/edit-pagos/edit-pagos.component
     DonateComponent,
     PostsDialog,
     CategoriesComponent,
-    EditPagosComponent
+    EditPagosComponent,
+    DonateDialogComponent,
+    DonatePlanDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'editarPosts', component:EditPostsComponent, canActivate:[AuthGuard]},
   { path: 'posts/:domain', component:ViewPostsComponent},
   { path: 'editarPagos/:domain', component:EditPagosComponent, canActivate:[AuthGuard]},
-  { path: 'donar', component:DonateComponent},
+  { path: 'donar/:domain', component:DonateComponent},
   { path: 'etiquetas', component:CategoriesComponent, canActivate:[AuthGuard,AdminGuard]},
   { path: '**', redirectTo: 'Home' },
 ]
