@@ -27,6 +27,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { PostsDialog } from './components/edit-posts/posts-dialog.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { EditPagosComponent } from './components/edit-pagos/edit-pagos.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CategoriesComponent } from './components/categories/categories.componen
     SignupComponent,
     DonateComponent,
     PostsDialog,
-    CategoriesComponent
+    CategoriesComponent,
+    EditPagosComponent
   ],
   imports: [
     BrowserModule,

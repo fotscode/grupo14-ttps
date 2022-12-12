@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { CategoriesComponent } from './components/categories/categories.component'
 import { DonateComponent } from './components/donate/donate.component'
+import { EditPagosComponent } from './components/edit-pagos/edit-pagos.component'
 import { EditPostsComponent } from './components/edit-posts/edit-posts.component'
 import { EmprendimientoComponent } from './components/emprendimiento/emprendimiento.component'
 import { HomeComponent } from './components/home/home.component'
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'registro', component: SignupComponent, canActivate: [LoggedInGuard] },
   { path: 'editarPosts', component:EditPostsComponent, canActivate:[AuthGuard]},
   { path: 'posts/:domain', component:ViewPostsComponent},
+  { path: 'editarPagos/:domain', component:EditPagosComponent, canActivate:[AuthGuard]},
   { path: 'donar', component:DonateComponent},
   { path: 'etiquetas', component:CategoriesComponent, canActivate:[AuthGuard,AdminGuard]},
   { path: '**', redirectTo: 'Home' },
