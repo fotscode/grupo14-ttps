@@ -8,6 +8,7 @@ import { EmprendimientoComponent } from './components/emprendimiento/emprendimie
 import { HomeComponent } from './components/home/home.component'
 import { LoginComponent } from './components/login/login.component'
 import { SignupComponent } from './components/signup/signup.component'
+import { ViewPagosComponent } from './components/view-pagos/view-pagos.component'
 import { ViewPostsComponent } from './components/view-posts/view-posts.component'
 import { AdminGuard } from './guards/admin.guard'
 import { AuthGuard } from './guards/auth.guard'
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'editarPosts', component:EditPostsComponent, canActivate:[AuthGuard]},
   { path: 'posts/:domain', component:ViewPostsComponent},
   { path: 'editarPagos/:domain', component:EditPagosComponent, canActivate:[AuthGuard]},
+  { path: 'verPagos/:domain',component:ViewPagosComponent, canActivate:[AuthGuard]},
   { path: 'donar/:domain', component:DonateComponent},
   { path: 'etiquetas', component:CategoriesComponent, canActivate:[AuthGuard,AdminGuard]},
   { path: '**', redirectTo: 'Home' },

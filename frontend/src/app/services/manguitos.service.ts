@@ -12,7 +12,7 @@ export class ManguitosService {
   constructor(private http:HttpClient) { }
 
   getManguitos(){
-    return this.http.get(`${this.URL}/manguito/list`)
+    return this.http.get(`${this.URL}/list`)
   }
 
   saveManguito(manguito:Manguito,idEmp:number){

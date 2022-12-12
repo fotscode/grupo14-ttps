@@ -1,0 +1,47 @@
+<div class="p-5 d-flex justify-content-center align-items-center flex-column">
+  <button type="button" class="btn btn-primary mb-5" (click)="toggleTable()">
+    Ver <span *ngIf="manguitosVisible">pagos de planes</span
+    ><span *ngIf="!manguitosVisible">manguitos</span>
+  </button>
+  <table
+    id="tableComponent"
+    class="table table-bordered table-striped text-white table-dark"
+    *ngIf="manguitosVisible && manguitos"
+  >
+    <thead>
+      <tr class="text-center bg-primary">
+        <th *ngFor="let columna of columnasManguito">{{ columna }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let manguito of manguitos" class="text-center manguito">
+        <td>{{ manguito.nombrePersona }}</td>
+        <td>{{ getFecha(manguito.fecha) }}</td>
+        <td>{{ manguito.cantidad }}</td>
+        <td>
+          {{ manguito.monto * manguito.cantidad }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table
+    id="tableComponent"
+    class="table table-bordered table-striped text-white table-dark"
+    *ngIf="!manguitosVisible && pagosPlan"
+  >
+    <thead>
+      <tr class="text-center bg-primary">
+        <th *ngFor="let columna of columnasPagosPlan">{{ columna }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pago of pagosPlan" class="text-center pago">
+        <td>{{ pago.nombrePersona }}</td>
+        <td>{{ getFecha(pago.fecha) }}</td>
+        <td>{{ pago.monto }}</td>
+        <td>{{ pago.mensaje }}</td>
+        <td>{{ pago.contacto }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
