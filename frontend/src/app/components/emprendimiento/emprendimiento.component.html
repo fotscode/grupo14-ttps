@@ -27,7 +27,7 @@
         class="photo-background"
         [ngClass]="this.editMode ? 'borders' : 'w-100'"
         style="overflow: hidden"
-        (click)="enterpriseImg.click()"
+        (click)="this.editMode ? enterpriseImg.click() : ''"
       >
         <img
           src="data:image/png;base64,{{ emprendimiento.imagen }}"
