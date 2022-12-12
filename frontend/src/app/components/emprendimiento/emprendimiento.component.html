@@ -153,9 +153,7 @@
             >
               <span
                 class="px-2 py-1 rounded-pill text-white"
-                [ngClass]="
-                  isSelected(categoria) ? 'bg-primary' : 'bg-secondary'
-                "
+                [ngStyle]="{'background-color': isSelected(categoria)?categoria.color : 'rgb(108, 117, 125)'}"
                 >{{ categoria.nombre }}</span
               >
             </div>

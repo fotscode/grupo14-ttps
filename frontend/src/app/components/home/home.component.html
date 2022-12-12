@@ -1,53 +1,136 @@
-
 <section>
-    <section class="d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center" style="/*max-width: 1190px;*/width: 100%;">
-        <form class="d-flex justify-content-center align-items-center justify-content-xxl-center search-form" style="padding: 0 90px;/*max-width: 1190px;*/">
-            <div class="input-group"><span class="input-group-text"><fa-icon [icon]="faSearch"></fa-icon></span><input class="form-control" type="text" placeholder="Estoy buscando por..." /><button class="btn btn-primary" type="button">Etiquetas ▾</button><button class="btn btn-light" type="button">Buscar</button></div>
-        </form>
-    </section>
-    <div  class=" row row-cols-3 align-items-xxl-center" >
-        <div *ngFor="let emprendimiento of emprendimientos; index as i;first as isFirst"  class="col container justify-content-xxl-center" style="width:45%;height: 320px;margin-top: 20px;">
-            <div class="photo-card" style="height: 320px;padding: 0px;margin: 0 9px;margin-top: 0px;">
-                <div class="photo-background" style="height: 100%; overflow:hidden" > <img class="w-100" style="overflow: hidden !important" src="data:image/jpg;base64, {{emprendimiento.imagen}}"> </div>
-                <div class="photo-details">
-                    <h1>{{emprendimiento.nombre}}<br /></h1>
-                    <p style="height: 103.938px;">{{emprendimiento.descripcion}}<br /></p>
-                    <div class="photo-tags">
-                        <ul>
-                          <li><a [routerLink]="['/posts',emprendimiento.domainUrl]">ver posts</a></li>
-                            <li><a routerLink="/donar">Donar</a></li>
-                        </ul>
-                        <div class="photo-tags" style="margin: 10px 0;">
-                            <div>
-                                <div class="selectgroup selectgroup-pills">
-                                    <label *ngFor="let categoria of emprendimiento.categorias;index as i; first as isFirst"  class="selectgroup-item">
-                                        <input class="selectgroup-input" type="checkbox" name="value" value="HTML" checked />
-                                        <span class="selectgroup-button">{{categoria.nombre}}</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <section
+    class="d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center"
+    style="/*max-width: 1190px;*/ width: 100%"
+  >
+    <form
+      class="d-flex justify-content-center align-items-center justify-content-xxl-center search-form"
+      style="padding: 0 90px; /*max-width: 1190px;*/"
+    >
+      <div class="input-group">
+        <span class="input-group-text"
+          ><fa-icon [icon]="faSearch"></fa-icon></span
+        ><input
+          class="form-control"
+          type="text"
+          placeholder="Estoy buscando por..."
+        /><button class="btn btn-primary" type="button">Etiquetas ▾</button
+        ><button class="btn btn-light" type="button">Buscar</button>
+      </div>
+    </form>
+  </section>
+  <div class="row row-cols-3 align-items-xxl-center">
+    <div
+      *ngFor="
+        let emprendimiento of emprendimientos;
+        index as i;
+        first as isFirst
+      "
+      class="col container justify-content-xxl-center"
+      style="width: 45%; height: 320px; margin-top: 20px"
+    >
+      <div
+        class="photo-card"
+        style="height: 320px; padding: 0px; margin: 0 9px; margin-top: 0px"
+      >
+        <div class="photo-background" style="height: 100%; overflow: hidden">
+          <img
+            class="w-100"
+            style="overflow: hidden !important"
+            src="data:image/jpg;base64, {{ emprendimiento.imagen }}"
+          />
         </div>
-          
+        <div class="photo-details">
+          <h1>{{ emprendimiento.nombre }}<br /></h1>
+          <p style="height: 103.938px">
+            {{ emprendimiento.descripcion }}<br />
+          </p>
+          <div class="photo-tags">
+            <ul>
+              <li>
+                <a [routerLink]="['/posts', emprendimiento.domainUrl]"
+                  >ver posts</a
+                >
+              </li>
+              <li><a routerLink="/donar">Donar</a></li>
+            </ul>
+            <div class="photo-tags" style="margin: 10px 0">
+              <div>
+                <div class="selectgroup selectgroup-pills">
+                  <label
+                    *ngFor="
+                      let categoria of emprendimiento.categorias;
+                      index as i;
+                      first as isFirst
+                    "
+                    class="selectgroup-item"
+                  >
+                    <input
+                      class="selectgroup-input"
+                      type="checkbox"
+                      name="value"
+                      value="HTML"
+                      checked
+                    />
+                    <span
+                      [ngStyle]="{ 'background-color': categoria.color }"
+                      class="selectgroup-button"
+                      >{{ categoria.nombre }}</span
+                    >
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div *ngIf="loading">
-        <p style="color: white;">No hay emprendimientos para enseñar</p>
-    </div>
+  </div>
+  <div *ngIf="loading">
+    <p style="color: white">No hay emprendimientos para enseñar</p>
+  </div>
 </section>
-<section class="d-xxl-flex justify-content-xxl-center" style="text-align: center;margin-top: 25px;">
-    <nav class="text-secondary d-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center">
-        <ul class="pagination" style="/*background-color: red !important;*/--bs-pagination-disabled-bg: #27262e!important;--bs-pagination-disabled-color: white !important;">
-            <li class="page-item disabled" style="/*background-color: red;*/--bs-pagination-bg: red !important;"><a class="page-link" aria-label="Previous" href="#" style="border-top-left-radius: 5px;border-bottom-left-radius: 5px;"><span aria-hidden="true">«</span></a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">1</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">2</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">3</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">4</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">5</a></li>
-            <li class="page-item disabled"><a class="page-link" aria-label="Next" href="#" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px;"><span aria-hidden="true">»</span></a></li>
-        </ul>
-    </nav>
+<section
+  class="d-xxl-flex justify-content-xxl-center"
+  style="text-align: center; margin-top: 25px"
+>
+  <nav
+    class="text-secondary d-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center"
+  >
+    <ul
+      class="pagination"
+      style="
+        /*background-color: red !important;*/
+        --bs-pagination-disabled-bg: #27262e !important;
+        --bs-pagination-disabled-color: white !important;
+      "
+    >
+      <li
+        class="page-item disabled"
+        style="/*background-color: red;*/ --bs-pagination-bg: red !important"
+      >
+        <a
+          class="page-link"
+          aria-label="Previous"
+          href="#"
+          style="border-top-left-radius: 5px; border-bottom-left-radius: 5px"
+          ><span aria-hidden="true">«</span></a
+        >
+      </li>
+      <li class="page-item disabled"><a class="page-link" href="#">1</a></li>
+      <li class="page-item disabled"><a class="page-link" href="#">2</a></li>
+      <li class="page-item disabled"><a class="page-link" href="#">3</a></li>
+      <li class="page-item disabled"><a class="page-link" href="#">4</a></li>
+      <li class="page-item disabled"><a class="page-link" href="#">5</a></li>
+      <li class="page-item disabled">
+        <a
+          class="page-link"
+          aria-label="Next"
+          href="#"
+          style="border-top-right-radius: 5px; border-bottom-right-radius: 5px"
+          ><span aria-hidden="true">»</span></a
+        >
+      </li>
+    </ul>
+  </nav>
 </section>
-
