@@ -19,7 +19,7 @@ export class HomeComponent {
   pageNumber = 0
   cantidadPaginas = 0
   search = ''
-  categoriaBuscar = new FormControl('')
+  categoriaBuscar = ''
 
   constructor(
     private emprendimientosService: EmprendimientosService,
@@ -39,11 +39,8 @@ export class HomeComponent {
 
   getEmprendimientos(page: number) {
     this.pageNumber = page
-    const cat: string = this.categoriaBuscar.value
-      ? this.categoriaBuscar.value
-      : ''
     this.emprendimientosService
-      .getEmprendimientos(page, 2, cat, this.search)
+      .getEmprendimientos(page, 2, this.categoriaBuscar, this.search)
       .subscribe(
         (res) => {
           if (res.data.emprendimientos)
@@ -54,7 +51,7 @@ export class HomeComponent {
         }
       )
     this.emprendimientosService
-      .getEmprendimientosLength(cat, this.search)
+      .getEmprendimientosLength(this.categoriaBuscar, this.search)
       .subscribe((res: any) => {
         //TODO: fix
         this.cantidadPaginas = Math.ceil(res.data.cantidad / 2)

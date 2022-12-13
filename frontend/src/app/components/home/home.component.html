@@ -16,16 +16,14 @@
           placeholder="Estoy buscando por..."
         />
       </div>
-      <mat-form-field appearance="fill">
-        <mat-label>Categorias</mat-label>
-        <mat-select [formControl]="categoriaBuscar">
-          <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.nombre"
-            >{{ categoria.nombre }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Categorias
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a *ngFor="let categoria of categorias" class="dropdown-item" (click)="categoriaBuscar=categoria.nombre">{{categoria.nombre}}</a>
+        </div>
+      </div>
 
       <button
         class="btn btn-light"
