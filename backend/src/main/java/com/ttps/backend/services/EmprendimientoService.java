@@ -14,7 +14,9 @@ public interface EmprendimientoService {
 
     Emprendimiento get(String domainUrl);
 
-    Collection<Emprendimiento> list(int limit);
+    Collection<Emprendimiento> list(int limit, int page, String category, String search);
+
+    int getEmprendimientosCount(String category,String search);
 
     Emprendimiento create(Emprendimiento empredimiento);
 

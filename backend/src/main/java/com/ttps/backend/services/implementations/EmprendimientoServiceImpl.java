@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -52,9 +53,62 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
     }
 
     @Override
-    public Collection<Emprendimiento> list(int limit) {
+    public Collection<Emprendimiento> list(int limit, int page, String category, String search) {
         log.info("Obteniendo lista de emprendimientos");
-        return emprendimientoRepo.findAll(PageRequest.of(0, limit)).toList();
+        List<Emprendimiento> list =
+                emprendimientoRepo.findAll(PageRequest.of(page, limit)).toList();
+
+        return list.stream()
+                .filter(
+                        emprendimiento -> {
+                            if (category != null && !category.isEmpty()) {
+                                return emprendimiento.getCategorias().stream()
+                                        .anyMatch(
+                                                categoria ->
+                                                        categoria.getNombre().equals(category));
+                            }
+                            return true;
+                        })
+                .filter(
+                        emprendimiento -> {
+                            if (search != null && !search.isEmpty()) {
+                                return emprendimiento
+                                        .getNombre()
+                                        .toLowerCase()
+                                        .contains(search.toLowerCase());
+                            }
+                            return true;
+                        })
+                .toList();
+    }
+
+    @Override
+    public int getEmprendimientosCount(String category, String search) {
+        return (int)
+                emprendimientoRepo
+                        .findAll()
+                        .stream()
+                        .filter(
+                                emprendimiento -> {
+                                    if (category != null && !category.isEmpty()) {
+                                        return emprendimiento.getCategorias().stream()
+                                                .anyMatch(
+                                                        categoria ->
+                                                                categoria.getNombre().equals(category));
+                                    }
+                                    return true;
+                                })
+                        .filter(
+                                emprendimiento -> {
+                                    if (search != null && !search.isEmpty()) {
+                                        return emprendimiento
+                                                .getNombre()
+                                                .toLowerCase()
+                                                .contains(search.toLowerCase());
+                                    }
+                                    return true;
+                                })
+                        .count();
     }
 
     @Override
@@ -66,7 +120,7 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
     @Override
     public Emprendimiento update(Emprendimiento emprendimiento) {
         log.info("Actualizando emprendimiento con dominio:{}", emprendimiento.getDomainUrl());
-        emprendimiento.getPlanes().forEach(p-> planRepo.save(p));
+        emprendimiento.getPlanes().forEach(p -> planRepo.save(p));
         return emprendimientoRepo.save(emprendimiento);
     }
 
