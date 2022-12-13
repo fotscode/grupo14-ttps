@@ -1,0 +1,14 @@
+@media only screen and (max-width: 768px) {
+  #registro {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .formulario{
+    padding:0px !important;
+  }
+
+  .redes{
+    flex-direction: column !important;
+  }
+}

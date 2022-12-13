@@ -1,15 +1,14 @@
 <section class="py-5">
   <form (submit)="signUp()">
-    <div class="row">
+    <div id="registro" class="row mx-2">
       <div class="container py-5 col">
-        <div class="row mb-4 mb-lg-5">
-          <div class="col-md-8 col-xl-6 text-center mx-auto">
-            <p class="fw-bold text-success mb-2">Registro de usuario</p>
-            <h2 class="fw-bold text-white">Bienvenido</h2>
+        <div class="row mb-2">
+          <div class="col text-center mx-auto">
+            <h2 class="fw-bold text-white">Usuario</h2>
           </div>
         </div>
         <div class="row d-flex justify-content-center">
-          <div class="w-100" style="max-width: 800px">
+          <div class="w-100 p-0" style="max-width: 800px">
             <div class="card bg-dark">
               <div
                 class="card-body text-center d-flex flex-column align-items-center"
@@ -75,11 +74,10 @@
           </div>
         </div>
       </div>
-      <div class="containet py-5 col">
-        <div class="row mb-4 mb-lg-5">
+      <div class="container py-5 col formulario">
+        <div class="row mb-2">
           <div class="col-md-8 col-xl-6 text-center mx-auto">
-            <p class="fw-bold text-success mb-2">Registro de Emprendimiento</p>
-            <h2 class="fw-bold text-white">Bienvenido</h2>
+            <h2 class="fw-bold text-white">Emprendimiento</h2>
           </div>
         </div>
         <div class="row d-flex justify-content-center">
@@ -91,21 +89,16 @@
                 <div
                   class="bs-icon-xl bs-icon-circle bs-icon-primary shadow bs-icon my-4"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 512 512" 
+                    fill="currentColor" 
                     width="1em"
-                    height="1em"
-                    fill="currentColor"
-                    viewBox="0 0 16 16"
-                    class="bi bi-person"
                   >
+                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                     <path
-                      d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2
-                      0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6
-                      4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68
-                      10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83
-                      1.418-.832 1.664h10z"
-                    ></path>
+                      d="M176 56V96H336V56c0-4.4-3.6-8-8-8H184c-4.4 0-8 3.6-8 8zM128 96V56c0-30.9 25.1-56 56-56H328c30.9 0 56 25.1 56 56V96v32V480H128V128 96zM64 96H96V480H64c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64zM448 480H416V96h32c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64z"
+                    />
                   </svg>
                 </div>
                 <div class="mb-3">
@@ -166,17 +159,19 @@
                   <div class="d-flex gap-2">
                     <div
                       *ngFor="let categoria of categorias"
-                      (click)="
-                      addCategoria(categoria)
-                      "
+                      (click)="addCategoria(categoria)"
                       class="px-2 rounded-pill"
-                      [ngStyle]="{'background-color': isSelected(categoria)?categoria.color : 'rgb(108, 117, 125)'}"
+                      [ngStyle]="{
+                        'background-color': isSelected(categoria)
+                          ? categoria.color
+                          : 'rgb(108, 117, 125)'
+                      }"
                     >
                       <span class="text-white">{{ categoria.nombre }}</span>
                     </div>
                   </div>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 px-3">
                   <button
                     (click)="this.addRedSocial()"
                     type="button"
@@ -189,7 +184,7 @@
                       let red of this.user.emprendimiento.redesSociales;
                       let i = index
                     "
-                    class="row gap-4 mt-3"
+                    class="row gap-4 mt-3 d-flex redes"
                   >
                     <input
                       class="form-control col"
@@ -220,7 +215,9 @@
         </div>
       </div>
       <div class="row justify-content-md-center">
-        <div class="col col-lg-3">
+        <div
+          class="col d-flex flex-column justify-content-center align-items-center mt-4"
+        >
           <div class="mb-3">
             <button class="btn btn-primary shadow d-block w-100" type="submit">
               Registrarse
