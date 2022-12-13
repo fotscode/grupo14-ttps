@@ -1,11 +1,10 @@
 <section>
   <section
-    class="d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center"
-    style="/*max-width: 1190px;*/ width: 100%"
+    class="d-flex justify-content-center"
+    style="width: 100%"
   >
-    <form
-      class="d-flex justify-content-center align-items-center justify-content-xxl-center search-form"
-      style="padding: 0 90px; /*max-width: 1190px;*/"
+    <div
+      class="d-flex justify-content-center align-items-center search-form"
     >
       <div class="input-group">
         <span class="input-group-text"
@@ -13,27 +12,46 @@
         ><input
           class="form-control"
           type="text"
+          [(ngModel)]="search"
           placeholder="Estoy buscando por..."
-        /><button class="btn btn-primary" type="button">Etiquetas ▾</button
-        ><button class="btn btn-light" type="button">Buscar</button>
+        />
       </div>
-    </form>
+      <mat-form-field appearance="fill">
+        <mat-label>Categorias</mat-label>
+        <mat-select [formControl]="categoriaBuscar">
+          <mat-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.nombre"
+            >{{ categoria.nombre }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <button
+        class="btn btn-light"
+        type="button"
+        (click)="getEmprendimientos(0)"
+      >
+        Buscar
+      </button>
+    </div>
+
   </section>
-  <div class="row row-cols-3 align-items-xxl-center">
+  <div id="emprendimientos" class="row row-cols-3 d-flex justify-content-center align-items-center">
     <div
       *ngFor="
         let emprendimiento of emprendimientos;
         index as i;
         first as isFirst
       "
-      class="col container justify-content-xxl-center"
-      style="width: 45%; height: 320px; margin-top: 20px"
+      class="col emprendimiento"
+      style="min-width: 45%; min-height: 320px; margin-top: 20px"
     >
       <div
         class="photo-card"
-        style="height: 320px; padding: 0px; margin: 0 9px; margin-top: 0px"
+        style="min-height: 420px; padding: 0px; margin: 0 9px; margin-top: 0px"
       >
-        <div class="photo-background" style="height: 100%; overflow: hidden">
+        <div class="photo-background" style="overflow: hidden">
           <img
             class="w-100"
             style="overflow: hidden !important"
@@ -42,7 +60,7 @@
         </div>
         <div class="photo-details">
           <h1>{{ emprendimiento.nombre }}<br /></h1>
-          <p style="height: 103.938px">
+          <p>
             {{ emprendimiento.descripcion }}<br />
           </p>
           <div class="photo-tags">
@@ -52,7 +70,9 @@
                   >ver posts</a
                 >
               </li>
-              <li><a [routerLink]="['/donar',emprendimiento.domainUrl]">Donar</a></li>
+              <li>
+                <a [routerLink]="['/donar', emprendimiento.domainUrl]">Donar</a>
+              </li>
             </ul>
             <div class="photo-tags" style="margin: 10px 0">
               <div>
@@ -86,7 +106,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="loading">
+  <div *ngIf="this.emprendimientos.length == 0">
     <p style="color: white">No hay emprendimientos para enseñar</p>
   </div>
 </section>
@@ -105,31 +125,38 @@
         --bs-pagination-disabled-color: white !important;
       "
     >
-      <li
-        class="page-item disabled"
-        style="/*background-color: red;*/ --bs-pagination-bg: red !important"
-      >
-        <a
-          class="page-link"
+      <li class="page-item">
+        <button
+          class="page-link bg-dark text-white"
+          (click)="getEmprendimientos(pageNumber - 1)"
+          *ngIf="pageNumber > 0"
           aria-label="Previous"
-          href="#"
           style="border-top-left-radius: 5px; border-bottom-left-radius: 5px"
-          ><span aria-hidden="true">«</span></a
         >
+          <span aria-hidden="true">«</span>
+        </button>
       </li>
-      <li class="page-item disabled"><a class="page-link" href="#">1</a></li>
-      <li class="page-item disabled"><a class="page-link" href="#">2</a></li>
-      <li class="page-item disabled"><a class="page-link" href="#">3</a></li>
-      <li class="page-item disabled"><a class="page-link" href="#">4</a></li>
-      <li class="page-item disabled"><a class="page-link" href="#">5</a></li>
-      <li class="page-item disabled">
-        <a
-          class="page-link"
-          aria-label="Next"
-          href="#"
-          style="border-top-right-radius: 5px; border-bottom-right-radius: 5px"
-          ><span aria-hidden="true">»</span></a
+      <li
+        class="page-item"
+        *ngFor="let x of counter(cantidadPaginas); let index = index"
+      >
+        <button
+          class="page-link bg-dark text-white"
+          (click)="getEmprendimientos(index)"
         >
+          {{ index + 1 }}
+        </button>
+      </li>
+      <li class="page-item">
+        <button
+          class="page-link bg-dark text-white"
+          aria-label="Next"
+          (click)="getEmprendimientos(pageNumber + 1)"
+          *ngIf="pageNumber < cantidadPaginas - 1"
+          style="border-top-right-radius: 5px; border-bottom-right-radius: 5px"
+        >
+          <span aria-hidden="true">»</span>
+        </button>
       </li>
     </ul>
   </nav>

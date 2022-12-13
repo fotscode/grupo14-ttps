@@ -1,0 +1,16 @@
+@media only screen and (max-width: 768px) {
+  #emprendimientos{
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  .emprendimiento{
+    width:90%;
+    height:auto;
+  }
+  
+  .photo-card{
+    height:auto;
+    width:100%;
+  }
+}
