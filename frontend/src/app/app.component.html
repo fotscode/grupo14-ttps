@@ -1,15 +1,18 @@
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
     <title>Home - Brand</title>
-</head>
+  </head>
 
-<body style="/*background: url('design.jpg');*/background-position: 0 -60px;">
+  <body style="/*background: url('design.jpg');*/ background-position: 0 -60px">
     <app-navigation-header></app-navigation-header>
-    <router-outlet></router-outlet>
+    <div style="min-height:90vh">
+      <router-outlet></router-outlet>
+    </div>
     <app-contact-footer></app-contact-footer>
-</body>
-
+  </body>
 </html>

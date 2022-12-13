@@ -16,8 +16,8 @@
   style="margin: 0px; /*padding: 0px 0px;*/ padding-top: 0rem !important"
 >
   <div
-    class="container d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center py-5"
-    style="width: 100%"
+    class="container d-flex justify-content-center py-5"
+    style="width: 100%; min-height: 70vh"
   >
     <div
       class="d-xxl-flex justify-content-xxl-center photo-card"
@@ -51,11 +51,13 @@
             <input
               type="text"
               name="nombre"
+              class="w-100"
               [(ngModel)]="emprendimiento.nombre"
             />
             <span class="text-white">Descripcion:</span>
             <input
               type="text"
+              class="w-100 mb-2"
               name="descripcion"
               [(ngModel)]="emprendimiento.descripcion"
             />
@@ -63,74 +65,59 @@
           <p *ngIf="!this.editMode" style="/*height: 103.938px;*/">
             {{ emprendimiento.descripcion }}
           </p>
-          <div style="width: 518.406px">
-            <fieldset
-              class="d-flex flex-column justify-content-around"
-              style="height: 80px"
-            >
+          <div >
               <div
                 class="text-start d-flex justify-content-start custom-control custom-checkbox custom-control-inline"
-                style="height: 30px"
               >
                 <input
                   id="customCheckInline1"
-                  class="custom-control-input"
                   type="checkbox"
-                  style="width: 30px; height: 30px; padding: 10px"
+                  style="width: 31px; height: 30px"
                   [(ngModel)]="emprendimiento.filterByDonations"
                   [checked]="emprendimiento.filterByDonations"
                   [disabled]="!isEditMode()"
-                /><label
-                  class="form-label custom-control-label"
+                /><span
+                  class="form-label custom-control-label text-white"
                   for="customCheckInline1"
                   style="
-                    position: static;
-                    display: inline;
-                    overflow: hidden;
-                    height: 30px;
+                    height: auto;
                     border-color: rgb(255, 255, 255);
                     padding: 0 10px;
                     font-size: 17px;
                   "
-                  >Mostrar top de donadores</label
+                  >Mostrar top de donadores</span
                 >
               </div>
               <div
-                class="text-start d-flex justify-content-start custom-control custom-checkbox custom-control-inline"
-                style="height: 30px"
+                class="d-flex"
               >
                 <input
                   id="customCheckInline-1"
-                  class="custom-control-input"
                   type="checkbox"
-                  style="width: 30px; height: 30px; padding: 10px"
+                  style="width: 30px; height: 30px"
                   [(ngModel)]="emprendimiento.filterByManguitos"
                   [checked]="emprendimiento.filterByManguitos"
                   [disabled]="!isEditMode()"
-                /><label
-                  class="form-label custom-control-label"
+                /><span
+                  class="form-label custom-control-label text-white"
                   for="customCheckInline1"
                   style="
-                    position: static;
-                    display: inline;
-                    overflow: hidden;
-                    height: 30px;
+                    height: auto;
                     padding: 0 10px;
                     font-size: 17px;
                   "
-                  >Mostrar top de manguitos recibidos</label
+                  >Mostrar top de manguitos recibidos</span
                 >
               </div>
-            </fieldset>
           </div>
           <div *ngIf="!this.editMode" style="margin: 10px 0 0 0">
             <p *ngFor="let red of emprendimiento.redesSociales">
               <strong>{{ red.nombre }}: </strong><span>{{ red.url }}</span>
             </p>
           </div>
-          <div *ngIf="this.editMode" class="d-flex flex-column mb-2">
+          <div *ngIf="this.editMode" class="d-flex flex-column mb-2 ms-2">
             <div
-              *ngFor="let red of emprendimiento.redesSociales; let i=index"
+              *ngFor="let red of emprendimiento.redesSociales; let i = index"
               class="row gap-2 mb-2 w-100"
             >
               <div class="row">
@@ -139,10 +126,22 @@
               </div>
               <input type="text" class="col" [(ngModel)]="red.nombre" />
               <input type="text" class="col" [(ngModel)]="red.url" />
-              <button type="button" class="btn btn-danger" (click)="this.emprendimiento.redesSociales.splice(i,1)">Borrar</button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="this.emprendimiento.redesSociales.splice(i, 1)"
+              >
+                Borrar
+              </button>
             </div>
             <div class="mb-3">
-              <button type="button" (click)="agregarRed()" class="btn btn-primary">Agregar red</button>
+              <button
+                type="button"
+                (click)="agregarRed()"
+                class="btn btn-primary"
+              >
+                Agregar red
+              </button>
             </div>
           </div>
 
@@ -153,14 +152,18 @@
             >
               <span
                 class="px-2 py-1 rounded-pill text-white"
-                [ngStyle]="{'background-color': isSelected(categoria)?categoria.color : 'rgb(108, 117, 125)'}"
+                [ngStyle]="{
+                  'background-color': isSelected(categoria)
+                    ? categoria.color
+                    : 'rgb(108, 117, 125)'
+                }"
                 >{{ categoria.nombre }}</span
               >
             </div>
           </div>
         </div>
         <section
-          class="d-flex d-xxl-flex justify-content-start align-self-start align-items-xxl-end gap-3"
+          class="d-flex"
           style="width: 100%"
         >
           <a
@@ -171,7 +174,7 @@
             ><span *ngIf="this.editMode">Guardar</span>
           </a>
           <a
-            class="btn btn-danger"
+            class="btn btn-danger ms-2"
             role="button"
             *ngIf="this.editMode"
             (click)="cancelEdit()"
