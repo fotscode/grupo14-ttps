@@ -6,9 +6,10 @@
   <table
     id="tableComponent"
     class="table table-bordered table-striped text-white table-dark"
-    *ngIf="manguitosVisible && manguitos"
+    *ngIf="manguitosVisible"
   >
-    <thead>
+  <p *ngIf="!isManguitosVisible()" class="text-center"> No hay manguitos visibles</p>
+    <thead *ngIf="isManguitosVisible()">
       <tr class="text-center bg-primary">
         <th *ngFor="let columna of columnasManguito">{{ columna }}</th>
       </tr>
@@ -27,9 +28,10 @@
   <table
     id="tableComponent"
     class="table table-bordered table-striped text-white table-dark"
-    *ngIf="!manguitosVisible && pagosPlan"
+    *ngIf="!manguitosVisible"
   >
-    <thead>
+  <p *ngIf="!isPlanesVisible()" class="text-center">No hay pagos visibles</p>
+    <thead *ngIf="isPlanesVisible()">
       <tr class="text-center bg-primary">
         <th *ngFor="let columna of columnasPagosPlan">{{ columna }}</th>
       </tr>

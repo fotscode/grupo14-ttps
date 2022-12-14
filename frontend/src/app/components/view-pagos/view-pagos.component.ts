@@ -37,4 +37,12 @@ export class ViewPagosComponent {
   toggleTable() {
     this.manguitosVisible = !this.manguitosVisible
   }
+  
+  isManguitosVisible(){
+    return (this.manguitos.length>0)
+  }
+
+  isPlanesVisible(){
+    return (this.pagosPlan.length>0)
+  }
 }
