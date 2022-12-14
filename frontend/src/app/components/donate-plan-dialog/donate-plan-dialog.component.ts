@@ -5,6 +5,7 @@ import { Pago } from 'src/app/interfaces/Pago';
 @Component({
   selector: 'app-donate-plan-dialog',
   templateUrl: './donate-plan-dialog.component.html',
+  styleUrls: ['../donate-dialog/donate-dialog.component.css']
 })
 export class DonatePlanDialogComponent {
   editar = false

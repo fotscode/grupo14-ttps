@@ -1,34 +1,48 @@
-<section class="py-5">
-  <div class="row mb-5">
-    <div class="col-md-8 col-xl-6 text-center mx-auto" style="color: white">
-      <h2 class="fw-bold">Donar a {{emprendimiento.nombre}}</h2>
-      <p class="text-muted w-lg-50">
+<section class="py-5 d-flex flex-column justify-content-center align-items-center">
+  <div class="row mb-3 w-100 d-flex">
+    <div class="text-center mx-auto p-0 w-100" style="color: white">
+      <h2 class="fw-bold">Donar a {{ emprendimiento.nombre }}</h2>
+      <p class="text-muted mx-2">
         Unos manguitos le vienen muy bien a un proyecto que recién esta
         empezando a crecer y desarrollarse.
       </p>
     </div>
   </div>
-  <div class="container d-flex justify-content-center" style="color: white">
-    <div class="card bg-dark border-dark" style="min-width:500px;">
-      <div class="card-body p-4" style="width: 50p">
-        <div class="d-flex flex-row justify-content-between w-100">
-          <div>
+  <div
+    class="container d-flex justify-content-center flex-column align-items-center"
+    style="color: white"
+  >
+    <p class="fw-bold display-4 text-white">Manguitos</p>
+    <div class="card bg-dark border-dark manguitos-container">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between w-100 manguitos">
+          <div
+            class="d-flex flex-column justify-content-between mb-2 me-3 precio-manguito"
+          >
             <h3 class="fw-bold mb-0">Donar Manguitos</h3>
             <h4 class="display-4 fw-bold">
-              ${{ emprendimiento.valorManguito }}
+              {{ emprendimiento.valorManguito }}$
             </h4>
           </div>
           <div>
-            <div class="input-group">
-              <span class="input-group-text">Cant.</span
+            <div class="cantidad-manguito d-flex">
+              <span class="input-group-text text-cant" style="border-radius: 5px 0 0 5px"
+                >Cant.</span
               ><input
-                class="form-control"
+                class="form-control rounded-0"
                 type="text"
                 [(ngModel)]="this.cantManguitos"
                 style="text-align: center; width: 73.844px"
-              /><span class="input-group-text">Total: ${{emprendimiento.valorManguito*cantManguitos}}</span>
+              /><span
+                class="input-group-text text-total"
+                style="border-radius: 0 5px 5px 0"
+                >Total:
+                {{ emprendimiento.valorManguito * cantManguitos }}$</span
+              >
             </div>
-            <small class="form-text">Cantidad de manguitos</small>
+            <small class="form-text d-flex justify-content-center"
+              >Cantidad de manguitos</small
+            >
           </div>
         </div>
         <div>
@@ -44,16 +58,25 @@
     </div>
   </div>
   <div class="container py-5" style="color: white">
+    <p
+      class="fw-bold display-4 text-white d-flex flex-column align-items-center"
+    >
+      Planes
+    </p>
     <div
       class="row row-cols-2 d-flex align-items-center justify-content-center"
     >
-      <div *ngFor="let plan of emprendimiento.planes;index as i; let last=last" class="col offset-xl-2 mx-0 mb-3" style="margin-right: 5px">
+      <div
+        *ngFor="let plan of emprendimiento.planes; index as i; let last = last"
+        class="col mb-3"
+        style="margin-right: 5px; width: 100%; max-width: 600px"
+      >
         <div class="card" [ngClass]="last ? 'bg-primary' : 'bg-dark'">
           <div class="card-body p-4">
             <div class="d-flex justify-content-between">
               <div>
-                <h3 class="fw-bold mb-0">{{plan.titulo}}</h3>
-                <h4 class="display-4 fw-bold">${{plan.monto}}</h4>
+                <h3 class="fw-bold mb-0">{{ plan.titulo }}</h3>
+                <h4 class="display-4 fw-bold">{{ plan.monto }}$</h4>
               </div>
               <div *ngIf="last">
                 <span
@@ -79,12 +102,13 @@
                       <path
                         d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"
                       ></path></svg></span
-                  ><span>{{plan.descripcion}}</span>
+                  ><span>{{ plan.descripcion }}</span>
                 </li>
               </ul>
             </div>
             <a
-              class="btn btn-primary d-block w-100"
+              class="btn d-block w-100"
+              [ngClass]="last ? 'btn-light' : 'btn-primary'"
               role="button"
               (click)="openPlanDialog(plan)"
               >Donar</a

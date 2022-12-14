@@ -1,5 +1,16 @@
-@media screen and (max-width:600px) {
-    input, button{
-        width: 100%;
-    }
+@media screen and (max-width: 600px) {
+  input,
+  button {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .categoria {
+    flex-direction: column;
+  }
+
+  .acciones button{
+    border-radius: 0px !important;
+  }
 }

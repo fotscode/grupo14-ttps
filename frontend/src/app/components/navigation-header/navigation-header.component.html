@@ -42,7 +42,7 @@
       </ul>
       <a
         *ngIf="!isLogged()"
-        class="btn btn-primary shadow"
+        class="btn btn-primary shadow nav-item"
         role="button"
         routerLink="/login"
         style="background: rgb(55, 99, 244)"
@@ -50,7 +50,7 @@
       >
       <a
         *ngIf="isLogged()"
-        class="btn btn-primary shadow"
+        class="btn btn-primary shadow nav-item"
         role="button"
         (click)="logOut()"
         style="background: rgb(55, 99, 244)"

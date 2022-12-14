@@ -5,6 +5,7 @@ import { Manguito } from 'src/app/interfaces/Manguito';
 @Component({
   selector: 'app-donate-dialog',
   templateUrl: './donate-dialog.component.html',
+  styleUrls: ['./donate-dialog.component.css']
 })
 export class DonateDialogComponent {
   editar = false

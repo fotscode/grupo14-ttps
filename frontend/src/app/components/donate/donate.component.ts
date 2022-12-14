@@ -50,7 +50,8 @@ export class DonateComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DonateDialogComponent, {
-      width: '50%',
+      width: '80%',
+      maxWidth:800,
       data: { ...this.emptyManguito },
     })
 
@@ -81,7 +82,8 @@ export class DonateComponent {
   }
   openPlanDialog(plan: Plan) {
     const dialogRef = this.dialog.open(DonatePlanDialogComponent, {
-      width: '50%',
+      width: '90%',
+      maxWidth:800,
       data: { ...this.createPago(plan) },
     })
 

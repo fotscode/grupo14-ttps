@@ -1,41 +1,52 @@
 <section>
-  <section
-    class="d-flex justify-content-center"
-    style="width: 100%"
-  >
-    <div
-      class="d-flex justify-content-center align-items-center search-form"
-    >
-      <div class="input-group">
-        <span class="input-group-text"
+  <section class="d-flex justify-content-center" style="width: 100%">
+    <div class="d-flex justify-content-center align-items-center search-form">
+      <div class="d-flex w-100">
+        <span class="input-group-text search-icon" style="border-radius: 5px 0 0 5px"
           ><fa-icon [icon]="faSearch"></fa-icon></span
         ><input
-          class="form-control"
+          class="form-control rounded-0"
           type="text"
           [(ngModel)]="search"
           placeholder="Estoy buscando por..."
         />
       </div>
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Categorias
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a *ngFor="let categoria of categorias" class="dropdown-item" (click)="categoriaBuscar=categoria.nombre">{{categoria.nombre}}</a>
-        </div>
+        <a
+          class="btn btn-primary dropdown-toggle rounded-0"
+          type="button"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          {{ (categoriaBuscar) ? categoriaBuscar: 'Categorias' }}
+        </a>
+        <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+          <li
+            *ngFor="let categoria of categorias"
+            class="dropdown-item"
+            (click)="categoriaBuscar = categoria.nombre"
+          >
+            {{ categoria.nombre }}
+          </li>
+        </ul>
       </div>
-
       <button
         class="btn btn-light"
         type="button"
         (click)="getEmprendimientos(0)"
+        style="border-radius: 0px 5px 5px 0px"
       >
         Buscar
       </button>
-    </div>
 
+    </div>
   </section>
-  <div id="emprendimientos" class="row row-cols-3 d-flex justify-content-center align-items-center">
+  <div
+    id="emprendimientos"
+    class="row row-cols-3 d-flex justify-content-center align-items-center mx-2 gap-5"
+  >
     <div
       *ngFor="
         let emprendimiento of emprendimientos;
@@ -43,24 +54,22 @@
         first as isFirst
       "
       class="col emprendimiento"
-      style="min-width: 45%; min-height: 320px; margin-top: 20px"
+      style="width:100%;max-width:700px;padding:0px; margin-top:20px"
     >
       <div
         class="photo-card"
-        style="min-height: 420px; padding: 0px; margin: 0 9px; margin-top: 0px"
+        style="padding: 0px; min-height: 320px; margin-top: 0px"
       >
-        <div class="photo-background" style="overflow: hidden">
+        <div class="photo-background" style="overflow: hidden; max-height:320px; ">
           <img
             class="w-100"
-            style="overflow: hidden !important"
+            style="overflow: hidden !important; "
             src="data:image/jpg;base64, {{ emprendimiento.imagen }}"
           />
         </div>
         <div class="photo-details">
           <h1>{{ emprendimiento.nombre }}<br /></h1>
-          <p>
-            {{ emprendimiento.descripcion }}<br />
-          </p>
+          <p>{{ emprendimiento.descripcion }}<br /></p>
           <div class="photo-tags">
             <ul>
               <li>

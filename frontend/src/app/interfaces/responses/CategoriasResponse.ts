@@ -8,5 +8,5 @@ export interface CategoriasResponse{
     message: string
     developerMessage: string
     path: string
-    data: { categorias: Categoria[] }
+    data: { categorias?: Categoria[], categoria?: Categoria }
 }

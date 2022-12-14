@@ -24,7 +24,7 @@ export class EmprendimientoComponent {
 
   ngOnInit(): void {
     this.categoriesService.getCategories().subscribe((res) => {
-      this.categorias = res.data.categorias
+      if (res.data.categorias) this.categorias = res.data.categorias
     })
     const domainUrl = this.route.snapshot.paramMap.get('domain')
     if (domainUrl) {

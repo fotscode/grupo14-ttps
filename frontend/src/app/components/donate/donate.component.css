@@ -1,0 +1,36 @@
+@media screen and (max-width: 768px) {
+  .manguitos{
+    flex-direction: column!important;
+  }
+  .precio-manguito{
+    align-items: center!important;
+    margin: 0px !important;
+  }
+
+  .cantidad-manguito{
+    display: flex;
+    flex-direction:column;
+    align-items: center!important;
+  }
+
+  .cantidad-manguito input, .input-group-text{
+    width: 100% !important;
+    border-radius: 0px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+  }
+
+  .manguitos-container{
+    width: 100%;
+  }
+
+  .text-total{
+    border-radius: 0 0 5px 5px !important;
+  }
+
+  .text-cant{
+    border-radius:5px 5px 0 0  !important;
+  }
+}

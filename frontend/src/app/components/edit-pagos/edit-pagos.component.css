@@ -1,0 +1,13 @@
+@media screen and (max-width: 768px) {
+  .plan{
+    flex-direction: column!important;
+  }
+
+  .manguito{
+    margin: 0px !important;
+    flex-direction: column!important;
+  }
+  .plan{
+    margin:5px;
+  }
+}

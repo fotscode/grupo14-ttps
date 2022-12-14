@@ -1,22 +1,52 @@
-.mat-mdc-text-field-wrapper{
+.mat-mdc-text-field-wrapper {
   margin-top: 20px;
 }
-mat-select{
+mat-select {
   height: 20%;
 }
 @media only screen and (max-width: 768px) {
-  #emprendimientos{
-    display:flex !important;
-    flex-direction:column !important;
+  #emprendimientos {
+    display: flex !important;
+    flex-direction: column !important;
   }
 
-  .emprendimiento{
-    width:90%;
-    height:auto;
+  .emprendimiento {
+    width: 90%;
+    height: auto;
   }
-  
-  .photo-card{
-    height:auto;
-    width:100%;
+
+  .photo-card {
+    height: auto;
+    width: 100%;
+  }
+
+  .search-form {
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .search-form input,
+  button,
+  .dropdown,
+  .dropdown a,
+  span {
+    width: 100%;
+  }
+
+  .search-form input {
+    border-radius: 5px 5px 0 0 !important;
+  }
+
+  .search-form button {
+    border-radius: 0 0 5px 5px !important;
+  }
+
+  .search-icon {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
   }
 }

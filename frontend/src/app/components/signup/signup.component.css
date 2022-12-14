@@ -1,14 +1,26 @@
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 850px) {
   #registro {
     display: flex !important;
     flex-direction: column !important;
   }
 
-  .formulario{
-    padding:0px !important;
+  .formulario {
+    padding: 0px !important;
   }
 
-  .redes{
+  .redes {
     flex-direction: column !important;
   }
+
+  .imagen{
+    flex-direction: column !important;
+  }
+  .imagen button{
+    margin: 10px 0px !important;
+  }
+}
+
+.form-item {
+  width: 100%;
+  max-width: 400px;
 }

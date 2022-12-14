@@ -1,40 +1,37 @@
-<div style="border: 1px solid rgb(55, 99, 244)">
+<div style="border: 1px solid rgb(255,255,255); z-index:99" class="text-center">
   <div
-    class="d-flex flex-column p-5 justify-content-between bg-dark text-white"
+    class="d-flex flex-column p-5 justify-content-between bg-dark text-white dialog"
     style="font-size: 1.5em"
     mat-dialog-content
   >
-    <div class="mb-4">
+    <div class="mb-4 form-item">
       <strong>Nombre donador</strong>
       <input
         type="text"
-        class="w-100"
+        class="w-100 mt-3"
         name="nombre"
         [(ngModel)]="data.nombrePersona"
       />
     </div>
-    <div class="mb-4">
-      <strong>Fecha:</strong><span> {{ data.fecha.toLocaleDateString() }}</span>
+    <div class="mb-4 form-item">
+      <strong>Monto:</strong><span class="mt-2"> {{ data.monto * data.cantidad }}$</span>
     </div>
-    <div class="mb-4">
-      <strong>Monto:</strong><span> {{ data.monto * data.cantidad }}</span>
-    </div>
-    <div class="mb-4">
-      <strong>Cantidad</strong>
+    <div class="mb-4 form-item">
+      <span class="display-7 fw-bold">Cantidad de manguitos</span>
       <input
         min="1"
         type="number"
         name="cantidad"
-        class="w-100"
+        class="w-100 mt-3 px-4"
         [(ngModel)]="data.cantidad"
       />
     </div>
-    <div class="d-flex flex-column mb-2">
+    <div class="d-flex flex-column mb-2 form-item">
       <strong class="mb-2">Mensaje</strong>
       <textarea matInput name="mensaje" [(ngModel)]="data.mensaje"></textarea>
     </div>
   </div>
-  <div class="gap-3 px-5 pb-5 bg-dark text-white py-3" mat-dialog-actions>
+  <div class="gap-3 px-5 py-3 bg-dark text-white border-top d-flex justify-content-center" mat-dialog-actions>
     <button class="btn btn-primary" [mat-dialog-close]="data" cdkFocusInitial>
       Ok
     </button>

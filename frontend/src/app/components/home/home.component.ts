@@ -31,7 +31,7 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.categoriesService.getCategories().subscribe((res) => {
-      this.categorias = res.data.categorias
+      if (res.data.categorias) this.categorias = res.data.categorias
     })
 
     this.getEmprendimientos(0)
