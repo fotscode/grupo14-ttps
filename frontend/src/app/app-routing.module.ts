@@ -13,22 +13,43 @@ import { ViewPostsComponent } from './components/view-posts/view-posts.component
 import { AdminGuard } from './guards/admin.guard'
 import { AuthGuard } from './guards/auth.guard'
 import { LoggedInGuard } from './guards/logged-in.guard'
+import { NegateAdminGuard } from './guards/negate-admin.guard'
 
 const routes: Routes = [
   { path: 'Home', component: HomeComponent },
   {
     path: 'emprendimiento/:domain',
     component: EmprendimientoComponent,
-    canActivate: [AuthGuard, (!AdminGuard)],
+    canActivate: [AuthGuard, NegateAdminGuard],
   },
   { path: 'login', component: LoginComponent, canActivate: [LoggedInGuard] },
-  { path: 'registro', component: SignupComponent, canActivate: [LoggedInGuard] },
-  { path: 'editarPosts', component:EditPostsComponent, canActivate:[AuthGuard, (!AdminGuard)]},
-  { path: 'posts/:domain', component:ViewPostsComponent},
-  { path: 'editarPagos/:domain', component:EditPagosComponent, canActivate:[AuthGuard, (!AdminGuard)]},
-  { path: 'verPagos/:domain',component:ViewPagosComponent, canActivate:[AuthGuard, (!AdminGuard)]},
-  { path: 'donar/:domain', component:DonateComponent},
-  { path: 'etiquetas', component:CategoriesComponent, canActivate:[AuthGuard,AdminGuard]},
+  {
+    path: 'registro',
+    component: SignupComponent,
+    canActivate: [LoggedInGuard],
+  },
+  {
+    path: 'editarPosts',
+    component: EditPostsComponent,
+    canActivate: [AuthGuard, NegateAdminGuard],
+  },
+  { path: 'posts/:domain', component: ViewPostsComponent },
+  {
+    path: 'editarPagos/:domain',
+    component: EditPagosComponent,
+    canActivate: [AuthGuard, NegateAdminGuard],
+  },
+  {
+    path: 'verPagos/:domain',
+    component: ViewPagosComponent,
+    canActivate: [AuthGuard, NegateAdminGuard],
+  },
+  { path: 'donar/:domain', component: DonateComponent },
+  {
+    path: 'etiquetas',
+    component: CategoriesComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
   { path: '**', redirectTo: 'Home' },
 ]
 
