@@ -9,7 +9,6 @@ import { HomeComponent } from './components/home/home.component';
 import { EmprendimientoComponent } from './components/emprendimiento/emprendimiento.component';
 import { EditPostsComponent } from './components/edit-posts/edit-posts.component';
 import { ViewPostsComponent } from './components/view-posts/view-posts.component';
-import { EditEmprendimientoComponent } from './components/edit-emprendimiento/edit-emprendimiento.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
 import { ContactFooterComponent } from './components/contact-footer/contact-footer.component';
 import { MaterialModule } from './material/material.module';
@@ -39,7 +38,6 @@ import { ViewPagosComponent } from './components/view-pagos/view-pagos.component
     EmprendimientoComponent,
     EditPostsComponent,
     ViewPostsComponent,
-    EditEmprendimientoComponent,
     NavigationHeaderComponent,
     ContactFooterComponent,
     LoginComponent,
