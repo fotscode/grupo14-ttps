@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Post } from 'src/app/interfaces/Post'
 import { PostService } from 'src/app/services/post.service'
+import { TemplateDialogComponent } from '../template-dialog/template-dialog.component'
 import { PostsDialog } from './posts-dialog.component'
 
 @Component({
@@ -22,6 +23,7 @@ export class EditPostsComponent implements OnInit {
 
   index = 0
   constructor(
+    public popup:MatDialog,
     private matSnackBar: MatSnackBar,
     private postService: PostService,
     public dialog: MatDialog
@@ -33,6 +35,23 @@ export class EditPostsComponent implements OnInit {
     this.postService.getPosts().subscribe((res) => {
       this.loading = false
       if (res.data.posts) this.posts = res.data.posts
+    })
+  }
+
+  deletePostAttempt(id:number | undefined){
+    const dialogConfig=new MatDialogConfig()
+    dialogConfig.disableClose=true
+    dialogConfig.autoFocus=false
+    dialogConfig.width='50%'
+    dialogConfig.data={
+      title:'Eliminar Post',
+      dialog:'eliminar el post'
+    }
+    const reference=this.popup.open(TemplateDialogComponent,dialogConfig)
+    reference.afterClosed().subscribe((res)=>{
+      if(res){
+        this.deletePost(id)
+      }
     })
   }
 

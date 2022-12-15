@@ -31,6 +31,7 @@ import { DonateDialogComponent } from './components/donate-dialog/donate-dialog.
 import { DonatePlanDialogComponent } from './components/donate-plan-dialog/donate-plan-dialog.component';
 import { ViewPagosComponent } from './components/view-pagos/view-pagos.component';
 import { ErrorCardComponent } from './components/error-card/error-card.component';
+import { TemplateDialogComponent } from './components/template-dialog/template-dialog.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ErrorCardComponent } from './components/error-card/error-card.component
     DonateDialogComponent,
     DonatePlanDialogComponent,
     ViewPagosComponent,
-    ErrorCardComponent
+    ErrorCardComponent,
+    TemplateDialogComponent
   ],
   imports: [
     BrowserModule,

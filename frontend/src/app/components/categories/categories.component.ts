@@ -1,8 +1,10 @@
 import { Component } from '@angular/core'
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Categoria } from 'src/app/interfaces/Categoria'
 import { CategoriasResponse } from 'src/app/interfaces/responses/CategoriasResponse'
 import { CategoriesService } from 'src/app/services/categories.service'
+import { TemplateDialogComponent } from '../template-dialog/template-dialog.component'
 
 @Component({
   selector: 'app-categories',
@@ -13,6 +15,7 @@ export class CategoriesComponent {
   categories: Categoria[] = []
 
   constructor(
+    public popup:MatDialog,
     private categoriesService: CategoriesService,
     private snackBar: MatSnackBar
   ) {}
@@ -43,6 +46,23 @@ export class CategoriesComponent {
 
   addEmptyCategory() {
     this.categories.push({ nombre: '', color: '' })
+  }
+
+  deleteCategoryAttempt(category:Categoria){
+    const dialogConfig=new MatDialogConfig()
+    dialogConfig.disableClose=true
+    dialogConfig.autoFocus=false
+    dialogConfig.width='50%'
+    dialogConfig.data={
+      title:'Eliminar Categoria',
+      dialog:'eliminar la categoria'
+    }
+    const reference=this.popup.open(TemplateDialogComponent,dialogConfig)
+    reference.afterClosed().subscribe((res)=>{
+      if(res){
+        this.deleteCategory(category)
+      }
+    })
   }
 
   deleteCategory(category: Categoria) {
