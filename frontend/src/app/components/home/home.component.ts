@@ -20,6 +20,7 @@ export class HomeComponent {
   cantidadPaginas = 0
   search = ''
   categoriaBuscar = ''
+  cantidadElementos=4
 
   constructor(
     private emprendimientosService: EmprendimientosService,
@@ -40,9 +41,10 @@ export class HomeComponent {
   getEmprendimientos(page: number) {
     this.pageNumber = page
     this.emprendimientosService
-      .getEmprendimientos(page, 2, this.categoriaBuscar, this.search)
+      .getEmprendimientos(page, this.cantidadElementos, this.categoriaBuscar, this.search)
       .subscribe(
         (res) => {
+          this.loading = false
           if (res.data.emprendimientos)
             this.emprendimientos = res.data.emprendimientos
         },
@@ -54,7 +56,7 @@ export class HomeComponent {
       .getEmprendimientosLength(this.categoriaBuscar, this.search)
       .subscribe((res: any) => {
         //TODO: fix
-        this.cantidadPaginas = Math.ceil(res.data.cantidad / 2)
+        this.cantidadPaginas = Math.ceil(res.data.cantidad / this.cantidadElementos)
       })
   }
 }

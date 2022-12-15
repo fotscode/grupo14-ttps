@@ -2,7 +2,9 @@
   <section class="d-flex justify-content-center" style="width: 100%">
     <div class="d-flex justify-content-center align-items-center search-form">
       <div class="d-flex w-100">
-        <span class="input-group-text search-icon" style="border-radius: 5px 0 0 5px"
+        <span
+          class="input-group-text search-icon"
+          style="border-radius: 5px 0 0 5px"
           ><fa-icon [icon]="faSearch"></fa-icon></span
         ><input
           class="form-control rounded-0"
@@ -20,9 +22,10 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          {{ (categoriaBuscar) ? categoriaBuscar: 'Categorias' }}
+          {{ categoriaBuscar ? categoriaBuscar : 'Categorias' }}
         </a>
         <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+          <li class="dropdown-item" (click)="categoriaBuscar = ''">Todas</li>
           <li
             *ngFor="let categoria of categorias"
             class="dropdown-item"
@@ -40,9 +43,15 @@
       >
         Buscar
       </button>
-
     </div>
   </section>
+  <div
+    class="container w-100 d-flex justify-content-center align-items-center spinner bg-dark"
+    style="height: 80vh"
+    *ngIf="loading"
+  >
+    <mat-spinner color="white"></mat-spinner>
+  </div>
   <div
     id="emprendimientos"
     class="row row-cols-3 d-flex justify-content-center align-items-center mx-2 gap-5"
@@ -54,16 +63,19 @@
         first as isFirst
       "
       class="col emprendimiento"
-      style="width:100%;max-width:700px;padding:0px; margin-top:20px"
+      style="width: 100%; max-width: 700px; padding: 0px; margin-top: 20px"
     >
       <div
         class="photo-card"
         style="padding: 0px; min-height: 320px; margin-top: 0px"
       >
-        <div class="photo-background" style="overflow: hidden; max-height:320px; ">
+        <div
+          class="photo-background"
+          style="overflow: hidden; max-height: 320px"
+        >
           <img
-            class="w-100"
-            style="overflow: hidden !important; "
+            class="w-100 h-100 m-auto"
+            style="object-fit: cover"
             src="data:image/jpg;base64, {{ emprendimiento.imagen }}"
           />
         </div>
@@ -72,9 +84,9 @@
           <p>{{ emprendimiento.descripcion }}<br /></p>
           <div class="photo-tags">
             <ul>
-              <li>
+              <li *ngIf="emprendimiento.posts.length > 0">
                 <a [routerLink]="['/posts', emprendimiento.domainUrl]"
-                  >ver posts</a
+                  >Ver posts</a
                 >
               </li>
               <li>
