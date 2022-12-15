@@ -19,4 +19,7 @@ export class DonateDialogComponent {
     this.dialogRef.close()
   }
 
+  isNotValid() {
+    return this.data.mensaje.length > 255 || this.data.nombrePersona.length > 255 || this.data.cantidad <= 0 || this.data.cantidad > 1000000
+  }
 }

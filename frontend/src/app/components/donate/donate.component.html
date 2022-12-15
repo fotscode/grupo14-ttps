@@ -57,9 +57,9 @@
       </div>
     </div>
   </div>
-  <div class="container py-5" style="color: white">
+  <div *ngIf="emprendimiento.planes && emprendimiento.planes.length>0" class="container py-5" style="color: white">
     <p
-      class="fw-bold display-4 text-white d-flex flex-column align-items-center"
+         class="fw-bold display-4 text-white d-flex flex-column align-items-center"
     >
       Planes
     </p>
