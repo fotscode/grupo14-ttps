@@ -15,6 +15,7 @@ export class ViewPagosComponent {
   columnasPagosPlan = ['Nombre', 'Fecha', 'Monto', 'Mensaje', 'Contacto']
   manguitosVisible = true
   pagosPlan = [] as Pago[]
+  loading:boolean=true
   constructor(
     private manguitosService: ManguitosService,
     private pagosService: PagosService
@@ -23,6 +24,7 @@ export class ViewPagosComponent {
   ngOnInit(): void {
     this.manguitosService.getManguitos().subscribe((res: any) => {
       //TODO: fix this interface
+      this.loading=false
       if (res.data.manguitos) this.manguitos = res.data.manguitos
     })
     this.pagosService.getPagos().subscribe((res: any) => {

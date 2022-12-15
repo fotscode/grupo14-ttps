@@ -8,6 +8,13 @@
     class="table table-bordered table-striped text-white table-dark"
     *ngIf="manguitosVisible"
   >
+  <div
+    class="container w-100 d-flex justify-content-center align-items-center spinner"
+    style="height: 80vh"
+    *ngIf="loading"
+  >
+    <mat-spinner color="white"></mat-spinner>
+  </div>
   <p *ngIf="!isManguitosVisible()" class="text-center"> No hay manguitos visibles</p>
     <thead *ngIf="isManguitosVisible()">
       <tr class="text-center bg-primary">
@@ -16,7 +23,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let manguito of manguitos" class="text-center manguito">
-        <td>{{ manguito.nombrePersona }}</td>
+        <td>{{ (manguito.nombrePersona) ? manguito.nombrePersona : 'Anónimo' }}</td>
         <td>{{ getFecha(manguito.fecha) }}</td>
         <td>{{ manguito.cantidad }}</td>
         <td>
@@ -38,10 +45,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let pago of pagosPlan" class="text-center pago">
-        <td>{{ pago.nombrePersona }}</td>
+        <td>{{ (pago.nombrePersona) ? pago.nombrePersona : 'Anónimo' }}</td>
         <td>{{ getFecha(pago.fecha) }}</td>
         <td>{{ pago.monto }}</td>
-        <td>{{ pago.mensaje }}</td>
+        <td>{{ (pago.mensaje) ? pago.mensaje : 'No hay' }}</td>
         <td>{{ pago.contacto }}</td>
       </tr>
     </tbody>
