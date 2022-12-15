@@ -29,15 +29,44 @@
     <div id="navcol-1" class="collapse navbar-collapse">
       <ul class="navbar-nav mx-auto">
         <li *ngIf="isLogged() && checkAdmin() && !isAdmin" class="nav-item">
-          <a class="nav-link" (click)="navigateEmprendimiento()"
+          <a
+            class="nav-link"
+            [routerLink]="['/emprendimiento']"
+            [routerLinkActive]="['fw-bold']"
             >Mi emprendimiento</a
           >
         </li>
         <li *ngIf="isLogged() && checkAdmin() && !isAdmin" class="nav-item">
-          <a class="nav-link" routerLink="/editarPosts">Posts</a>
+          <a
+            class="nav-link"
+            [routerLink]="['/editarPosts']"
+            [routerLinkActive]="['fw-bold']"
+            >Posts</a
+          >
+        </li>
+        <li *ngIf="isLogged() && checkAdmin() && !isAdmin" class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/editarPagos']"
+            [routerLinkActive]="['fw-bold']"
+            >Editar pagos</a
+          >
+        </li>
+        <li *ngIf="isLogged() && checkAdmin() && !isAdmin" class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/verPagos']"
+            [routerLinkActive]="['fw-bold']"
+            >Ver pagos</a
+          >
         </li>
         <li *ngIf="isLogged() && checkAdmin() && isAdmin" class="nav-item">
-          <a class="nav-link" routerLink="/etiquetas">Etiquetas</a>
+          <a
+            class="nav-link"
+            routerLink="/etiquetas"
+            [routerLinkActive]="['fw-bold']"
+            >Etiquetas</a
+          >
         </li>
       </ul>
       <a
@@ -45,6 +74,7 @@
         class="btn btn-primary shadow nav-item"
         role="button"
         routerLink="/login"
+        [routerLinkActive]="['fw-bold']"
         style="background: rgb(55, 99, 244)"
         >Iniciar sesión</a
       >
