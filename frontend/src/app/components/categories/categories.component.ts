@@ -55,4 +55,8 @@ export class CategoriesComponent {
     }
     this.categories = this.categories.filter((c) => c !== category)
   }
+
+  isNotValid(category: Categoria) {
+    return category.nombre.length > 15 || category.nombre=='' || category.color.match(/^#[0-9A-F]{6}$/i) == null
+  }
 }

@@ -5,67 +5,75 @@
         <h2 class="fw-bold text-white">Editar categorias</h2>
       </div>
     </div>
-    <section></section>
-    <div
-      *ngFor="let category of categories"
-      class="d-flex justify-content-center categoria"
-      style="margin-bottom: 15px"
-    >
-      <div class="card" style="background: none">
-        <div
-          class="card-body d-flex justify-content-between"
-          style="background: rgb(45, 54, 56)"
-        >
-          <div class="d-flex flex-column">
-            <small class="form-text mb-2">Nombre de categoria</small>
-            <input
-              type="text"
-              style="border-radius: 10px; padding-left: 10px"
-              [(ngModel)]="category.nombre"
-            />
-            <small class="form-text mb-2">Color (e.g: #ff0000)</small>
-            <input
-              type="text"
-              class="mb-2"
-              style="border-radius: 10px; padding-left: 10px"
-              [(ngModel)]="category.color"
-            />
+    <section class="row">
+      <div
+        *ngFor="let category of categories"
+        class="d-flex justify-content-center categoria col mb-5"
+      >
+        <div class="card" style="background: none">
+          <div
+            class="card-body d-flex justify-content-between"
+            style="background: rgb(45, 54, 56)"
+          >
+            <div class="d-flex flex-column w-100">
+              <mat-form-field [style.width.%]="100" appearance="fill">
+                <mat-label>Nombre de categoria</mat-label>
+                <input
+                  type="text"
+                  max="255"
+                  matInput
+                  style="border-radius: 10px; padding-left: 10px"
+                  [(ngModel)]="category.nombre"
+                />
+              </mat-form-field>
+              <mat-form-field [style.width.%]="100" appearance="fill">
+                <mat-label>Color (e.g: #ff0000 )</mat-label>
+                <input
+                  type="text"
+                  class="mb-2"
+                  matInput
+                  style="border-radius: 10px; padding-left: 10px"
+                  [(ngModel)]="category.color"
+                />
+              </mat-form-field>
+            </div>
           </div>
         </div>
-      </div>
-      <div role="group" class="d-flex flex-column acciones">
-        <button
-          class="btn btn-primary h-100"
-          style="border-radius: 0 5px 0 0"
-          type="button"
-          (click)="saveCategory(category)"
-        >
-          Guardar</button
-        ><button
-          class="btn btn-primary"
-          type="button"
-          (click)="deleteCategory(category)"
-          style="
-            border-radius: 0 0 5px 0;
-            border: none;
-            background: rgb(220, 53, 69);
-          "
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="-32 0 512 512"
-            width="1em"
-            height="1em"
-            fill="currentColor"
+        <div role="group" class="d-flex flex-column acciones">
+          <button
+            class="btn btn-primary h-100"
+            style="border-radius: 0 5px 0 0"
+            type="button"
+            [disabled]="isNotValid(category)"
+            (click)="saveCategory(category)"
           >
-            <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
-            <path
-              d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128H416L394.8 466.1z"
-            ></path>
-          </svg>
-        </button>
+            Guardar</button
+          ><button
+            class="btn btn-primary"
+            type="button"
+            (click)="deleteCategory(category)"
+            style="
+              border-radius: 0 0 5px 0;
+              border: none;
+              background: rgb(220, 53, 69);
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="-32 0 512 512"
+              width="1em"
+              height="1em"
+              fill="currentColor"
+            >
+              <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+              <path
+                d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128H416L394.8 466.1z"
+              ></path>
+            </svg>
+          </button>
+        </div>
       </div>
-    </div>
+    </section>
     <div class="d-flex justify-content-center" style="margin-bottom: 15px">
       <div
         class="w-50 card d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center justify-content-xxl-center align-items-xxl-center"
@@ -75,7 +83,7 @@
           --bs-body-bg: #2d2c38;
           height: 100.3906px;
           text-align: center;
-          max-width:420px;
+          max-width: 420px;
           cursor: pointer;
         "
       >
