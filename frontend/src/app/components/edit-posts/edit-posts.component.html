@@ -7,15 +7,19 @@
     Agregar post
   </button>
 </section>
-  <div
-    class="container w-100 d-flex justify-content-center align-items-center spinner"
-    style="height: 80vh"
-    *ngIf="loading"
-  >
-    <mat-spinner></mat-spinner>
-  </div>
+<div
+  class="container w-100 d-flex justify-content-center align-items-center spinner"
+  style="height: 80vh"
+  *ngIf="loading"
+>
+  <mat-spinner></mat-spinner>
+</div>
 <section class="container d-flex flex-column align-items-center">
-
+  <app-error-card
+    [condition]="!loading && posts.length === 0"
+    [title]="'Esto es incomodo, no existen posts actualmente'"
+    [message]="'Esperare a que se llene...'"
+  ></app-error-card>
   <section
     class="w-100 mx-5"
     *ngFor="let post of posts; let index = index"

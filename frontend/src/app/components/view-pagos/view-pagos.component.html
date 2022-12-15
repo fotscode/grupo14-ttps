@@ -3,19 +3,23 @@
     Ver <span *ngIf="manguitosVisible">pagos de planes</span
     ><span *ngIf="!manguitosVisible">manguitos</span>
   </button>
-  <table
-    id="tableComponent"
-    class="table table-bordered table-striped text-white table-dark"
-    *ngIf="manguitosVisible"
-  >
   <div
     class="container w-100 d-flex justify-content-center align-items-center spinner"
     style="height: 80vh"
     *ngIf="loading"
   >
-    <mat-spinner color="white"></mat-spinner>
+    <mat-spinner class="bg-none"></mat-spinner>
   </div>
-  <p *ngIf="!isManguitosVisible()" class="text-center"> No hay manguitos visibles</p>
+  <table
+    id="tableComponent"
+    class="table table-bordered table-striped text-white table-dark"
+    *ngIf="manguitosVisible"
+  >
+    <app-error-card
+      [condition]="!isManguitosVisible()"
+      [title]="'Esto es incomodo, no existen Manguitos acreditados actualmente'"
+      [message]="'Esperare a que se llene...'"
+    ></app-error-card>
     <thead *ngIf="isManguitosVisible()">
       <tr class="text-center bg-primary">
         <th *ngFor="let columna of columnasManguito">{{ columna }}</th>
@@ -23,7 +27,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let manguito of manguitos" class="text-center manguito">
-        <td>{{ (manguito.nombrePersona) ? manguito.nombrePersona : 'Anónimo' }}</td>
+        <td>
+          {{ manguito.nombrePersona ? manguito.nombrePersona : 'Anónimo' }}
+        </td>
         <td>{{ getFecha(manguito.fecha) }}</td>
         <td>{{ manguito.cantidad }}</td>
         <td>
@@ -37,7 +43,13 @@
     class="table table-bordered table-striped text-white table-dark"
     *ngIf="!manguitosVisible"
   >
-  <p *ngIf="!isPlanesVisible()" class="text-center">No hay pagos visibles</p>
+    <app-error-card
+      [condition]="!isPlanesVisible()"
+      [title]="
+        'Esto es incomodo, no existen pagos a planes acreditados actualmente'
+      "
+      [message]="'Esperare a que se llene...'"
+    ></app-error-card>
     <thead *ngIf="isPlanesVisible()">
       <tr class="text-center bg-primary">
         <th *ngFor="let columna of columnasPagosPlan">{{ columna }}</th>
@@ -45,10 +57,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let pago of pagosPlan" class="text-center pago">
-        <td>{{ (pago.nombrePersona) ? pago.nombrePersona : 'Anónimo' }}</td>
+        <td>{{ pago.nombrePersona ? pago.nombrePersona : 'Anónimo' }}</td>
         <td>{{ getFecha(pago.fecha) }}</td>
         <td>{{ pago.monto }}</td>
-        <td>{{ (pago.mensaje) ? pago.mensaje : 'No hay' }}</td>
+        <td>{{ pago.mensaje ? pago.mensaje : 'No hay' }}</td>
         <td>{{ pago.contacto }}</td>
       </tr>
     </tbody>

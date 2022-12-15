@@ -54,12 +54,20 @@ export class EditPostsComponent implements OnInit {
       if (result) {
         this.postService.updatePost(result).subscribe(
           (res) => {
-            if (res.data.post)
-              this.posts[this.posts.indexOf(post)] = res.data.post
-            this.matSnackBar.open('Se guardaron los cambios', void 0, { duration: 3000 })
+            this.posts = this.posts.map((p) => {
+              if (p.id === result.id) return result
+              return p
+            })
+            if (!result.id && res.data.post) 
+             this.posts.push(res.data.post)
+            this.matSnackBar.open('Se guardaron los cambios', void 0, {
+              duration: 3000,
+            })
           },
           (err) => {
-            this.matSnackBar.open('Ocurrio un error', void 0, { duration: 3000 })
+            this.matSnackBar.open('Ocurrio un error', void 0, {
+              duration: 3000,
+            })
             this.ngOnInit()
           }
         )

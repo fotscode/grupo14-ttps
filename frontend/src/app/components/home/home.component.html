@@ -46,7 +46,7 @@
     </div>
   </section>
   <div
-    class="container w-100 d-flex justify-content-center align-items-center spinner bg-dark"
+    class="container w-100 d-flex justify-content-center align-items-center spinner bg-dark rounded"
     style="height: 80vh"
     *ngIf="loading"
   >
@@ -125,8 +125,20 @@
       </div>
     </div>
   </div>
-  <div *ngIf="this.emprendimientos.length == 0">
-    <p style="color: white">No hay emprendimientos para enseñar</p>
+  <div
+    *ngIf="this.emprendimientos.length == 0"
+    class="d-flex justify-content-center align-items-center container"
+  >
+    <app-error-card
+      [condition]="!loading && this.emprendimientos.length == 0"
+      [title]="
+        'Esto es incomodo, no existen emprendimientos que coincidan con tu
+          busqueda'
+      "
+      [message]="'Sé el primero en tenerlo con Manguito!'"
+      [action]="'Registro'"
+      [link]="'/registro'"
+    ></app-error-card>
   </div>
 </section>
 <section

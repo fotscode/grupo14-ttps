@@ -30,6 +30,7 @@ import { EditPagosComponent } from './components/edit-pagos/edit-pagos.component
 import { DonateDialogComponent } from './components/donate-dialog/donate-dialog.component';
 import { DonatePlanDialogComponent } from './components/donate-plan-dialog/donate-plan-dialog.component';
 import { ViewPagosComponent } from './components/view-pagos/view-pagos.component';
+import { ErrorCardComponent } from './components/error-card/error-card.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ViewPagosComponent } from './components/view-pagos/view-pagos.component
     EditPagosComponent,
     DonateDialogComponent,
     DonatePlanDialogComponent,
-    ViewPagosComponent
+    ViewPagosComponent,
+    ErrorCardComponent
   ],
   imports: [
     BrowserModule,

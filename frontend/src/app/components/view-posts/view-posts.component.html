@@ -1,4 +1,9 @@
 <section class="container d-flex flex-column align-items-center mt-5">
+  <app-error-card
+    [condition]="!loading && posts.length === 0"
+    [title]="'Esto es incomodo, no existen posts actualmente'"
+    [message]="'Esperare a que se llene...'"
+  ></app-error-card>
   <section
     *ngFor="let post of posts; let index = index"
     class="w-100"

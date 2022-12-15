@@ -1,0 +1,20 @@
+<div
+  *ngIf="condition"
+  class="d-flex justify-content-center align-items-center container"
+>
+  <div class="card p-3 bg-dark text-white">
+    <div class="card-body gap-3 d-flex flex-column" style="max-width: 700px">
+      <h3 class="card-title">
+        {{ title }}
+      </h3>
+      <h5 class="text-muted">{{ message }}</h5>
+      <button
+        *ngIf="action != ''"
+        class="btn btn-primary w-100"
+        routerLink="{{ link }}"
+      >
+        {{ action }}
+      </button>
+    </div>
+  </div>
+</div>

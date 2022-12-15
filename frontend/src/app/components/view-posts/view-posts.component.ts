@@ -15,6 +15,7 @@ export class ViewPostsComponent {
     private router: Router
   ) {}
 
+  loading = true
   posts = [] as Post[]
 
   ngOnInit(): void {
@@ -23,6 +24,7 @@ export class ViewPostsComponent {
       this.emprendimientoService
         .getEmprendimientoByDomain(domainUrl)
         .subscribe((res) => {
+          this.loading = false
           if (res.data.emprendimiento)
             this.posts = res.data.emprendimiento.posts
           else this.router.navigate(['/Home'])
