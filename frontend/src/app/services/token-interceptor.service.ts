@@ -16,12 +16,16 @@ import {
 } from 'rxjs'
 import { AuthService } from '../services/auth.service'
 import { TokenResponse } from '../interfaces/responses/TokenResponse'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenInterceptorService implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private matSnackBar: MatSnackBar
+  ) {}
   private isRefreshing = false
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
     null
@@ -60,14 +64,23 @@ export class TokenInterceptorService implements HttpInterceptor {
           switchMap((res: TokenResponse) => {
             this.isRefreshing = false
             this.refreshTokenSubject.next(res.data.tokens.access_token)
-            this.authService.setTokens(res.data.tokens.access_token, res.data.tokens.refresh_token)
+            this.authService.setTokens(
+              res.data.tokens.access_token,
+              res.data.tokens.refresh_token
+            )
             const cloned = req.clone({
-              headers: req.headers.set('Authorization', 'Bearer ' + res.data.tokens.access_token),
+              headers: req.headers.set(
+                'Authorization',
+                'Bearer ' + res.data.tokens.access_token
+              ),
             })
             return next.handle(cloned)
           }),
           catchError((err) => {
             this.isRefreshing = false
+            this.matSnackBar.open('La sesion ha expirado', void 0, {
+              duration: 3000,
+            })
             this.authService.logOut()
             return throwError(err)
           })
