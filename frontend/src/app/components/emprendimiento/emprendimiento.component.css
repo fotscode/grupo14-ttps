@@ -1,8 +1,20 @@
-.borders{
+.borders {
   border-style: groove !important;
-  border: 27px solid rgb(55,99,244);
+  border: 27px solid rgb(55, 99, 244);
 }
 
-:disabled{
-  background:#222;
+@media screen and (max-width: 1000px) {
+  .photo-card {
+    flex-direction: column;
+  }
+
+  .photo-background {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    max-height: 500px !important;
+  }
+
+  .acciones {
+    flex-direction: column;
+  }
 }

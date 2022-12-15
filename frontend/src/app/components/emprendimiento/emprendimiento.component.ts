@@ -21,34 +21,34 @@ export class EmprendimientoComponent {
   categorias: Categoria[] = []
   emprendimiento = {} as Emprendimiento
   editMode: boolean = false
+  loading: boolean = true
 
   ngOnInit(): void {
     this.categoriesService.getCategories().subscribe((res) => {
       if (res.data.categorias) this.categorias = res.data.categorias
     })
-    const domainUrl = this.route.snapshot.paramMap.get('domain')
-    if (domainUrl) {
-      this.emprendimientoService
-        .getEmprendimientoByDomain(domainUrl)
-        .subscribe((res: any) => {
-          this.emprendimiento = res.data.emprendimiento
-        })
-    }
-
+    this.emprendimientoService
+      .getEmprendimientoWithJWT()
+      .subscribe((res: any) => {
+        this.loading = false
+        this.emprendimiento = res.data.emprendimiento
+      })
   }
 
   isSelected(categoria: Categoria) {
-    return this.emprendimiento.categorias.filter((cat)=>cat.id==categoria.id).length>0
+    return (
+      this.emprendimiento.categorias.filter((cat) => cat.id == categoria.id)
+        .length > 0
+    )
   }
 
   addCategoria(categoria: Categoria) {
     if (!this.editMode) return
 
     if (this.isSelected(categoria)) {
-      this.emprendimiento.categorias =
-        this.emprendimiento.categorias.filter(
-          (cat) => cat.id != categoria.id
-        )
+      this.emprendimiento.categorias = this.emprendimiento.categorias.filter(
+        (cat) => cat.id != categoria.id
+      )
     } else {
       this.emprendimiento.categorias.push(categoria)
     }
@@ -66,10 +66,10 @@ export class EmprendimientoComponent {
   }
 
   toggleEditMode() {
-    if(this.editMode){
-      this.emprendimientoService.updateEmprendimiento(this.emprendimiento).subscribe((res)=>{
-        this.router.navigate(["/emprendimiento",this.emprendimiento.domainUrl])
-      })
+    if (this.editMode) {
+      this.emprendimientoService
+        .updateEmprendimiento(this.emprendimiento)
+        .subscribe((res) => {})
     }
     this.editMode = !this.editMode
   }
@@ -85,9 +85,7 @@ export class EmprendimientoComponent {
       const reader = new FileReader()
 
       reader.onload = (e: any) => {
-        this.emprendimiento.imagen = this._arrayBufferToBase64(
-          e.target.result
-        )
+        this.emprendimiento.imagen = this._arrayBufferToBase64(e.target.result)
       }
       reader.readAsArrayBuffer(inputNode.files[0])
     }
@@ -103,7 +101,7 @@ export class EmprendimientoComponent {
     return window.btoa(binary)
   }
 
-  agregarRed(){
-    this.emprendimiento.redesSociales.push({nombre:"",url:""})
+  agregarRed() {
+    this.emprendimiento.redesSociales.push({ nombre: '', url: '' })
   }
 }
