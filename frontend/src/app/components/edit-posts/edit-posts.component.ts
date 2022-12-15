@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { Post } from 'src/app/interfaces/Post'
 import { PostService } from 'src/app/services/post.service'
 import { PostsDialog } from './posts-dialog.component'
@@ -12,7 +13,7 @@ import { PostsDialog } from './posts-dialog.component'
 export class EditPostsComponent implements OnInit {
   posts: Post[] = []
 
-  emptyPost: Post ={
+  emptyPost: Post = {
     titulo: '',
     descripcion: '',
     fotos: [{ id: 0, image: '' }],
@@ -20,15 +21,18 @@ export class EditPostsComponent implements OnInit {
   loading = true
 
   index = 0
-  constructor(private postService: PostService, public dialog:MatDialog) {
+  constructor(
+    private matSnackBar: MatSnackBar,
+    private postService: PostService,
+    public dialog: MatDialog
+  ) {
     this.emptyPost.fotos.pop()
   }
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe((res) => {
-      if (res.data.posts)
-        this.posts = res.data.posts
       this.loading = false
+      if (res.data.posts) this.posts = res.data.posts
     })
   }
 
@@ -41,7 +45,8 @@ export class EditPostsComponent implements OnInit {
 
   openDialog(post: Post): void {
     const dialogRef = this.dialog.open(PostsDialog, {
-      width: '50%',
+      width: '90%',
+      maxWidth: 800,
       data: { ...post },
     })
 
@@ -49,18 +54,18 @@ export class EditPostsComponent implements OnInit {
       if (result) {
         this.postService.updatePost(result).subscribe(
           (res) => {
-            this.posts = this.posts.filter((post) => post.id !== result.id)
             if (res.data.post)
-              this.posts.push(res.data.post)
+              this.posts[this.posts.indexOf(post)] = res.data.post
+            this.matSnackBar.open('Se guardaron los cambios', void 0, { duration: 3000 })
           },
           (err) => {
+            this.matSnackBar.open('Ocurrio un error', void 0, { duration: 3000 })
             this.ngOnInit()
           }
         )
-      }else{
+      } else {
         this.ngOnInit()
       }
     })
-
   }
 }

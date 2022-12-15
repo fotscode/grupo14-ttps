@@ -5,6 +5,7 @@ import { Post } from 'src/app/interfaces/Post'
 @Component({
   selector: 'posts-dialog',
   templateUrl: 'posts-dialog.html',
+  styleUrls: ['./posts-dialog.component.css'],
 })
 export class PostsDialog {
   editar = false
@@ -22,17 +23,19 @@ export class PostsDialog {
     return this.editar
   }
 
-  onFileSelected(index:number) {
-    if (index==-1){
+  onFileSelected(index: number) {
+    if (index == -1) {
       this.data.fotos.push({ image: '' })
-      index=this.data.fotos.length-1
+      index = this.data.fotos.length - 1
     }
-    const inputNode: any = document.querySelector('#compImg-'+index)
+    const inputNode: any = document.querySelector('#compImg-' + index)
     if (typeof FileReader !== 'undefined') {
       const reader = new FileReader()
 
       reader.onload = (e: any) => {
-        this.data.fotos[index].image = this._arrayBufferToBase64(e.target.result)
+        this.data.fotos[index].image = this._arrayBufferToBase64(
+          e.target.result
+        )
       }
       reader.readAsArrayBuffer(inputNode.files[0])
     }
@@ -46,5 +49,13 @@ export class PostsDialog {
       binary += String.fromCharCode(bytes[i])
     }
     return window.btoa(binary)
+  }
+
+  isNotValid() {
+    return (
+      this.data.titulo == '' ||
+      this.data.titulo.length > 255 ||
+      this.data.descripcion.length > 255
+    )
   }
 }

@@ -1,34 +1,98 @@
-<h1 *ngIf="!isEditar()" mat-dialog-title>Agregar post</h1>
-<h1 *ngIf="isEditar()" mat-dialog-title>Editar post {{data.titulo}}</h1>
-<div mat-dialog-content>
-  <mat-form-field [style.width.%]="100" appearance="fill">
-    <mat-label>Titulo</mat-label>
-    <input matInput [(ngModel)]="data.titulo" />
-  </mat-form-field>
-  <mat-form-field [style.width.%]="100" appearance="fill">
-    <mat-label>Descripcion</mat-label>
-    <textarea matInput [(ngModel)]="data.descripcion"></textarea>
-  </mat-form-field>
+<div
+  style="border: 1px solid rgb(255, 255, 255); z-index: 99"
+  class="text-center bg-dark"
+>
+  <h1 *ngIf="!isEditar()" class="text-white border-bottom" mat-dialog-title>Agregar post</h1>
+  <h1 *ngIf="isEditar()" class="text-white border-bottom" mat-dialog-title>
+    Editar post {{data.titulo}}
+  </h1>
+  <form (submit)="isEditar" ngNativeValidate>
+    <div
+      class="d-flex flex-column p-5 justify-content-between bg-dark text-white dialog"
+      style="font-size: 1.5em"
+      mat-dialog-content
+    >
+      <mat-form-field [style.width.%]="100" appearance="fill">
+        <mat-label>Titulo</mat-label>
+        <input
+          name="titulo"
+          type="text"
+          matInput
+          [(ngModel)]="data.titulo"
+        />
+      </mat-form-field>
+      <mat-form-field [style.width.%]="100" appearance="fill">
+        <mat-label>Descripcion</mat-label>
+        <textarea
+          type="text"
+          name="descripcion"
+          matInput
+          [(ngModel)]="data.descripcion"
+        ></textarea>
+      </mat-form-field>
 
-  <div  *ngFor="let foto of data.fotos;let index=index" class="container d-flex justify-content-center gap-5 align-items-center">
-    <img src="data:image/jpeg;base64,{{ foto.image }}" style="width:150px; height:auto"/>
-    <button type="button" class="h-50" mat-raised-button color="primary" (click)="companyImg.click()">
-      Elegir Imagen
-    </button>
-    <button type="button" class="h-50" mat-raised-button color="primary" (click)="data.fotos.splice(index,1)">
-      Eliminar imagen
-    </button>
-    <input hidden (change)="onFileSelected(index)" #companyImg type="file" [attr.id]="'compImg-'+index" />
-  </div>
-  <button type="button" class="h-50" mat-raised-button color="primary" (click)="companyImg.click()">
-    Agregar imagen
-  </button>
+      <div
+        *ngFor="let foto of data.fotos;let index=index"
+        class="container d-flex justify-content-center gap-5 align-items-center mb-4"
+      >
+        <img
+          src="data:image/jpeg;base64,{{ foto.image }}"
+          style="width: 150px; height: auto"
+        />
+        <button
+          type="button"
+          class="btn btn-primary"
+          color="primary"
+          (click)="companyImg.click()"
+        >
+          Elegir Imagen
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          color="primary"
+          (click)="data.fotos.splice(index,1)"
+        >
+          Eliminar imagen
+        </button>
+        <input
+          hidden
+          (change)="onFileSelected(index)"
+          #companyImg
+          type="file"
+          [attr.id]="'compImg-'+index"
+        />
+      </div>
+      <button
+        type="button"
+        class="btn btn-primary"
+        color="primary"
+        (click)="companyImg.click()"
+      >
+        Agregar imagen
+      </button>
 
-  <input hidden (change)="onFileSelected(-1)" #companyImg type="file" [attr.id]="'compImg-'+data.fotos.length" />
-
-
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Rechazar</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+      <input
+        hidden
+        (change)="onFileSelected(-1)"
+        #companyImg
+        type="file"
+        [attr.id]="'compImg-'+data.fotos.length"
+      />
+    </div>
+    <div
+      class="gap-3 px-5 py-3 bg-dark text-white border-top d-flex justify-content-center"
+      mat-dialog-actions
+    >
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [mat-dialog-close]="data"
+        [disabled]="isNotValid()"
+      >
+        Ok
+      </button>
+      <button class="btn btn-danger" (click)="onNoClick()">Rechazar</button>
+    </div>
+  </form>
 </div>
