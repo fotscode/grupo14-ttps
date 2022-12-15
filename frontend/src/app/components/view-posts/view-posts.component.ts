@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Post } from 'src/app/interfaces/Post'
 import { EmprendimientosService } from 'src/app/services/emprendimientos.service'
 
@@ -11,19 +11,21 @@ import { EmprendimientosService } from 'src/app/services/emprendimientos.service
 export class ViewPostsComponent {
   constructor(
     private emprendimientoService: EmprendimientosService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
-  posts=[] as Post[]
+  posts = [] as Post[]
 
   ngOnInit(): void {
-    const domainUrl=this.route.snapshot.paramMap.get('domain')
+    const domainUrl = this.route.snapshot.paramMap.get('domain')
     if (domainUrl) {
       this.emprendimientoService
         .getEmprendimientoByDomain(domainUrl)
         .subscribe((res) => {
-          if(res.data.emprendimiento)
-            this.posts=res.data.emprendimiento.posts
+          if (res.data.emprendimiento)
+            this.posts = res.data.emprendimiento.posts
+          else this.router.navigate(['/Home'])
         })
     }
   }
