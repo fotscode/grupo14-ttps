@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute } from '@angular/router'
 import { Emprendimiento } from 'src/app/interfaces/Emprendimiento'
 import { Plan } from 'src/app/interfaces/Plan'
@@ -13,36 +14,41 @@ export class EditPagosComponent {
   emprendimiento = {} as Emprendimiento
   constructor(
     private route: ActivatedRoute,
-    private empService: EmprendimientosService
+    private empService: EmprendimientosService,
+    private matSnackBar: MatSnackBar
   ) {}
+
+  loading: boolean = true
+
   ngOnInit(): void {
-    const domainUrl = this.route.snapshot.paramMap.get('domain')
-    if (domainUrl) {
-      this.empService.getEmprendimientoByDomain(domainUrl).subscribe((res) => {
-        if (res.data.emprendimiento)
-          this.emprendimiento = res.data.emprendimiento
-        console.log(this.emprendimiento)
-      })
-    }
+    this.empService.getEmprendimientoWithJWT().subscribe((res) => {
+      this.loading = false
+      if (res.data.emprendimiento) this.emprendimiento = res.data.emprendimiento
+    })
   }
 
   agregarPlan() {
     this.emprendimiento.planes.push({
       titulo: '',
       descripcion: '',
-      monto: 0,
+      monto: 1,
       pagos: [],
     })
   }
 
   guardarCambios() {
-    this.empService
-      .updateEmprendimiento(this.emprendimiento)
-      .subscribe((res) => {
-        console.log(res)
+    this.empService.updateEmprendimiento(this.emprendimiento).subscribe(
+      (res) => {
         if (res.data.emprendimiento)
           this.emprendimiento = res.data.emprendimiento
-      })
+        this.matSnackBar.open('Se guardaron los cambios', void 0, {
+          duration: 3000,
+        })
+      },
+      (err) => {
+        this.matSnackBar.open('Ocurrio un error', void 0, { duration: 3000 })
+      }
+    )
   }
 
   eliminarPlan(plan: Plan) {
