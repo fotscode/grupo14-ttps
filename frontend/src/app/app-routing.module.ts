@@ -18,7 +18,7 @@ import { NegateAdminGuard } from './guards/negate-admin.guard'
 const routes: Routes = [
   { path: 'Home', component: HomeComponent },
   {
-    path: 'emprendimiento/:domain',
+    path: 'emprendimiento',
     component: EmprendimientoComponent,
     canActivate: [AuthGuard, NegateAdminGuard],
   },
@@ -35,12 +35,12 @@ const routes: Routes = [
   },
   { path: 'posts/:domain', component: ViewPostsComponent },
   {
-    path: 'editarPagos/:domain',
+    path: 'editarPagos',
     component: EditPagosComponent,
     canActivate: [AuthGuard, NegateAdminGuard],
   },
   {
-    path: 'verPagos/:domain',
+    path: 'verPagos',
     component: ViewPagosComponent,
     canActivate: [AuthGuard, NegateAdminGuard],
   },
