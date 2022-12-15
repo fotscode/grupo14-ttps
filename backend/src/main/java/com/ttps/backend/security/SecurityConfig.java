@@ -64,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         HttpMethod.POST,
                         "/api/login/",
                         "/api/user/**",
+                        "/api/token/**",
                         "/api/emprendimiento/manguito/**",
                         "/api/emprendimiento/plan/pago/**")
                 .permitAll()

@@ -121,6 +121,7 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
     public Emprendimiento update(Emprendimiento emprendimiento) {
         log.info("Actualizando emprendimiento con dominio:{}", emprendimiento.getDomainUrl());
         emprendimiento.getPlanes().forEach(p -> planRepo.save(p));
+        emprendimiento.getRedesSociales().forEach(r -> redSocialRepo.save(r));
         return emprendimientoRepo.save(emprendimiento);
     }
 

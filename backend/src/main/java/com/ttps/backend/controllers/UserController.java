@@ -1,5 +1,6 @@
 package com.ttps.backend.controllers;
 
+import com.google.gson.Gson;
 import com.ttps.backend.helpers.JWTFactory;
 import com.ttps.backend.models.AppUser;
 import com.ttps.backend.models.Response;
@@ -12,7 +13,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -69,7 +69,7 @@ public class UserController {
 
     @GetMapping("/user/roles")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<Response> listRoles(){
+    public ResponseEntity<Response> listRoles() {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(
                 Response.builder()
@@ -116,16 +116,21 @@ public class UserController {
                                 .build());
     }
 
-    @GetMapping("/token/refresh")
+    @PostMapping("/token/refresh")
     public ResponseEntity<Response> refreshToken(
             HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpStatus status;
         Map<?, ?> data = new HashMap<>();
-        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        Map<String, String> json = new Gson().fromJson(request.getReader(), Map.class);
+        String authorizationHeader = "Bearer " + json.get("refresh_token");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 status = HttpStatus.OK;
-                data = Map.of("tokens", jwtFactory.genTokensFromRequest(userService, request));
+                data =
+                        Map.of(
+                                "tokens",
+                                jwtFactory.genTokensFromRequest(
+                                        userService, request, json.get("refresh_token")));
             } catch (Exception exception) {
                 status = HttpStatus.FORBIDDEN;
                 data = Map.of("error", exception.getMessage());
@@ -144,7 +149,6 @@ public class UserController {
                                 .path("/api/token/refresh")
                                 .build());
     }
-    
 }
 
 @Data

@@ -4,17 +4,16 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.ttps.backend.models.AppUser;
 import com.ttps.backend.models.Role;
 import com.ttps.backend.services.UserService;
 
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +26,8 @@ public class JWTFactory {
             Algorithm.HMAC256("secret".getBytes()); // deberia ser la private key
 
     public Map<String, String> genTokensFromRequest(
-            UserService userService, HttpServletRequest request) {
-        String refreshToken =
-                request.getHeader(HttpHeaders.AUTHORIZATION).substring("Bearer ".length());
+            UserService userService, HttpServletRequest request, String refreshToken)
+            throws JsonSyntaxException, JsonIOException, IOException {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(refreshToken);
         String username = decodedJWT.getSubject();
@@ -55,7 +53,9 @@ public class JWTFactory {
         String accessToken =
                 JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 100))
+                        .withExpiresAt(
+                                new Date(
+                                        System.currentTimeMillis() + 2 * 60 * 60 * 1000)) // 2 horas
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim(
                                 "roles",
@@ -68,7 +68,9 @@ public class JWTFactory {
                 JWT.create()
                         .withSubject(user.getUsername())
                         .withExpiresAt(
-                                new Date(System.currentTimeMillis() + 5 * 24 * 60 * 60 * 100))
+                                new Date(
+                                        System.currentTimeMillis()
+                                                + 5 * 24 * 60 * 60 * 1000)) // 5 dias
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim(
                                 "roles",
