@@ -82,19 +82,11 @@
 }
 
 .photo-tags a:hover, .photo-tags a:focus {
-  color: #e37544;
+  background: var(--bs-primary);
 }
 
 .photo-details p {
   color: white;
-}
-
-input:disabled ~ label {
-  background: red !important;
-}
-
-input:disabled {
-  background: red;
 }
 
 input:disabled {
