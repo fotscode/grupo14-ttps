@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(
                         HttpMethod.GET,
+                        "/api/emprendimiento/post/list/**",
                         "/api/emprendimiento/list/**",
                         "/api/emprendimiento/get/**",
                         "/api/token/**",
