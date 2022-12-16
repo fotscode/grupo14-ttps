@@ -32,26 +32,6 @@
           <p>
             {{ emprendimiento.descripcion }}
           </p>
-          <div
-            class="d-flex align-items-start flex-column justify-content-start mb-4"
-          >
-            <div class="d-flex justify-content-start align-items-center">
-              <mat-checkbox
-                name="check-donations"
-                [(ngModel)]="emprendimiento.filterByDonations"
-                [disabled]="'true'"
-              ></mat-checkbox>
-              <span class="text-white">Mostrar top de donaciones</span>
-            </div>
-            <div class="d-flex justify-content-start align-items-center">
-              <mat-checkbox
-                name="check-manguitos"
-                [(ngModel)]="emprendimiento.filterByManguitos"
-                [disabled]="'true'"
-              ></mat-checkbox>
-              <span class="text-white">Mostrar top de manguitos</span>
-            </div>
-          </div>
           <div class="mt-2">
             <p *ngFor="let red of emprendimiento.redesSociales">
               <strong>{{ red.nombre }}: </strong><a [href]="red.url" target="_blank">{{ red.url }}</a>
