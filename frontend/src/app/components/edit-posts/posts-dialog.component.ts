@@ -33,9 +33,9 @@ export class PostsDialog {
       const reader = new FileReader()
 
       reader.onload = (e: any) => {
-        this.data.fotos[index].image = this._arrayBufferToBase64(
-          e.target.result
-        )
+          this.data.fotos[index].image = this._arrayBufferToBase64(
+            e.target.result
+          )
       }
       reader.readAsArrayBuffer(inputNode.files[0])
     }
