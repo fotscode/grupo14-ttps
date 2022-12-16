@@ -32,6 +32,7 @@ import { DonatePlanDialogComponent } from './components/donate-plan-dialog/donat
 import { ViewPagosComponent } from './components/view-pagos/view-pagos.component';
 import { ErrorCardComponent } from './components/error-card/error-card.component';
 import { TemplateDialogComponent } from './components/template-dialog/template-dialog.component';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { TemplateDialogComponent } from './components/template-dialog/template-d
     DonatePlanDialogComponent,
     ViewPagosComponent,
     ErrorCardComponent,
-    TemplateDialogComponent
+    TemplateDialogComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,7 @@
+.page-link:hover {
+  background: #111 !important;
+  color: #fff !important;
+}
+.page-link:focus{
+  box-shadow: none !important;
+}
