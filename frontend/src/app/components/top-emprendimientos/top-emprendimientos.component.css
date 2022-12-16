@@ -1,0 +1,20 @@
+@media screen and (max-width: 1024px) {
+  .photo-card{
+    flex-direction: column;
+  }
+
+  .photo-card *{
+    width: 100% !important;
+  }
+
+  .position{
+    border-radius:10px 10px 0 0 !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .acciones{
+    flex-direction: column;
+    gap: 1.5rem !important;
+  }
+}

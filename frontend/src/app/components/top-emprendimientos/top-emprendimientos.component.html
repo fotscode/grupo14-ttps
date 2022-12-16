@@ -1,0 +1,110 @@
+<section class="container my-5">
+  <section class="d-flex justify-content-center align-items-center mb-5 gap-5 acciones">
+    <button type="button" class="btn btn-primary" routerLink="/Home">Volver al home</button>
+    <button type="button" class="btn btn-primary" (click)="toggleVisible()">
+      Mas {{ manguitosVisible ? 'donaciones' : 'manguitos' }}
+    </button>
+  </section>
+  <div
+    class="container w-100 d-flex justify-content-center align-items-center spinner bg-dark rounded"
+    style="height: 80vh"
+    *ngIf="loading"
+  >
+    <mat-spinner color="white"></mat-spinner>
+  </div>
+  <div
+    id="emprendimientos"
+    class="d-flex flex-column justify-content-center align-items-center mx-2 gap-5"
+  >
+    <div
+      *ngFor="let emprendimiento of getEmprendimientos(); index as i; first as isFirst"
+      class="emprendimiento w-100 p-0 mt-2"
+    >
+      <div class="photo-card p-0" style="min-height: 520px; margin-top: 0px">
+        <div
+          [ngStyle]="{ background: colors[i] }"
+          style="border-radius: 10px 0 0 10px; width: 30%"
+          class="d-flex justify-content-center align-items-center flex-column text-center position"
+        >
+          <span class="display-1">#{{ i + 1 }}</span>
+          <h3>{{ cantidad(i) }}</h3>
+        </div>
+        <div
+          class="photo-background rounded-0"
+          style="overflow: hidden; max-height: 520px"
+        >
+          <img
+            class="w-100 h-100 m-auto rounded-0"
+            style="object-fit: cover"
+            src="data:image/jpg;base64, {{ emprendimiento.imagen }}"
+          />
+        </div>
+        <div class="photo-details">
+          <h1>{{ emprendimiento.nombre }}<br /></h1>
+          <p>{{ emprendimiento.descripcion }}<br /></p>
+          <div class="photo-tags">
+            <ul>
+              <li>
+                <a
+                  [routerLink]="[
+                    '/verEmprendimiento',
+                    emprendimiento.domainUrl
+                  ]"
+                  >Vista detallada</a
+                >
+              </li>
+              <li *ngIf="emprendimiento.posts.length > 0">
+                <a [routerLink]="['/posts', emprendimiento.domainUrl]"
+                  >Ver posts</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="['/donar', emprendimiento.domainUrl]">Donar</a>
+              </li>
+            </ul>
+            <div class="photo-tags" style="margin: 10px 0">
+              <div>
+                <div class="selectgroup selectgroup-pills">
+                  <label
+                    *ngFor="
+                      let categoria of emprendimiento.categorias;
+                      index as i;
+                      first as isFirst
+                    "
+                    class="selectgroup-item"
+                  >
+                    <input
+                      class="selectgroup-input"
+                      type="checkbox"
+                      name="value"
+                      value="HTML"
+                      checked
+                    />
+                    <span
+                      [ngStyle]="{ 'background-color': categoria.color }"
+                      class="selectgroup-button"
+                      >{{ categoria.nombre }}</span
+                    >
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="getEmprendimientos().length == 0"
+    class="d-flex justify-content-center align-items-center container"
+  >
+    <app-error-card
+      [condition]="!loading && getEmprendimientos().length == 0"
+      [title]="
+        'Esto es incomodo, no existen emprendimientos que coincidan con tu
+          busqueda'
+      "
+      [message]="'Esperare a que se llene...'"
+    ></app-error-card>
+  </div>
+</section>

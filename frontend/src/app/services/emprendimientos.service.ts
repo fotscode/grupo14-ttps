@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core'
 import { environment } from 'src/environments/environment'
 import { Emprendimiento } from '../interfaces/Emprendimiento'
 import { EmprendimientoResponse } from '../interfaces/responses/EmprendimientosResponse'
+import { TopEmprendimientosResponse } from '../interfaces/responses/TopEmprendimientosResponse'
 
 @Injectable({
   providedIn: 'root',
@@ -42,9 +43,7 @@ export class EmprendimientosService {
     )
   }
 
-  getEmprendimientosLength(category: string = '', search: string = '') {
-    return this.http.get<EmprendimientoResponse>(this.URL + '/list/size', {
-      params: { category, search },
-    })
+  getTopEmprendimientos() {
+    return this.http.get<TopEmprendimientosResponse>(this.URL + '/top')
   }
 }

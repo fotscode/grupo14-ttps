@@ -9,6 +9,7 @@ import { ErrorNotFoundComponent } from './components/error-not-found/error-not-f
 import { HomeComponent } from './components/home/home.component'
 import { LoginComponent } from './components/login/login.component'
 import { SignupComponent } from './components/signup/signup.component'
+import { TopEmprendimientosComponent } from './components/top-emprendimientos/top-emprendimientos.component'
 import { ViewEmprendimientoComponent } from './components/view-emprendimiento/view-emprendimiento.component'
 import { ViewPagosComponent } from './components/view-pagos/view-pagos.component'
 import { ViewPostsComponent } from './components/view-posts/view-posts.component'
@@ -24,6 +25,7 @@ const routes: Routes = [
     component: EmprendimientoComponent,
     canActivate: [AuthGuard, NegateAdminGuard],
   },
+  { path: 'top', component: TopEmprendimientosComponent },
   {
     path: 'verEmprendimiento/:domain',
     component: ViewEmprendimientoComponent,

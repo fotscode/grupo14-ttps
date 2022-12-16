@@ -35,6 +35,7 @@ import { TemplateDialogComponent } from './components/template-dialog/template-d
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { ViewEmprendimientoComponent } from './components/view-emprendimiento/view-emprendimiento.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
+import { TopEmprendimientosComponent } from './components/top-emprendimientos/top-emprendimientos.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { ErrorNotFoundComponent } from './components/error-not-found/error-not-f
     TemplateDialogComponent,
     PaginatorComponent,
     ViewEmprendimientoComponent,
-    ErrorNotFoundComponent
+    ErrorNotFoundComponent,
+    TopEmprendimientosComponent
   ],
   imports: [
     BrowserModule,
