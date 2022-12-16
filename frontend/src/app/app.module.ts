@@ -33,6 +33,8 @@ import { ViewPagosComponent } from './components/view-pagos/view-pagos.component
 import { ErrorCardComponent } from './components/error-card/error-card.component';
 import { TemplateDialogComponent } from './components/template-dialog/template-dialog.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { ViewEmprendimientoComponent } from './components/view-emprendimiento/view-emprendimiento.component';
+import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
     ViewPagosComponent,
     ErrorCardComponent,
     TemplateDialogComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    ViewEmprendimientoComponent,
+    ErrorNotFoundComponent
   ],
   imports: [
     BrowserModule,

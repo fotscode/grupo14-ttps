@@ -54,7 +54,7 @@
   </div>
   <div
     id="emprendimientos"
-    class="row row-cols-3 d-flex justify-content-center align-items-center mx-2 gap-5"
+    class="row row-cols-3 d-flex justify-content-center align-items-center mx-2 gap-5 mb-5"
   >
     <div
       *ngFor="
@@ -62,8 +62,8 @@
         index as i;
         first as isFirst
       "
-      class="col emprendimiento"
-      style="width: 100%; max-width: 700px; padding: 0px; margin-top: 20px"
+      class="col emprendimiento w-100 p-0 mt-2"
+      style="max-width: 700px"
     >
       <div
         class="photo-card"
@@ -84,6 +84,9 @@
           <p>{{ emprendimiento.descripcion }}<br /></p>
           <div class="photo-tags">
             <ul>
+              <li>
+                <a [routerLink]="['/verEmprendimiento', emprendimiento.domainUrl]">Vista detallada</a>
+              </li>
               <li *ngIf="emprendimiento.posts.length > 0">
                 <a [routerLink]="['/posts', emprendimiento.domainUrl]"
                   >Ver posts</a

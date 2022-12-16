@@ -5,9 +5,11 @@ import { DonateComponent } from './components/donate/donate.component'
 import { EditPagosComponent } from './components/edit-pagos/edit-pagos.component'
 import { EditPostsComponent } from './components/edit-posts/edit-posts.component'
 import { EmprendimientoComponent } from './components/emprendimiento/emprendimiento.component'
+import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component'
 import { HomeComponent } from './components/home/home.component'
 import { LoginComponent } from './components/login/login.component'
 import { SignupComponent } from './components/signup/signup.component'
+import { ViewEmprendimientoComponent } from './components/view-emprendimiento/view-emprendimiento.component'
 import { ViewPagosComponent } from './components/view-pagos/view-pagos.component'
 import { ViewPostsComponent } from './components/view-posts/view-posts.component'
 import { AdminGuard } from './guards/admin.guard'
@@ -21,6 +23,10 @@ const routes: Routes = [
     path: 'emprendimiento',
     component: EmprendimientoComponent,
     canActivate: [AuthGuard, NegateAdminGuard],
+  },
+  {
+    path: 'verEmprendimiento/:domain',
+    component: ViewEmprendimientoComponent,
   },
   { path: 'login', component: LoginComponent, canActivate: [LoggedInGuard] },
   {
@@ -50,6 +56,7 @@ const routes: Routes = [
     component: CategoriesComponent,
     canActivate: [AuthGuard, AdminGuard],
   },
+  { path: '404', component: ErrorNotFoundComponent },
   { path: '**', redirectTo: 'Home' },
 ]
 
