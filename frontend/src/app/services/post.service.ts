@@ -8,18 +8,26 @@ import { PostResponse } from '../interfaces/responses/PostResponse'
   providedIn: 'root',
 })
 export class PostService {
-  private URL = environment.baseApiUrl
+  private URL = `${environment.baseApiUrl}/emprendimiento/post/`
   constructor(private http: HttpClient) {}
 
-  getPosts() {
-    return this.http.get<PostResponse>(this.URL + '/emprendimiento/post/list/')
+  getPosts(page: number, limit: number) {
+    return this.http.get<PostResponse>(this.URL + 'list/', {
+      params: { page, limit },
+    })
+  }
+
+  getPostsByDomain(domain: string, page: number, limit: number) {
+    return this.http.get<PostResponse>(this.URL + 'list/' + domain, {
+      params: { page, limit },
+    })
   }
 
   deletePost(id: number) {
-    return this.http.delete<PostResponse>(this.URL + '/emprendimiento/post/delete/' + id)
+    return this.http.delete<PostResponse>(this.URL + 'delete/' + id)
   }
 
   updatePost(post: Post) {
-    return this.http.put<PostResponse>(this.URL + '/emprendimiento/post/update/', post)
+    return this.http.put<PostResponse>(this.URL + 'update/', post)
   }
 }

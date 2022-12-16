@@ -64,4 +64,11 @@
       </div>
     </div>
   </section>
+  <app-paginator
+    [cantidadPaginas]="cantidadPaginas"
+    [paginaActual]="paginaActual"
+    (paginaSeleccionada)="getPosts($event)"
+    class="mb-3"
+  >
+  </app-paginator>
 </section>

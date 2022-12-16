@@ -13,6 +13,9 @@ import { PostsDialog } from './posts-dialog.component'
 })
 export class EditPostsComponent implements OnInit {
   posts: Post[] = []
+  cantidadPaginas = 0
+  paginaActual = 0
+  cantidadElementos = 6
 
   emptyPost: Post = {
     titulo: '',
@@ -23,7 +26,7 @@ export class EditPostsComponent implements OnInit {
 
   index = 0
   constructor(
-    public popup:MatDialog,
+    public popup: MatDialog,
     private matSnackBar: MatSnackBar,
     private postService: PostService,
     public dialog: MatDialog
@@ -32,24 +35,34 @@ export class EditPostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.postService.getPosts().subscribe((res) => {
+    this.getPosts()
+  }
+
+  getPosts(page: number = 0) {
+    this.loading = true
+    this.paginaActual = page
+    this.postService.getPosts(page, this.cantidadElementos).subscribe((res) => {
       this.loading = false
       if (res.data.posts) this.posts = res.data.posts
+      if (res.data.length)
+        this.cantidadPaginas = Math.ceil(
+          res.data.length / this.cantidadElementos
+        )
     })
   }
 
-  deletePostAttempt(id:number | undefined){
-    const dialogConfig=new MatDialogConfig()
-    dialogConfig.disableClose=true
-    dialogConfig.autoFocus=false
-    dialogConfig.width='50%'
-    dialogConfig.data={
-      title:'Eliminar Post',
-      dialog:'eliminar el post'
+  deletePostAttempt(id: number | undefined) {
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = false
+    dialogConfig.width = '50%'
+    dialogConfig.data = {
+      title: 'Eliminar Post',
+      dialog: 'eliminar el post',
     }
-    const reference=this.popup.open(TemplateDialogComponent,dialogConfig)
-    reference.afterClosed().subscribe((res)=>{
-      if(res){
+    const reference = this.popup.open(TemplateDialogComponent, dialogConfig)
+    reference.afterClosed().subscribe((res) => {
+      if (res) {
         this.deletePost(id)
       }
     })
@@ -77,8 +90,7 @@ export class EditPostsComponent implements OnInit {
               if (p.id === result.id) return result
               return p
             })
-            if (!result.id && res.data.post) 
-             this.posts.push(res.data.post)
+            if (!result.id && res.data.post) this.posts.unshift(res.data.post)
             this.matSnackBar.open('Se guardaron los cambios', void 0, {
               duration: 3000,
             })
