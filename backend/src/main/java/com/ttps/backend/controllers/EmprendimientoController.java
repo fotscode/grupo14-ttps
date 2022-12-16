@@ -36,32 +36,24 @@ public class EmprendimientoController {
 
     @GetMapping("/list")
     public ResponseEntity<Response> getEmprendimientos(
-            @RequestParam int page, @RequestParam int limit,@RequestParam String category, @RequestParam String search) {
+            @RequestParam int page,
+            @RequestParam int limit,
+            @RequestParam String category,
+            @RequestParam String search) {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
                         .data(
                                 Map.of(
                                         "emprendimientos",
-                                        emprendimientoService.list(limit, page, category, search)))
+                                        emprendimientoService.list(limit, page, category, search),
+                                        "length",
+                                        emprendimientoService.getEmprendimientosCount(
+                                                category, search)))
                         .message("Emprendimientos retornados")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
                         .path("/api/emprendimiento/list")
-                        .build());
-    }
-
-    @GetMapping("/list/size")
-    public ResponseEntity<Response> getEmprendimientosSize(@RequestParam String category, @RequestParam String search) {
-        log.info("Obteniendo cantidad de emprendimientos");
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(LocalDateTime.now())
-                        .data(Map.of("cantidad", emprendimientoService.getEmprendimientosCount(category, search)))
-                        .message("Cantidad de mprendimientos retornado")
-                        .status(HttpStatus.OK)
-                        .statusCode(HttpStatus.OK.value())
-                        .path("/api/emprendimiento/list/size")
                         .build());
     }
 
