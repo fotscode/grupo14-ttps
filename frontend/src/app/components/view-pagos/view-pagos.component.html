@@ -26,7 +26,7 @@
     *ngIf="manguitosVisible"
   >
     <app-error-card
-      [condition]="!isManguitosVisible()"
+      [condition]="!loadingManguitos && !isManguitosVisible()"
       [title]="'Esto es incomodo, no existen Manguitos acreditados actualmente'"
       [message]="'Esperare a que se llene...'"
     ></app-error-card>
@@ -55,7 +55,7 @@
     *ngIf="!manguitosVisible"
   >
     <app-error-card
-      [condition]="!isPlanesVisible()"
+      [condition]="!loadingPagosPlan && !isPlanesVisible()"
       [title]="
         'Esto es incomodo, no existen pagos a planes acreditados actualmente'
       "
