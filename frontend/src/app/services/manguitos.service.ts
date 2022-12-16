@@ -8,15 +8,15 @@ import { ManguitosResponse } from '../interfaces/responses/ManguitosResponse';
   providedIn: 'root'
 })
 export class ManguitosService {
-  private URL =`${environment.baseApiUrl}/emprendimiento/manguito`
+  private URL = `${environment.baseApiUrl}/emprendimiento/manguito`
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getManguitos(){
-    return this.http.get<ManguitosResponse>(`${this.URL}/list`)
+  getManguitos(page: number, limit: number) {
+    return this.http.get<ManguitosResponse>(`${this.URL}/list`, { params: { page, limit } })
   }
 
-  saveManguito(manguito:Manguito,idEmp:number){
+  saveManguito(manguito: Manguito, idEmp: number) {
     return this.http.post(`${this.URL}/save/${idEmp}`, manguito)
   }
 }

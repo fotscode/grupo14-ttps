@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,20 +33,23 @@ public class PagoPlanController {
 
     @GetMapping("/list")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<Response> getPagoPlans() {
+    public ResponseEntity<Response> getPagoPlans(@RequestParam int page, @RequestParam int limit) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<PagoPlan> payments =
+                userService.getUser(user).getEmprendimiento().getPlanes().stream()
+                        .flatMap(p -> p.getPagos().stream())
+                        .toList();
+        int start = page * limit;
+        int end = Math.min(start + limit, payments.size());
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
                         .data(
                                 Map.of(
                                         "pagosPlanes",
-                                        userService
-                                                .getUser(user)
-                                                .getEmprendimiento()
-                                                .getPlanes()
-                                                .stream()
-                                                .flatMap(p -> p.getPagos().stream())))
+                                        payments.subList(start, end),
+                                        "length",
+                                        payments.size()))
                         .message("Pagos a planes retornados")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())

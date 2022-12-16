@@ -7,7 +7,7 @@ import com.ttps.backend.models.Post;
 public interface PostService {
     Post get(Long id);
 
-    Collection<Post> list(int limit);
+    Collection<Post> list(int limit, int page);
 
     Post create(Post post);
 

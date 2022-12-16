@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Post } from 'src/app/interfaces/Post'
-import { EmprendimientosService } from 'src/app/services/emprendimientos.service'
+import { PostService } from 'src/app/services/post.service'
 
 @Component({
   selector: 'app-view-posts',
@@ -10,24 +10,35 @@ import { EmprendimientosService } from 'src/app/services/emprendimientos.service
 })
 export class ViewPostsComponent {
   constructor(
-    private emprendimientoService: EmprendimientosService,
+    private postsService: PostService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
+  cantidadPaginas = 0
+  paginaActual = 0
+  cantidadElementos = 4
+  private domainUrl: string = ''
 
   loading = true
   posts = [] as Post[]
 
   ngOnInit(): void {
-    const domainUrl = this.route.snapshot.paramMap.get('domain')
-    if (domainUrl) {
-      this.emprendimientoService
-        .getEmprendimientoByDomain(domainUrl)
+    this.domainUrl = this.route.snapshot.paramMap.get('domain') || ''
+    this.getPosts()
+  }
+  getPosts(page: number = 0) {
+    this.loading = true
+    this.paginaActual = page
+    if (this.domainUrl) {
+      this.postsService
+        .getPostsByDomain(this.domainUrl, page, this.cantidadElementos)
         .subscribe((res) => {
           this.loading = false
-          if (res.data.emprendimiento)
-            this.posts = res.data.emprendimiento.posts
-          else this.router.navigate(['/Home'])
+          if (res.data.posts) this.posts = res.data.posts
+          if (res.data.length)
+            this.cantidadPaginas = Math.ceil(
+              res.data.length / this.cantidadElementos
+            )
         })
     }
   }

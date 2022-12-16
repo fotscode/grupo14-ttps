@@ -9,6 +9,7 @@ import com.ttps.backend.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -32,18 +35,20 @@ public class ManguitoController {
 
     @GetMapping("/list")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<Response> getManguitos() {
+    public ResponseEntity<Response> getManguitos(@RequestParam int page, @RequestParam int limit) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Manguito> manguitos = userService.getUser(user).getEmprendimiento().getManguitos();
+        int start = page * limit;
+        int end = Math.min(start + limit, manguitos.size());
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
                         .data(
                                 Map.of(
                                         "manguitos",
-                                        userService
-                                                .getUser(user)
-                                                .getEmprendimiento()
-                                                .getManguitos()))
+                                        manguitos.subList(start, end),
+                                        "length",
+                                        manguitos.size()))
                         .message("Manguitos retornados")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())

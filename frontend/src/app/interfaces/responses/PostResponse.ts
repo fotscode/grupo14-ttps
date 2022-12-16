@@ -7,5 +7,5 @@ export interface PostResponse {
   message: string
   developerMessage: string
   path: string
-  data: { posts?: Post[], post?: Post }
+  data: { posts?: Post[], post?: Post, length?: number }
 }

@@ -31,9 +31,9 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public Collection<Plan> list(int limit) {
+    public Collection<Plan> list(int limit, int page) {
         log.info("Listando planes");
-        return planRepo.findAll(PageRequest.of(0, limit)).toList();
+        return planRepo.findAll(PageRequest.of(page, limit)).toList();
     }
 
     @Override

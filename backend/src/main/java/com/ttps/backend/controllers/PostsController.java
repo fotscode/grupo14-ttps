@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,15 +37,33 @@ public class PostsController {
 
     @GetMapping("/list")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<Response> getPosts() {
+    public ResponseEntity<Response> getPosts(@RequestParam int page, @RequestParam int limit) {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Post> posts = userService.getUser(user).getEmprendimiento().getPosts();
+        int start = page * limit;
+        int end = Math.min(start + limit, posts.size());
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
-                        .data(
-                                Map.of(
-                                        "posts",
-                                        userService.getUser(user).getEmprendimiento().getPosts()))
+                        .data(Map.of("posts", posts.subList(start, end), "length", posts.size()))
+                        .message("Posts retornados")
+                        .status(HttpStatus.OK)
+                        .statusCode(HttpStatus.OK.value())
+                        .path("/api/emprendimiento/post/list")
+                        .build());
+    }
+
+    @GetMapping("/list/{domain}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<Response> getPostsOfDomain(
+            @RequestParam int page, @RequestParam int limit, @PathVariable String domain) {
+        List<Post> posts = emprendimientoService.get(domain).getPosts();
+        int start = page * limit;
+        int end = Math.min(start + limit, posts.size());
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .data(Map.of("posts", posts.subList(start, end), "length", posts.size()))
                         .message("Posts retornados")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
@@ -70,7 +90,7 @@ public class PostsController {
                                 .message(msg)
                                 .status(status)
                                 .statusCode(status.value())
-                                .path("/api/emprendimiento/post/get/"+id)
+                                .path("/api/emprendimiento/post/get/" + id)
                                 .build());
     }
 

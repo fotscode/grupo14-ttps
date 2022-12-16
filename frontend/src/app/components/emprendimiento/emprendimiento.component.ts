@@ -31,9 +31,8 @@ export class EmprendimientoComponent {
       .getEmprendimientoWithJWT()
       .subscribe((res) => {
         this.loading = false
-        if(res.data.emprendimiento){
+        if(res.data.emprendimiento)
           this.emprendimiento = res.data.emprendimiento
-        }
       })
   }
 

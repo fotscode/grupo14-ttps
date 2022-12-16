@@ -145,50 +145,9 @@
   class="d-xxl-flex justify-content-xxl-center"
   style="text-align: center; margin-top: 25px"
 >
-  <nav
-    class="text-secondary d-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center justify-content-xxl-center"
-  >
-    <ul
-      class="pagination"
-      style="
-        /*background-color: red !important;*/
-        --bs-pagination-disabled-bg: #27262e !important;
-        --bs-pagination-disabled-color: white !important;
-      "
-    >
-      <li class="page-item">
-        <button
-          class="page-link bg-dark text-white"
-          (click)="getEmprendimientos(pageNumber - 1)"
-          *ngIf="pageNumber > 0"
-          aria-label="Previous"
-          style="border-top-left-radius: 5px; border-bottom-left-radius: 5px"
-        >
-          <span aria-hidden="true">«</span>
-        </button>
-      </li>
-      <li
-        class="page-item"
-        *ngFor="let x of counter(cantidadPaginas); let index = index"
-      >
-        <button
-          class="page-link bg-dark text-white"
-          (click)="getEmprendimientos(index)"
-        >
-          {{ index + 1 }}
-        </button>
-      </li>
-      <li class="page-item">
-        <button
-          class="page-link bg-dark text-white"
-          aria-label="Next"
-          (click)="getEmprendimientos(pageNumber + 1)"
-          *ngIf="pageNumber < cantidadPaginas - 1"
-          style="border-top-right-radius: 5px; border-bottom-right-radius: 5px"
-        >
-          <span aria-hidden="true">»</span>
-        </button>
-      </li>
-    </ul>
-  </nav>
+  <app-paginator
+    [cantidadPaginas]="cantidadPaginas"
+    [paginaActual]="pageNumber"
+    (paginaSeleccionada)="getEmprendimientos($event)"
+  ></app-paginator>
 </section>

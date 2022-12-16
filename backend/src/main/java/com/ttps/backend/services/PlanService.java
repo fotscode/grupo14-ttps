@@ -8,7 +8,7 @@ import com.ttps.backend.models.Plan;
 public interface PlanService {
     Plan get(Long id);
 
-    Collection<Plan> list(int limit);
+    Collection<Plan> list(int limit, int page);
 
     Plan create(Plan plan);
 

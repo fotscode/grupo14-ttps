@@ -7,7 +7,7 @@ import com.ttps.backend.models.PagoPlan;
 public interface PagoPlanService {
     PagoPlan get(Long id);
 
-    Collection<PagoPlan> list(int limit);
+    Collection<PagoPlan> list(int limit, int page);
 
     PagoPlan create(PagoPlan pagoPlan);
 
