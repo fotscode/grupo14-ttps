@@ -72,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         HttpMethod.GET,
                         "/api/emprendimiento/post/list/**",
                         "/api/emprendimiento/list/**",
+                        "/api/emprendimiento/top/**",
                         "/api/emprendimiento/get/**",
                         "/api/token/**",
                         "/api/categoria/**")

@@ -1,6 +1,8 @@
 package com.ttps.backend.controllers;
 
 import com.ttps.backend.models.Emprendimiento;
+import com.ttps.backend.models.Manguito;
+import com.ttps.backend.models.PagoPlan;
 import com.ttps.backend.models.Response;
 import com.ttps.backend.services.EmprendimientoService;
 import com.ttps.backend.services.UserService;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -54,6 +58,55 @@ public class EmprendimientoController {
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
                         .path("/api/emprendimiento/list")
+                        .build());
+    }
+
+    @GetMapping("/top")
+    public ResponseEntity<Response> getEmprendimientosTop() {
+        List<Emprendimiento> topManguitos =
+                emprendimientoService.list(9999, 0, "", "").stream()
+                        .filter(
+                                emprendimiento ->
+                                        emprendimiento.getFilterByManguitos()
+                                                && emprendimiento.getManguitos().size() > 0)
+                        .sorted(
+                                Comparator.comparingInt(
+                                        emprendimiento ->
+                                                emprendimiento.getManguitos().stream()
+                                                        .mapToInt(Manguito::getCantidad)
+                                                        .sum()))
+                        .limit(5)
+                        .toList();
+        List<Emprendimiento> topDonaciones =
+                emprendimientoService.list(9999, 0, "", "").stream()
+                        .filter(
+                                emprendimiento ->
+                                        emprendimiento.getFilterByDonations()
+                                                && emprendimiento.getPlanes().stream()
+                                                                .flatMap(p -> p.getPagos().stream())
+                                                                .count()
+                                                        > 0)
+                        .sorted(
+                                Comparator.comparingDouble(
+                                        emprendimiento ->
+                                                emprendimiento.getPlanes().stream()
+                                                        .flatMapToDouble(
+                                                                p ->
+                                                                        p.getPagos().stream()
+                                                                                .mapToDouble(
+                                                                                        PagoPlan
+                                                                                                ::getMonto))
+                                                        .sum()))
+                        .limit(5)
+                        .toList();
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .data(Map.of("topManguitos", topManguitos, "topDonaciones", topDonaciones))
+                        .message("Emprendimientos retornados")
+                        .status(HttpStatus.OK)
+                        .statusCode(HttpStatus.OK.value())
+                        .path("/api/emprendimiento/top")
                         .build());
     }
 

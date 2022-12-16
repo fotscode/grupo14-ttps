@@ -67,7 +67,7 @@ public class PostsController {
                         .message("Posts retornados")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
-                        .path("/api/emprendimiento/post/list")
+                        .path("/api/emprendimiento/post/list/"+domain)
                         .build());
     }
 
