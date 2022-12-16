@@ -1,4 +1,6 @@
-<div class="p-5 d-flex justify-content-center align-items-center flex-column">
+<div
+  class="pt-5 d-flex justify-content-center align-items-center flex-column container"
+>
   <button type="button" class="btn btn-primary mb-5" (click)="toggleTable()">
     Ver <span *ngIf="manguitosVisible">pagos de planes</span
     ><span *ngIf="!manguitosVisible">manguitos</span>
@@ -6,13 +8,21 @@
   <div
     class="container w-100 d-flex justify-content-center align-items-center spinner"
     style="height: 80vh"
-    *ngIf="loading"
+    *ngIf="loadingManguitos && manguitosVisible"
+  >
+    <mat-spinner class="bg-none"></mat-spinner>
+  </div>
+  <div
+    class="container w-100 d-flex justify-content-center align-items-center spinner"
+    style="height: 80vh"
+    *ngIf="loadingPagosPlan && manguitosVisible"
   >
     <mat-spinner class="bg-none"></mat-spinner>
   </div>
   <table
     id="tableComponent"
-    class="table table-bordered table-striped text-white table-dark"
+    class="table table-responsive table-bordered table-striped text-white table-dark"
+    [ngClass]="{ 'mb-5': cantidadPaginasManguitos == 1 }"
     *ngIf="manguitosVisible"
   >
     <app-error-card
@@ -40,7 +50,8 @@
   </table>
   <table
     id="tableComponent"
-    class="table table-bordered table-striped text-white table-dark"
+    class="table table-bordered table-striped text-white table-dark mb-5"
+    [ngClass]="{ 'mb-5': cantidadPaginasPagos == 1 }"
     *ngIf="!manguitosVisible"
   >
     <app-error-card
@@ -65,4 +76,18 @@
       </tr>
     </tbody>
   </table>
+  <app-paginator
+    [cantidadPaginas]="cantidadPaginasManguitos"
+    [paginaActual]="paginaActualManguitos"
+    (paginaSeleccionada)="getManguitos($event)"
+    *ngIf="manguitosVisible"
+  >
+  </app-paginator>
+  <app-paginator
+    [cantidadPaginas]="cantidadPaginasPagos"
+    [paginaActual]="paginaActualPagos"
+    (paginaSeleccionada)="getPagosPlan($event)"
+    *ngIf="!manguitosVisible"
+  >
+  </app-paginator>
 </div>

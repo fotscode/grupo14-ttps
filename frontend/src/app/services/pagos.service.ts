@@ -9,10 +9,10 @@ import { Pago } from '../interfaces/Pago'
 export class PagosService {
   private URL = environment.baseApiUrl + '/emprendimiento/plan/pago'
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getPagos() {
-    return this.http.get(`${this.URL}/list`)
+  getPagos(page: number, limit: number) {
+    return this.http.get(`${this.URL}/list`, { params: { page, limit } })
   }
 
   savePago(pago: Pago, idPlan: number) {

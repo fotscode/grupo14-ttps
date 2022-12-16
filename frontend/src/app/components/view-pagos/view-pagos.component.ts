@@ -10,26 +10,60 @@ import { PagosService } from 'src/app/services/pagos.service'
   styleUrls: ['./view-pagos.component.css'],
 })
 export class ViewPagosComponent {
-  manguitos = [] as Manguito[]
-  columnasManguito = ['Nombre', 'Fecha', 'Cantidad', 'Monto']
-  columnasPagosPlan = ['Nombre', 'Fecha', 'Monto', 'Mensaje', 'Contacto']
   manguitosVisible = true
+  cantidadElementos = 14
+
+  columnasManguito = ['Nombre', 'Fecha', 'Cantidad', 'Monto']
+  manguitos = [] as Manguito[]
+  loadingManguitos: boolean = true
+  paginaActualManguitos = 0
+  cantidadPaginasManguitos = 0
+
+  columnasPagosPlan = ['Nombre', 'Fecha', 'Monto', 'Mensaje', 'Contacto']
   pagosPlan = [] as Pago[]
-  loading:boolean=true
+  loadingPagosPlan: boolean = true
+  paginaActualPagos = 0
+  cantidadPaginasPagos = 0
+  
   constructor(
     private manguitosService: ManguitosService,
     private pagosService: PagosService
   ) {}
 
   ngOnInit(): void {
-    this.manguitosService.getManguitos().subscribe((res: any) => {
-      //TODO: fix this interface
-      this.loading=false
-      if (res.data.manguitos) this.manguitos = res.data.manguitos
-    })
-    this.pagosService.getPagos().subscribe((res: any) => {
-      if (res.data.pagosPlanes) this.pagosPlan = res.data.pagosPlanes
-    })
+    this.getManguitos()
+    this.getPagosPlan()
+  }
+
+  getManguitos(page: number = 0) {
+    this.paginaActualManguitos = page
+    this.loadingManguitos = true
+    this.manguitosService
+      .getManguitos(page, this.cantidadElementos)
+      .subscribe((res: any) => {
+        //TODO: fix this interface
+        this.loadingManguitos = false
+        if (res.data.manguitos) this.manguitos = res.data.manguitos
+        if (res.data.length)
+          this.cantidadPaginasManguitos = Math.ceil(
+            res.data.length / this.cantidadElementos
+          )
+      })
+  }
+
+  getPagosPlan(page: number = 0) {
+    this.paginaActualPagos = page
+    this.loadingPagosPlan = true
+    this.pagosService
+      .getPagos(page, this.cantidadElementos)
+      .subscribe((res: any) => {
+        this.loadingPagosPlan = false
+        if (res.data.pagosPlanes) this.pagosPlan = res.data.pagosPlanes
+        if (res.data.length)
+          this.cantidadPaginasPagos = Math.ceil(
+            res.data.length / this.cantidadElementos
+          )
+      })
   }
 
   getFecha(fecha: Date): string {
@@ -39,12 +73,12 @@ export class ViewPagosComponent {
   toggleTable() {
     this.manguitosVisible = !this.manguitosVisible
   }
-  
-  isManguitosVisible(){
-    return (this.manguitos.length>0)
+
+  isManguitosVisible() {
+    return this.manguitos.length > 0
   }
 
-  isPlanesVisible(){
-    return (this.pagosPlan.length>0)
+  isPlanesVisible() {
+    return this.pagosPlan.length > 0
   }
 }

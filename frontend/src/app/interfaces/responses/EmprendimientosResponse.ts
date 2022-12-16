@@ -7,5 +7,5 @@ export interface EmprendimientoResponse{
     message: string
     developerMessage: string
     path: string
-    data: { emprendimientos?: Emprendimiento[], emprendimiento?: Emprendimiento }
+    data: { emprendimientos?: Emprendimiento[], emprendimiento?: Emprendimiento, length?:number }
 }
