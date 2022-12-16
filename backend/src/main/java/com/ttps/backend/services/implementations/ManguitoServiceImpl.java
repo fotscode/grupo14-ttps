@@ -28,9 +28,9 @@ public class ManguitoServiceImpl implements ManguitoService {
     }
 
     @Override
-    public Collection<Manguito> list(int limit) {
+    public Collection<Manguito> list(int limit, int page) {
         log.info("Listando manguitos");
-        return manguitoRepo.findAll(PageRequest.of(0, limit)).toList();
+        return manguitoRepo.findAll(PageRequest.of(page, limit)).toList();
     }
 
     @Override

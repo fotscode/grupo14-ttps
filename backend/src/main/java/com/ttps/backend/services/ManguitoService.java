@@ -7,7 +7,7 @@ import com.ttps.backend.models.Manguito;
 public interface ManguitoService {
     Manguito get(Long id);
 
-    Collection<Manguito> list(int limit);
+    Collection<Manguito> list(int limit, int page);
 
     Manguito create(Manguito manguito);
 

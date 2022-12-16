@@ -28,9 +28,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Collection<Post> list(int limit) {
+    public Collection<Post> list(int limit, int page) {
         log.info("Listando posts");
-        return postRepo.findAll(PageRequest.of(0, limit)).toList();
+        return postRepo.findAll(PageRequest.of(page, limit)).toList();
     }
 
     @Override

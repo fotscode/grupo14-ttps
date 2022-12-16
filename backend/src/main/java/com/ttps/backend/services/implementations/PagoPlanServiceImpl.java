@@ -28,9 +28,9 @@ public class PagoPlanServiceImpl implements PagoPlanService {
     }
 
     @Override
-    public Collection<PagoPlan> list(int limit) {
+    public Collection<PagoPlan> list(int limit, int page) {
         log.info("Listando pagos de planes");
-        return pagoPlanRepo.findAll(PageRequest.of(0, limit)).toList();
+        return pagoPlanRepo.findAll(PageRequest.of(page, limit)).toList();
     }
 
     @Override
