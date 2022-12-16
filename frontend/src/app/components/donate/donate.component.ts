@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute } from '@angular/router'
 import { Emprendimiento } from 'src/app/interfaces/Emprendimiento'
 import { Manguito } from 'src/app/interfaces/Manguito'
@@ -27,13 +28,15 @@ export class DonateComponent {
     monto: 0,
     mensaje: '',
   }
+  loading:boolean=true
 
   constructor(
     private empService: EmprendimientosService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private manguitoService: ManguitosService,
-    private pagosService: PagosService
+    private pagosService: PagosService,
+    private matSnackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +47,7 @@ export class DonateComponent {
           this.emprendimiento = res.data.emprendimiento
           this.emprendimiento.planes.sort((a, b) => a.monto - b.monto)
           this.emptyManguito.monto = this.emprendimiento.valorManguito
+          this.loading=false
         }
       })
   }
@@ -51,7 +55,7 @@ export class DonateComponent {
   openDialog(): void {
     const dialogRef = this.dialog.open(DonateDialogComponent, {
       width: '80%',
-      maxWidth:800,
+      maxWidth: 800,
       data: { ...this.emptyManguito },
     })
 
@@ -61,10 +65,16 @@ export class DonateComponent {
           .saveManguito(result, this.emprendimiento.id)
           .subscribe(
             (res) => {
-              console.log(res)
+              this.matSnackBar.open('Manguitos recibidos con éxito', void 0, {
+                duration: 2000,
+              })
             },
             (err) => {
-              console.log(err)
+              this.matSnackBar.open(
+                'Hubo un error al enviar los manguitos',
+                void 0,
+                { duration: 2000 }
+              )
             }
           )
       }
@@ -83,7 +93,7 @@ export class DonateComponent {
   openPlanDialog(plan: Plan) {
     const dialogRef = this.dialog.open(DonatePlanDialogComponent, {
       width: '90%',
-      maxWidth:800,
+      maxWidth: 800,
       data: { ...this.createPago(plan) },
     })
 
@@ -91,10 +101,16 @@ export class DonateComponent {
       if (result && plan.id) {
         this.pagosService.savePago(result, plan.id).subscribe(
           (res) => {
-            console.log(res)
+            this.matSnackBar.open('Pago de plan recibido con éxito', void 0, {
+              duration: 2000,
+            })
           },
           (err) => {
-            console.log(err)
+            this.matSnackBar.open(
+              'Hubo un error al enviar el pago del plan',
+              void 0,
+              { duration: 2000 }
+            )
           }
         )
       }

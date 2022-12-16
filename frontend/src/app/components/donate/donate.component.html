@@ -1,4 +1,7 @@
-<section class="py-5 d-flex flex-column justify-content-center align-items-center">
+<section class="d-flex container justify-content-center align-items-center" style="height:80vh" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</section>
+<section *ngIf="!loading" class="py-5 d-flex flex-column justify-content-center align-items-center">
   <div class="row mb-3 w-100 d-flex">
     <div class="text-center mx-auto p-0 w-100" style="color: white">
       <h2 class="fw-bold">Donar a {{ emprendimiento.nombre }}</h2>
