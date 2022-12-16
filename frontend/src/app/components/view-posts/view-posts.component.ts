@@ -29,17 +29,20 @@ export class ViewPostsComponent {
   getPosts(page: number = 0) {
     this.loading = true
     this.paginaActual = page
-    if (this.domainUrl) {
-      this.postsService
-        .getPostsByDomain(this.domainUrl, page, this.cantidadElementos)
-        .subscribe((res) => {
+    this.postsService
+      .getPostsByDomain(this.domainUrl, page, this.cantidadElementos)
+      .subscribe(
+        (res) => {
           this.loading = false
           if (res.data.posts) this.posts = res.data.posts
           if (res.data.length)
             this.cantidadPaginas = Math.ceil(
               res.data.length / this.cantidadElementos
             )
-        })
-    }
+        },
+        (err) => {
+          this.router.navigate(['/404'])
+        }
+      )
   }
 }

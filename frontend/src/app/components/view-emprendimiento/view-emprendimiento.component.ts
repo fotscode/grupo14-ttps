@@ -19,17 +19,16 @@ export class ViewEmprendimientoComponent {
   ) {}
 
   ngOnInit(): void {
-    const domainUrl = this.route.snapshot.paramMap.get('domain')
-    if (domainUrl) {
-      this.emprendimientoService
-        .getEmprendimientoByDomain(domainUrl)
-        .subscribe((res) => {
-          if(res.data.emprendimiento)
-            this.emprendimiento = res.data.emprendimiento
-          this.loading = false
-        }, (err)=>{
-            this.router.navigate(['/404'])
-          })
-    }
+    const domainUrl = this.route.snapshot.paramMap.get('domain') || ''
+    this.emprendimientoService.getEmprendimientoByDomain(domainUrl).subscribe(
+      (res) => {
+        if (res.data.emprendimiento)
+          this.emprendimiento = res.data.emprendimiento
+        this.loading = false
+      },
+      (err) => {
+        this.router.navigate(['/404'])
+      }
+    )
   }
 }

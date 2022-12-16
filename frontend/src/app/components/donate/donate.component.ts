@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Emprendimiento } from 'src/app/interfaces/Emprendimiento'
 import { Manguito } from 'src/app/interfaces/Manguito'
 import { Pago } from 'src/app/interfaces/Pago'
@@ -28,7 +28,7 @@ export class DonateComponent {
     monto: 0,
     mensaje: '',
   }
-  loading:boolean=true
+  loading: boolean = true
 
   constructor(
     private empService: EmprendimientosService,
@@ -36,20 +36,26 @@ export class DonateComponent {
     private dialog: MatDialog,
     private manguitoService: ManguitosService,
     private pagosService: PagosService,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    const domainUrl = this.route.snapshot.paramMap.get('domain')
-    if (domainUrl)
-      this.empService.getEmprendimientoByDomain(domainUrl).subscribe((res) => {
+    const domainUrl = this.route.snapshot.paramMap.get('domain') || ''
+
+    this.empService.getEmprendimientoByDomain(domainUrl).subscribe(
+      (res) => {
         if (res.data.emprendimiento) {
           this.emprendimiento = res.data.emprendimiento
           this.emprendimiento.planes.sort((a, b) => a.monto - b.monto)
           this.emptyManguito.monto = this.emprendimiento.valorManguito
-          this.loading=false
+          this.loading = false
         }
-      })
+      },
+      (err) => {
+        this.router.navigate(['/404'])
+      }
+    )
   }
 
   openDialog(): void {
