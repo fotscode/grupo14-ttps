@@ -3,3 +3,10 @@
 body {
   background-color: #2d2c38;
 }
+
+a{
+  color:rgb(55, 153, 244) 
+}
+a:hover{
+  color:#fff
+}
