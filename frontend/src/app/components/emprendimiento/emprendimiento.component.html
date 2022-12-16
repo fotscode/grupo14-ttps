@@ -9,18 +9,19 @@
     </div>
       <div
         class="photo-card"
-        style="padding: 0px; margin: 0px; max-width: 2000px"
+        style="padding: 0px; margin: 0px; max-width: 2000px;min-height:80vh"
         *ngIf="!loading"
       >
         <div
-          class="photo-background w-100 mh-100"
+          class="photo-background w-100"
           [ngClass]="this.editMode ? 'borders' : 'w-100'"
           style="overflow: hidden"
           (click)="this.editMode ? enterpriseImg.click() : ''"
         >
           <img
             src="data:image/png;base64,{{ emprendimiento.imagen }}"
-            class="w-100 h-100 rounded"
+            class="w-100 h-100"
+            [ngClass]="this.editMode ? '' : 'rounded-4'"
             style="object-fit: cover"
             alt="Imagen emprendimiento"
           />
