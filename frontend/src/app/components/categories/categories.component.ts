@@ -25,8 +25,9 @@ export class CategoriesComponent {
   }
 
   getCategories() {
-    this.categoriesService.getCategories().subscribe((res: any) => {
-      this.categories = res.data.categorias
+    this.categoriesService.getCategories().subscribe((res) => {
+      if(res.data.categorias)
+        this.categories = res.data.categorias
     })
   }
 
@@ -69,7 +70,7 @@ export class CategoriesComponent {
     if (category.id) {
       this.categoriesService
         .deleteCategory(category.id)
-        .subscribe((res: any) => {
+        .subscribe((res) => {
           this.snackBar.open(res.message, void 0, { duration: 3000 })
         })
     }

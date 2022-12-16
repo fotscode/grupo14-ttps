@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Manguito } from '../interfaces/Manguito';
+import { ManguitosResponse } from '../interfaces/responses/ManguitosResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ManguitosService {
   constructor(private http:HttpClient) { }
 
   getManguitos(){
-    return this.http.get(`${this.URL}/list`)
+    return this.http.get<ManguitosResponse>(`${this.URL}/list`)
   }
 
   saveManguito(manguito:Manguito,idEmp:number){

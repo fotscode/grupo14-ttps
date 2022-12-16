@@ -22,13 +22,13 @@ export class ViewPagosComponent {
   ) {}
 
   ngOnInit(): void {
-    this.manguitosService.getManguitos().subscribe((res: any) => {
+    this.manguitosService.getManguitos().subscribe((res) => {
       //TODO: fix this interface
       this.loading=false
       if (res.data.manguitos) this.manguitos = res.data.manguitos
     })
-    this.pagosService.getPagos().subscribe((res: any) => {
-      if (res.data.pagosPlanes) this.pagosPlan = res.data.pagosPlanes
+    this.pagosService.getPagos().subscribe((res) => {
+      if (res.data.pagos) this.pagosPlan = res.data.pagos
     })
   }
 
