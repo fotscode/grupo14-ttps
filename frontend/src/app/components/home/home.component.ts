@@ -52,7 +52,9 @@ export class HomeComponent {
         (res) => {
           this.loading = false
           if (res.data.emprendimientos)
-            this.emprendimientos = res.data.emprendimientos
+            this.emprendimientos = res.data.emprendimientos.sort(
+              () => Math.random() - 0.5
+            )
           if (res.data.length)
             this.cantidadPaginas = Math.ceil(
               res.data.length / this.cantidadElementos
