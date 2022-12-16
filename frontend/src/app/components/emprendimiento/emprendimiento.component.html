@@ -38,11 +38,11 @@
           class="d-flex flex-column justify-content-between photo-details w-100"
         >
           <div>
-            <h1 *ngIf="!this.editMode">
+            <h3 class="text-white" *ngIf="!this.editMode">
               <span class="fw-bold">Dominio:</span> /{{
                 emprendimiento.domainUrl
               }}
-            </h1>
+            </h3>
             <div *ngIf="this.editMode">
               <mat-form-field [style.width.%]="100" appearance="fill">
                 <mat-label>Dominio</mat-label>
@@ -57,7 +57,7 @@
               </mat-form-field>
             </div>
 
-            <h1 *ngIf="!this.editMode">{{ emprendimiento.nombre }}</h1>
+            <p class="display-4" *ngIf="!this.editMode">{{ emprendimiento.nombre }}</p>
             <div *ngIf="this.editMode">
               <mat-form-field [style.width.%]="100" appearance="fill">
                 <mat-label>Nombre del emprendimiento</mat-label>
@@ -107,7 +107,7 @@
             </div>
             <div *ngIf="!this.editMode" style="margin: 10px 0 0 0">
               <p *ngFor="let red of emprendimiento.redesSociales">
-                <strong>{{ red.nombre }}: </strong><span>{{ red.url }}</span>
+                <strong>{{ red.nombre }}: </strong><a [href]="red.url" target="_blank">{{ red.url }}</a>
               </p>
             </div>
             <div *ngIf="this.editMode" class="d-flex flex-column mb-2">
