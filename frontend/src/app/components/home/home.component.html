@@ -117,7 +117,7 @@
                       checked
                     />
                     <span
-                      [ngStyle]="{ 'background-color': categoria.color }"
+                      [ngStyle]="{'background-color': categoria.color,'color':setContrast(categoria.color)}"
                       class="selectgroup-button"
                       >{{ categoria.nombre }}</span
                     >
