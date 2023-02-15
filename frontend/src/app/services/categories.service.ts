@@ -23,4 +23,6 @@ export class CategoriesService {
   deleteCategory(id:number){
     return this.http.delete<CategoriasResponse>(this.URL+"/categoria/delete/"+id)
   }
+
+
 }

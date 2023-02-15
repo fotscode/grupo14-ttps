@@ -177,12 +177,16 @@
                       (click)="addCategoria(categoria)"
                       class="px-2 rounded-pill"
                       [ngStyle]="{
+                        
                         'background-color': isSelected(categoria)
                           ? categoria.color
                           : 'rgb(108, 117, 125)'
+
                       }"
                     >
-                      <span class="text-white">{{ categoria.nombre }}</span>
+                      <span [ngStyle]="{
+                        'color': setContrast(categoria.color)
+                      }">{{ categoria.nombre }}</span>
                     </div>
                   </div>
                 </div>

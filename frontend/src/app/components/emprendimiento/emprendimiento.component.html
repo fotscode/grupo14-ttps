@@ -162,8 +162,9 @@
                 (click)="addCategoria(categoria)"
               >
                 <span
-                  class="px-2 py-1 rounded-pill text-white"
+                  class="px-2 py-1 rounded-pill"
                   [ngStyle]="{
+                    'color': setContrast(categoria.color),
                     'background-color': isSelected(categoria)
                       ? categoria.color
                       : 'rgb(108, 117, 125)'

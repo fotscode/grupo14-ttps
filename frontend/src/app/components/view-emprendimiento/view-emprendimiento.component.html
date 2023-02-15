@@ -42,8 +42,8 @@
           >
             <div *ngFor="let categoria of emprendimiento.categorias">
               <span
-                class="px-2 py-1 rounded-pill text-white"
-                [ngStyle]="{ 'background-color': categoria.color }"
+                class="px-2 py-1 rounded-pill"
+                [ngStyle]="{ 'background-color': categoria.color, 'color': setContrast(categoria.color) }"
                 >{{ categoria.nombre }}</span
               >
             </div>
