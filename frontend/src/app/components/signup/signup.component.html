@@ -167,7 +167,7 @@
                     id="enterpriseImg"
                   />
                 </div>
-                <div *ngIf="categorias.length>0" class="mb-3 form-item">
+                <div *ngIf="categorias.length > 0" class="mb-3 form-item">
                   <p class="text-white fw-bold" style="font-size: 1.5rem">
                     Categorias
                   </p>
@@ -177,16 +177,15 @@
                       (click)="addCategoria(categoria)"
                       class="px-2 rounded-pill"
                       [ngStyle]="{
-                        
+                        color: isSelected(categoria)
+                          ? setContrast(categoria.color)
+                          : 'rgb(255,255,255)',
                         'background-color': isSelected(categoria)
                           ? categoria.color
                           : 'rgb(108, 117, 125)'
-
                       }"
                     >
-                      <span [ngStyle]="{
-                        'color': setContrast(categoria.color)
-                      }">{{ categoria.nombre }}</span>
+                      <span>{{ categoria.nombre }}</span>
                     </div>
                   </div>
                 </div>
