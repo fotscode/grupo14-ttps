@@ -10,6 +10,17 @@ mat-select {
     flex-direction: column !important;
   }
 
+  .button-section{
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+   }
+   .button-section > button{
+        margin:15px 0 0 0 !important;
+        width:95vw;
+        max-width:500px;
+    }
+
   .emprendimiento {
     width: 90%;
     height: auto;
@@ -25,7 +36,7 @@ mat-select {
     margin-left: 10px;
     margin-right: 10px;
     max-width: 500px;
-    width: 100%;
+    width:95vw;
   }
 
   .search-form input,
